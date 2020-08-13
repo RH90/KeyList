@@ -1,0 +1,206 @@
+﻿<Window Background="Black" x:Class="KeyList.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KeyList"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="750" Width="1300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="0.4*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.15*" />
+            <RowDefinition Height="1*" />
+
+        </Grid.RowDefinitions>
+        <StackPanel Height="20" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="0,37">
+            <ComboBox x:Name="cbsGrade" Width="100" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="Grade"/>
+                <ComboBoxItem Content="7"/>
+                <ComboBoxItem Content="8"/>
+                <ComboBoxItem Content="9"/>
+            </ComboBox>
+            <ComboBox x:Name="cbsClass" Width="100" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="Class"/>
+                <ComboBoxItem Content="a"/>
+                <ComboBoxItem Content="b"/>
+                <ComboBoxItem Content="c"/>
+                <ComboBoxItem Content="d"/>
+                <ComboBoxItem Content="e"/>
+                <ComboBoxItem Content="f"/>
+            </ComboBox>
+            <ComboBox x:Name="cbsFloor" Width="100" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="Floor"/>
+                <ComboBoxItem Content="1"/>
+                <ComboBoxItem Content="2"/>
+                <ComboBoxItem Content="3"/>
+            </ComboBox>
+            <ComboBox x:Name="cbsStatus" Width="100" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="Status"/>
+                <ComboBoxItem>
+                    <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="Green">ELEV HAR SKÅPET</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Pink">LÅST AV SKOLAN</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="YellowGreen">ELEV MED EGET LÅS</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">SKÅPET REPARERAS</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Blue">LÅST M. MULTILÅS</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">ELEV MED DED. SKÅP</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">ANVÄNDS INTE</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">UTAN NYCKEL ELEVINNEHÅLL</TextBlock>
+                </ComboBoxItem>
+            </ComboBox>
+            <TextBox Text="" x:Name="tbSearch" Width="250"></TextBox>
+            <Button x:Name="bSearch" Click="bSearch_Click">Search</Button>
+            <Button Click="Add_Pupil_Button_Click">Add Pupil</Button>
+            <TextBlock Foreground="White" Text="{Binding ElementName=listView, Path=Items.Count, Mode=OneWay,StringFormat=Antal Resultat: {0}}"></TextBlock>
+
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Left" Height="100" Grid.Row="0" VerticalAlignment="Top" Width="auto"/>
+        <ListView Background="Black" AlternationCount="2" x:Name="listView" Grid.Row="1" Margin="10,0,10,10" SelectionChanged="ListView_SelectionChanged">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="listView_MouseClick"/>
+                    <Setter Property="BorderBrush" Value="#222" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border
+                         BorderBrush="Red"
+                         BorderThickness="0"
+                         Background="{TemplateBinding Background}">
+                                    <GridViewRowPresenter HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Width="Auto" Margin="0" Content="{TemplateBinding Content}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                            <Setter Property="Background" Value="#111"></Setter>
+                            <Setter Property="BorderBrush" Value="#222" />
+                            <Setter Property="BorderThickness" Value="0,0,0,1" />
+                        </Trigger>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                            <Setter Property="Background" Value="Black"></Setter>
+                            <Setter Property="BorderBrush" Value="#222" />
+                            <Setter Property="BorderThickness" Value="0,0,0,1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="red"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Background" Value="Purple"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View >
+                <GridView>
+                    <GridViewColumn Header="Owner_id" DisplayMemberBinding="{Binding L.Owner_id}"/>
+                    <GridViewColumn Header="Year" DisplayMemberBinding="{Binding P.Year}" />
+                    <GridViewColumn Header="Keys" DisplayMemberBinding="{Binding L.Keys}"/>
+                    <GridViewColumn Header="Status">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock IsEnabled="False" Text="{Binding L.StatusText}" Foreground="{Binding L.StatusColor}">
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Locker" DisplayMemberBinding="{Binding L.Number}" />
+                    <GridViewColumn Header="Floor" DisplayMemberBinding="{Binding L.Floor}" />
+                    <GridViewColumn Header="Grade" DisplayMemberBinding="{Binding P.Grade}" />
+                    <GridViewColumn Header="Class" DisplayMemberBinding="{Binding P.Class}" />
+                    <GridViewColumn Header="FirstName" DisplayMemberBinding="{Binding P.Firstname}" />
+                    <GridViewColumn Header="LastName" DisplayMemberBinding="{Binding P.Lastname}"/>
+                    <GridViewColumn Width="300" Header="CommentLocker">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox PreviewMouseDown="TextBox_MouseClick" Background="Transparent" Foreground="White" BorderThickness="0" MinWidth="100px" TextWrapping="Wrap" IsReadOnly="True" AcceptsReturn="True" Text="{Binding L.Comment}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="PupilComment" DisplayMemberBinding="{Binding P.Comment}"/>
+                </GridView>
+            </ListView.View>
+        </ListView >
+        <StackPanel Grid.Row="2" Grid.Column="2">
+            <GroupBox Foreground="White" Header="Locker" >
+                <StackPanel>
+                    <TextBlock x:Name="tbLockerNumber" Text="Locker: "></TextBlock>
+                    <TextBlock Text="Keys"></TextBlock>
+                    <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbLockerKeys"></TextBox>
+                    <TextBlock Text="Status"></TextBlock>
+                    <ComboBox PreviewMouseDown="TextBlock_KeyDown" x:Name="cbStatus" HorizontalAlignment="Left" Width="329">
+                        <ComboBoxItem>
+                            <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="Green">ELEV HAR SKÅPET</TextBlock>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Pink">LÅST AV SKOLAN</TextBlock>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="YellowGreen">ELEV MED EGET LÅS</TextBlock>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">SKÅPET REPARERAS</TextBlock>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Blue">LÅST M. MULTILÅS</TextBlock>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">ELEV MED DED. SKÅP</TextBlock>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">ANVÄNDS INTE</TextBlock>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">UTAN NYCKEL ELEVINNEHÅLL</TextBlock>
+                        </ComboBoxItem>
+                    </ComboBox>
+                    <TextBlock Text="Comment"></TextBlock>
+                    <TextBox KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbLockerComment"></TextBox>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Foreground="White" Header="Student">
+                <StackPanel>
+                    <TextBlock Text="FirstName"></TextBlock>
+                    <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilFirstname"></TextBox>
+                    <TextBlock Text="LastName"></TextBlock>
+                    <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilLastName"></TextBox>
+                    <TextBlock Text="Grade"></TextBlock>
+                    <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilGrade"></TextBox>
+                    <TextBlock Text="Class"></TextBlock>
+                    <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilClass"></TextBox>
+                    <TextBlock Text="Comment"></TextBlock>
+                    <TextBox KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbPupilComment"></TextBox>
+                </StackPanel>
+            </GroupBox>
+            <Button IsEnabled="False" x:Name="bAssignPupil" Content="Assign Pupil" Click="bAssignPupil_Click">
+            </Button>
+            <Button IsEnabled="False" x:Name="bRemovePupil" Content="Remove Pupil" Click="bRemovePupil_Click">
+            </Button>
+            <Button IsEnabled="False" x:Name="bSave" Content="Save" Click="bSave_Click">
+            </Button>
+
+        </StackPanel>
+    </Grid>
+</Window>

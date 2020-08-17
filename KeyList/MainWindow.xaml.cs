@@ -435,6 +435,21 @@ namespace KeyList
         private void bRemovePupil_Click(object sender, RoutedEventArgs e)
         {
             //TODO create alert window with accept or cancel, only if there is a owners
+            MessageBoxResult result = MessageBox.Show("Remove Pupil?", "My App", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                MyItem m = (MyItem)listView.SelectedItem;
+                Console.WriteLine("Remove pupil from: " + m.L.Id);
+                sql.removePupilFromLocker(m.L.Id);
+                m.L.Owner_id = -1;
+                m.P = new Pupil(-1, "", "", "", "", "", "");
+
+                ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                view.Refresh();
+                bRemovePupil.IsEnabled = false;
+                bAssignPupil.IsEnabled = true;
+            }
+
         }
 
         private void bAssignPupil_Click(object sender, RoutedEventArgs e)
@@ -443,8 +458,21 @@ namespace KeyList
 
             Nullable<bool> res = window.ShowDialog();
 
-            Console.WriteLine(res);
-            Console.WriteLine(window.pupilID);
+            MyItem m = (MyItem)listView.SelectedItem;
+
+            if (m != null && res.Value)
+            {
+                sql.assignPupilToLocker(m.L.Id, window.pupilID);
+                m.L.Owner_id = window.pupilID;
+                m.P = sql.getPupil(window.pupilID);
+                ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                view.Refresh();
+                bRemovePupil.IsEnabled = true;
+                bAssignPupil.IsEnabled = false;
+            }
+            // sql.assignPupilToLocker(m.L.Id,);
+            Console.WriteLine(res.Value);
+            Console.WriteLine();
             // TODO only if there is no owner
         }
 

@@ -42,7 +42,16 @@ namespace KeyList
         }
         private void bAccept_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
+            if (listView.SelectedIndex != -1 && pupilID != -1)
+            {
+                this.DialogResult = true;
+            }
+            else
+            {
+                this.DialogResult = false;
+            }
+
+
 
             this.Close();
         }

@@ -42,7 +42,8 @@ namespace KeyList
                "year TEXT DEFAULT \"\"," +
                "firstname TEXT DEFAULT \"\"," +
                "lastname TEXT DEFAULT \"\"," +
-               "comment TEXT DEFAULT \"\")", con).ExecuteNonQuery();
+               "comment TEXT DEFAULT \"\"," +
+               "inschool BOOLEAN DEFAULT 'true')", con).ExecuteNonQuery();
 
         }
         public long addPupil(String FirstName, String LastName, String Class, String Grade, String Year)
@@ -279,6 +280,31 @@ namespace KeyList
             }
 
             return list;
+        }
+
+        public void removePupilFromLocker(int id)
+        {
+            string query = "UPDATE locker set owner_id=null where id=@id";
+
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                query, con))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void assignPupilToLocker(int id, int pupilID)
+        {
+            string query = "UPDATE locker set owner_id=@owner_id where id=@id";
+
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                query, con))
+            {
+                cmd.Parameters.AddWithValue("@owner_id", pupilID);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 

@@ -481,6 +481,12 @@ namespace KeyList
             if (listView.SelectedIndex != -1)
                 bSave.IsEnabled = true;
         }
+
+        private void ShowFloors_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new ShowFloors();
+            window.Show();
+        }
     }
 
 }

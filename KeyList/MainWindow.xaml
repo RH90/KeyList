@@ -68,6 +68,7 @@
             <TextBox Text="" x:Name="tbSearch" Width="250"></TextBox>
             <Button x:Name="bSearch" Click="bSearch_Click">Search</Button>
             <Button Click="Add_Pupil_Button_Click">Add Pupil</Button>
+            <Button Click="ShowFloors_Button_Click" >Show Floors</Button>
             <TextBlock Foreground="White" Text="{Binding ElementName=listView, Path=Items.Count, Mode=OneWay,StringFormat=Antal Resultat: {0}}"></TextBlock>
 
         </StackPanel>

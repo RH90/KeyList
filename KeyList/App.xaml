@@ -11,6 +11,8 @@
         </Style>
         <Style TargetType="ToolTip">
             <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="TextBlock.Foreground" Value="White"/>
         </Style>
     </Application.Resources>
 </Application>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -35,6 +36,12 @@ namespace KeyList
             }
 
             InitializeComponent();
+
+
+            addToolTip(tab1);
+            addToolTip(tab2);
+            addToolTip(tab3);
+
             //for (int i = 0; i < test.Children.Count; i++)
             //{
             //    if (test.Children[i] is Border)
@@ -54,6 +61,47 @@ namespace KeyList
             //}
 
         }
+
+        private void addToolTip(UniformGrid tab)
+        {
+            for (int i = 0; i < tab.Children.Count; i++)
+            {
+                if (tab.Children[i] is Border)
+                {
+                    try
+                    {
+                        Border b = (Border)tab.Children[i];
+                        TextBlock t = (TextBlock)b.Child;
+                        Locker l = MainWindow.sql.getLocker(int.Parse(t.Text));
+
+                        //MainWindow.sql.getPupil();
+                        if (l != null)
+                        {
+                            Pupil p = MainWindow.sql.getPupil(l.Owner_id);
+
+
+                            ToolTipService.SetShowDuration(t, int.MaxValue);
+                            ToolTipService.SetInitialShowDelay(t, 0);
+                            t.ToolTip =
+                              "==Keys==\n" + l.Keys
+                            + "\n==Comment==\n" + l.Comment
+                            + "\n==Status==\n" + l.StatusText;
+
+                            if (p != null)
+                            {
+                                t.ToolTip +=
+                                    "\n==Pupil==\n" + p.Firstname + " " + p.Lastname + ", " + p.Grade + p.Class + ", " + p.Year;
+                            }
+                        }
+
+                    }
+                    catch
+                    { }
+
+                }
+            }
+        }
+
         public ArrayList Text { get; set; }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

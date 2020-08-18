@@ -64,6 +64,40 @@ namespace KeyList
 
             return lastID;
         }
+
+        public Locker getLocker(int id)
+        {
+            Locker l = null;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                "SELECT * from locker where number=@id", con))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    int owner;
+
+                    if (!int.TryParse(reader.GetValue(reader.GetOrdinal("owner_id")) + "", out owner))
+                    {
+
+                        owner = -1;
+                    }
+
+                    l = new Locker(
+                       reader.GetInt32(reader.GetOrdinal("id")),
+                       reader.GetInt32(reader.GetOrdinal("number")),
+                       reader.GetInt32(reader.GetOrdinal("keys")),
+                       reader.GetString(reader.GetOrdinal("floor")),
+                       reader.GetInt32(reader.GetOrdinal("status")),
+                       owner,
+                       reader.GetString(reader.GetOrdinal("comment")));
+                }
+            }
+            return l;
+        }
+
         public long addLocker(String Locker, string Status, string Keys, string CommentLocker, long OwnerID)
         {
             sem.WaitOne();

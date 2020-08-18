@@ -10,7 +10,7 @@
     <Grid>
         <TabControl Margin="4,0,3,2" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Floor 1">
-                <UniformGrid  Rows="35" Columns="60" Background="#FFE5E5E5">
+                <UniformGrid x:Name="tab1"  Rows="35" Columns="60" Background="#FFE5E5E5">
                     <Grid ></Grid>
                     <Grid ></Grid>
                     <Grid ></Grid>
@@ -2352,7 +2352,7 @@
                 </UniformGrid>
             </TabItem>
             <TabItem Header="Floor 2" Height="22" VerticalAlignment="Top">
-                <UniformGrid  Rows="35" Columns="60" Background="#FFE5E5E5">
+                <UniformGrid  x:Name="tab2"   Rows="35" Columns="60" Background="#FFE5E5E5">
                     <Grid ></Grid>
                     <Grid ></Grid>
                     <Grid ></Grid>
@@ -4687,7 +4687,7 @@
 
             </TabItem>
             <TabItem Header="Floor 3">
-                <UniformGrid x:Name="test" Rows="35" Columns="60" Background="#FFE5E5E5">
+                <UniformGrid  x:Name="tab3"  Rows="35" Columns="60" Background="#FFE5E5E5">
                     <Grid ></Grid>
                     <Grid ></Grid>
                     <Grid ></Grid>

@@ -41,6 +41,7 @@ namespace KeyList
         String currentSort = "";
         bool ascending = true;
         int selected = -2;
+        ShowFloors showFloorWindow = null;
 
         public static SQL sql;
 
@@ -484,8 +485,11 @@ namespace KeyList
 
         private void ShowFloors_Button_Click(object sender, RoutedEventArgs e)
         {
-            var window = new ShowFloors();
-            window.Show();
+
+            if (showFloorWindow == null || !showFloorWindow.IsVisible)
+                showFloorWindow = new ShowFloors();
+
+            showFloorWindow.Show();
         }
     }
 

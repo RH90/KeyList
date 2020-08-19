@@ -4691,7 +4691,7 @@
                         <Grid ></Grid>
                         <Grid></Grid>
                     </UniformGrid>
-                    <Border Background="Beige" BorderBrush="{x:Null}" Margin="7,297,1267,381">
+                    <Border Background="Beige" BorderBrush="{x:Null}" Margin="11,250,1263,428">
                         <TextBlock  Text="HUVUDINGÅNG" VerticalAlignment="Center" TextAlignment="Center"/>
                     </Border>
                 </Grid>

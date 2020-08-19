@@ -21,7 +21,7 @@ namespace KeyList
         {
 
 
-            con = new SQLiteConnection("Data Source=C:\\Users\\rilhas\\Desktop\\test.db;New=False;");
+            con = new SQLiteConnection("Data Source=C:\\Users\\rilhas\\Desktop\\KeyList\\test.db;New=False;");
             con.Open();
 
             new SQLiteCommand("CREATE TABLE IF NOT EXISTS " +
@@ -318,7 +318,7 @@ namespace KeyList
 
         public void removePupilFromLocker(int id)
         {
-            string query = "UPDATE locker set owner_id=null where id=@id";
+            string query = "UPDATE locker set owner_id=null,status=1 where id=@id";
 
             using (SQLiteCommand cmd = new SQLiteCommand(
                 query, con))
@@ -330,7 +330,7 @@ namespace KeyList
 
         public void assignPupilToLocker(int id, int pupilID)
         {
-            string query = "UPDATE locker set owner_id=@owner_id where id=@id";
+            string query = "UPDATE locker set owner_id=@owner_id,status=0 where id=@id";
 
             using (SQLiteCommand cmd = new SQLiteCommand(
                 query, con))

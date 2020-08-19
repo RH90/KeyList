@@ -10,7 +10,7 @@ namespace KeyList
 {
     public class Locker
     {
-        enum StatusT
+        public enum StatusT
         {
             ELEVE_HAR_SLÅPET,
             LÅST_AV_SKOLAN,
@@ -21,7 +21,7 @@ namespace KeyList
             ANVÄNDS_EJ,
             UTAN_NYCKEL_ELEVINNEHÅLL
         }
-        enum StatusC
+        public enum StatusC
         {
             GREEN,
             PINK,

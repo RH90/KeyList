@@ -17,13 +17,13 @@
 
         </Grid.RowDefinitions>
         <StackPanel Height="20" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="0,37">
-            <ComboBox x:Name="cbsGrade" Width="100" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+            <ComboBox x:Name="cbsGrade" Width="62" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
                 <ComboBoxItem Content="Grade"/>
                 <ComboBoxItem Content="7"/>
                 <ComboBoxItem Content="8"/>
                 <ComboBoxItem Content="9"/>
             </ComboBox>
-            <ComboBox x:Name="cbsClass" Width="100" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+            <ComboBox x:Name="cbsClass" Width="73" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
                 <ComboBoxItem Content="Class"/>
                 <ComboBoxItem Content="a"/>
                 <ComboBoxItem Content="b"/>
@@ -32,13 +32,13 @@
                 <ComboBoxItem Content="e"/>
                 <ComboBoxItem Content="f"/>
             </ComboBox>
-            <ComboBox x:Name="cbsFloor" Width="100" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+            <ComboBox x:Name="cbsFloor" Width="60" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
                 <ComboBoxItem Content="Floor"/>
                 <ComboBoxItem Content="1"/>
                 <ComboBoxItem Content="2"/>
                 <ComboBoxItem Content="3"/>
             </ComboBox>
-            <ComboBox x:Name="cbsStatus" Width="100" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+            <ComboBox x:Name="cbsStatus" Width="73" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
                 <ComboBoxItem Content="Status"/>
                 <ComboBoxItem>
                     <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="Green">ELEV HAR SKÅPET</TextBlock>
@@ -65,10 +65,11 @@
                     <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">UTAN NYCKEL ELEVINNEHÅLL</TextBlock>
                 </ComboBoxItem>
             </ComboBox>
-            <TextBox Text="" x:Name="tbSearch" Width="250"></TextBox>
+            <TextBox Text="" x:Name="tbSearch" Width="217"></TextBox>
             <Button x:Name="bSearch" Click="bSearch_Click">Search</Button>
             <Button Click="Add_Pupil_Button_Click">Add Pupil</Button>
             <Button Click="ShowFloors_Button_Click" >Show Floors</Button>
+            <Button Click="Export_List_Button_Click" >Export List</Button>
             <TextBlock Foreground="White" Text="{Binding ElementName=listView, Path=Items.Count, Mode=OneWay,StringFormat=Antal Resultat: {0}}"></TextBlock>
 
         </StackPanel>

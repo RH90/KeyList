@@ -77,6 +77,7 @@
         <ListView Background="Black" AlternationCount="2" x:Name="listView" Grid.Row="1" Margin="10,0,10,10" SelectionChanged="ListView_SelectionChanged">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
                     <EventSetter Event="PreviewMouseLeftButtonDown" Handler="listView_MouseClick"/>
                     <Setter Property="BorderBrush" Value="#222" />
                     <Setter Property="BorderThickness" Value="0,0,0,1" />
@@ -128,16 +129,29 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Locker" DisplayMemberBinding="{Binding L.Number}" />
-                    <GridViewColumn Header="Floor" DisplayMemberBinding="{Binding L.Floor}" />
-                    <GridViewColumn Header="Grade" DisplayMemberBinding="{Binding P.Grade}" />
-                    <GridViewColumn Header="Class" DisplayMemberBinding="{Binding P.Class}" />
-                    <GridViewColumn Header="FirstName" DisplayMemberBinding="{Binding P.Firstname}" />
-                    <GridViewColumn Header="LastName" DisplayMemberBinding="{Binding P.Lastname}"/>
+                    <GridViewColumn Header="Locker" DisplayMemberBinding="{Binding L.Number}" >
+                    </GridViewColumn>
+                    <GridViewColumn Header="Floor" DisplayMemberBinding="{Binding L.Floor}" >
+                    </GridViewColumn>
+                    <GridViewColumn Header="Grade" DisplayMemberBinding="{Binding P.Grade}" >
+                    </GridViewColumn>
+                    <GridViewColumn Header="Class" DisplayMemberBinding="{Binding P.Class}" >
+                    </GridViewColumn>
+                    <GridViewColumn Header="FirstName" DisplayMemberBinding="{Binding P.Firstname}" >
+                    </GridViewColumn>
+                    <GridViewColumn Header="LastName"  DisplayMemberBinding="{Binding P.Lastname}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid Background="LightGreen" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding P.Lastname}" Background="Transparent" Foreground="Black" />
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Width="300" Header="CommentLocker">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox PreviewMouseDown="TextBox_MouseClick" Background="Transparent" Foreground="White" BorderThickness="0" MinWidth="100px" TextWrapping="Wrap" IsReadOnly="True" AcceptsReturn="True" Text="{Binding L.Comment}" />
+                                <TextBox PreviewMouseDown="TextBox_MouseClick" Background="Transparent" Foreground="White" BorderThickness="0" MinWidth="100" TextWrapping="Wrap" IsReadOnly="True" AcceptsReturn="True" Text="{Binding L.Comment}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

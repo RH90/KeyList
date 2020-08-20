@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,6 +35,8 @@ namespace KeyList
     // batch operations (remove,add pupils to lockers)
     // auto up grade on students? 
     // multi satus
+    // add column for pupil if they have ever never lost a key
+    // go to item on letter click sensitive to column
 
     public partial class MainWindow : Window
     {
@@ -45,6 +49,7 @@ namespace KeyList
 
         public MainWindow()
         {
+
             InitializeComponent();
             // listView.Items.Add(new MyItem {FirstName="Rilind",LastName="Hasanaj safsa s" });
             //'Skåp-info -7$'
@@ -225,6 +230,7 @@ namespace KeyList
         {
             try
             {
+
                 GridViewColumnHeader gc = (GridViewColumnHeader)e.OriginalSource;
                 Console.WriteLine(gc.Content);
 
@@ -260,7 +266,7 @@ namespace KeyList
 
 
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
-
+                view.Culture = new CultureInfo("sv-SE");
 
                 view.SortDescriptions.Clear();
                 if (currentSort == col)
@@ -444,6 +450,7 @@ namespace KeyList
                 m.P = new Pupil(-1, "", "", "", "", "", "");
 
                 m.L.Status = (int)Locker.StatusT.LÅST_AV_SKOLAN;
+                cbStatus.SelectedIndex = m.L.Status;
 
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
@@ -468,6 +475,7 @@ namespace KeyList
                 m.L.Owner_id = window.pupilID;
                 m.P = sql.getPupil(window.pupilID);
                 m.L.Status = (int)Locker.StatusT.ELEVE_HAR_SLÅPET;
+                cbStatus.SelectedIndex = m.L.Status;
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
                 bRemovePupil.IsEnabled = true;

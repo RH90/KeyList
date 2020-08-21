@@ -340,7 +340,11 @@ namespace KeyList
 
         private void bSearch_Click(object sender, RoutedEventArgs e)
         {
+            Search();
+        }
 
+        private void Search()
+        {
             string status = "", grade = "", floor = "", classP = "";
 
             if (cbsGrade.SelectedIndex != 0)
@@ -518,7 +522,13 @@ namespace KeyList
             Clipboard.SetText(text);
 
         }
-
+        private void tbSearch_Enter(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Search();
+            }
+        }
     }
 
 }

@@ -211,13 +211,21 @@ namespace KeyList
                     string[] parts = search.Split(' ');
 
                     bool check = true;
-
+                    int tmp;
                     for (int i = 0; i < parts.Length; i++)
                     {
-                        if (!p.Firstname.ToLower().Contains(parts[i]) && !p.Lastname.ToLower().Contains(parts[i]) && !l.Comment.ToLower().Contains(parts[i]))
+                        if (int.TryParse(parts[i], out tmp))
+                        {
+                            if (!l.Number.ToString().Equals(parts[i]))
+                            {
+                                check = false;
+                            }
+                        }
+                        else if (!p.Firstname.ToLower().Contains(parts[i]) && !p.Lastname.ToLower().Contains(parts[i]) && !l.Comment.ToLower().Contains(parts[i]))
                         {
                             check = false;
                         }
+
                     }
                     if (classP != "" && !classP.Equals(p.Class))
                     {
@@ -232,6 +240,7 @@ namespace KeyList
 
                     if ((search == "" && grade == "" && classP == "") || check)
                     {
+
                         list.Add(new MyItem
                         {
                             P = p,

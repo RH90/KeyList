@@ -37,6 +37,7 @@ namespace KeyList
     // multi satus
     // add column for pupil if they have ever never lost a key
     // go to item on letter click sensitive to column
+    // search with locker nmbr
 
     public partial class MainWindow : Window
     {

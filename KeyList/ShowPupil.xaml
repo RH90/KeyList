@@ -7,10 +7,53 @@
         mc:Ignorable="d"
         Title="ShowPupil" Height="450" Width="635.195">
     <Grid Background="Black">
-        <ListView Height="368" Margin="6,5,6,0" VerticalAlignment="Top">
-            <ListView.View>
+        <ListView Height="368" Margin="6,5,6,0" VerticalAlignment="Top" Background="Black" AlternationCount="2" x:Name="listView" SelectionChanged="listView_SelectionChanged" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="BorderBrush" Value="#222" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border
+                         BorderBrush="Red"
+                         BorderThickness="0"
+                         Background="{TemplateBinding Background}">
+                                    <GridViewRowPresenter HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Width="Auto" Margin="0" Content="{TemplateBinding Content}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                            <Setter Property="Background" Value="#111"></Setter>
+                            <Setter Property="BorderBrush" Value="#222" />
+                            <Setter Property="BorderThickness" Value="0,0,0,1" />
+                        </Trigger>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                            <Setter Property="Background" Value="Black"></Setter>
+                            <Setter Property="BorderBrush" Value="#222" />
+                            <Setter Property="BorderThickness" Value="0,0,0,1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="red"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Background" Value="Purple"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View >
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Header="FirstName" DisplayMemberBinding="{Binding P.Firstname}" />
+                    <GridViewColumn Header="LastName" DisplayMemberBinding="{Binding P.Lastname}"/>
+                    <GridViewColumn Header="Year" DisplayMemberBinding="{Binding P.Year}" />
+                    <GridViewColumn Header="Grade" DisplayMemberBinding="{Binding P.Grade}" />
+                    <GridViewColumn Header="Class" DisplayMemberBinding="{Binding P.Class}" />
+                    <GridViewColumn Header="PupilComment" DisplayMemberBinding="{Binding P.Comment}"/>
                 </GridView>
             </ListView.View>
         </ListView>

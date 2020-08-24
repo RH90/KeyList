@@ -95,20 +95,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Addpupil.xaml.cs" />
     <Compile Include="AssignPupil.xaml.cs">
       <DependentUpon>AssignPupil.xaml</DependentUpon>
     </Compile>
     <Compile Include="Locker.cs" />
     <Compile Include="Pupil.cs" />
+    <Compile Include="ShowPupil.xaml.cs">
+      <DependentUpon>ShowPupil.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SQL.cs" />
     <Compile Include="ShowFloors.xaml.cs">
       <DependentUpon>ShowFloors.xaml</DependentUpon>
     </Compile>
-    <Page Include="Addpupil.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="AssignPupil.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,6 +124,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ShowFloors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowPupil.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

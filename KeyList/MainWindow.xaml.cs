@@ -396,9 +396,9 @@ namespace KeyList
 
         }
 
-        private void Add_Pupil_Button_Click(object sender, RoutedEventArgs e)
+        private void Show_Pupil_Button_Click(object sender, RoutedEventArgs e)
         {
-            var window = new Addpupil();
+            var window = new ShowPupil();
 
             window.ShowDialog();
 
@@ -508,13 +508,14 @@ namespace KeyList
 
         private void Export_List_Button_Click(object sender, RoutedEventArgs e)
         {
-            List<MyItem> list = (List<MyItem>)listView.ItemsSource;
+            // List<MyItem> list = (List<MyItem>);
 
             String text = "";
             text = "Skåp\tNycklar\tStatus\tFörnamn\tEfternamn\tÅk\tKlass\tÅr\tCommentar\n";
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < listView.Items.Count; i++)
             {
-                MyItem m = list[i];
+
+                MyItem m = (MyItem)listView.Items[i];
                 // Console.WriteLine("JJ" + m.L.Comment.Replace("\n", " ") + "JJ");
                 text += m.L.Number + "\t" + m.L.Keys + "\t" + m.L.StatusText + "\t" + m.P.Firstname + "\t" + m.P.Lastname + "\t" + m.P.Grade + "\t" + m.P.Class + "\t" + m.P.Year + "\t" + m.L.Comment.Replace("\r\n", "").Replace("\n", "") + "\n";
             }

@@ -1,0 +1,29 @@
+﻿<Window x:Class="KeyList.AddPupil"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KeyList"
+        mc:Ignorable="d"
+        Title="AddPupil" Height="451.169" Width="319.61">
+    <Grid Background="Black">
+        <GroupBox Foreground="White" Header="Pupil">
+            <StackPanel Margin="0,0,0,50">
+                <TextBlock Text="FirstName"></TextBlock>
+                <TextBox x:Name="tbPupilFirstname"></TextBox>
+                <TextBlock Text="LastName"></TextBlock>
+                <TextBox  x:Name="tbPupilLastName"></TextBox>
+                <TextBlock Text="Grade"></TextBlock>
+                <TextBox  x:Name="tbPupilGrade"></TextBox>
+                <TextBlock Text="Class"></TextBlock>
+                <TextBox x:Name="tbPupilClass"></TextBox>
+                <TextBlock Text="Year"></TextBlock>
+                <TextBox x:Name="tbYear"></TextBox>
+                <TextBlock Text="Comment"></TextBlock>
+                <TextBox AcceptsReturn="True" x:Name="tbPupilComment"></TextBox>
+            </StackPanel>
+        </GroupBox>
+        <Button x:Name="bOK" Content="OK" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="28,381,0,0" Click="bOK_Click" />
+        <Button x:Name="bCancel" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="185,381,0,0" Click="bCancel_Click"/>
+    </Grid>
+</Window>

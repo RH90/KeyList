@@ -426,18 +426,34 @@ namespace KeyList
 
         private void bSave_Click(object sender, RoutedEventArgs e)
         {
-
             MyItem m = (MyItem)listView.SelectedItem;
-
-
-
 
             if (m.L.Owner_id != -1)
             {
                 //TODO edit pupil
-            }
+                string firstname, lastname, grade, classP, comment;
 
-            //TODO add plus minus button to key textbox
+                firstname = tbPupilFirstname.Text;
+                lastname = tbPupilLastName.Text;
+                grade = tbPupilGrade.Text;
+                classP = tbPupilClass.Text;
+                comment = tbPupilComment.Text;
+
+                if (!(firstname.Equals("") || lastname.Equals("") || classP.Equals("")) && (grade.Equals("7") || grade.Equals("8") || grade.Equals("9")))
+                {
+                    Console.WriteLine(firstname + "," + lastname + ", " + grade + ", " + classP + ", " + comment);
+
+                    m.P.Firstname = firstname;
+                    m.P.Lastname = lastname;
+                    m.P.Grade = grade;
+                    m.P.Class = classP;
+                    m.P.Comment = comment;
+
+                    sql.UpdatePupil(m.P);
+                }
+
+
+            }
 
             int tryNumber, tryKeys;
 

@@ -24,10 +24,21 @@ namespace KeyList
             InitializeComponent();
             InitializeComponent();
             listView.ItemsSource = MainWindow.sql.getUnAssignedPupulList();
+            // sort newest up
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new AddPupil();
+
+            window.ShowDialog();
+
+            //refresh list
 
         }
     }

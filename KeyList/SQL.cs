@@ -347,6 +347,23 @@ namespace KeyList
                 cmd.ExecuteNonQuery();
             }
         }
+
+        public void UpdatePupil(Pupil p)
+        {
+            string query = "UPDATE pupil set firstname=@firstname,lastname=@lastname,grade=@grade,classP=@classP,comment=@comment where id=@id";
+
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                query, con))
+            {
+                cmd.Parameters.AddWithValue("@firstname", p.Firstname);
+                cmd.Parameters.AddWithValue("@lastname", p.Lastname);
+                cmd.Parameters.AddWithValue("@grade", p.Grade);
+                cmd.Parameters.AddWithValue("@classP", p.Class);
+                cmd.Parameters.AddWithValue("@comment", p.Comment);
+                cmd.Parameters.AddWithValue("@id", p.Id);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 
 

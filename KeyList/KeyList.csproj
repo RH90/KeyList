@@ -95,6 +95,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddPupil.xaml.cs">
+      <DependentUpon>AddPupil.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AssignPupil.xaml.cs">
       <DependentUpon>AssignPupil.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,10 @@
     <Compile Include="ShowFloors.xaml.cs">
       <DependentUpon>ShowFloors.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddPupil.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AssignPupil.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

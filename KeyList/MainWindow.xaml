@@ -118,9 +118,12 @@
             </ListView.ItemContainerStyle>
             <ListView.View >
                 <GridView>
-                    <GridViewColumn Header="Owner_id" DisplayMemberBinding="{Binding L.Owner_id}"/>
-                    <GridViewColumn Header="Year" DisplayMemberBinding="{Binding P.Year}" />
-                    <GridViewColumn Header="Keys" DisplayMemberBinding="{Binding L.Keys}"/>
+
+                    <GridViewColumn Header="Locker" DisplayMemberBinding="{Binding L.Number}" >
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Floor" DisplayMemberBinding="{Binding L.Floor}" >
+                    </GridViewColumn>
                     <GridViewColumn Header="Status">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -129,14 +132,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Locker" DisplayMemberBinding="{Binding L.Number}" >
-                    </GridViewColumn>
-                    <GridViewColumn Header="Floor" DisplayMemberBinding="{Binding L.Floor}" >
-                    </GridViewColumn>
-                    <GridViewColumn Header="Grade" DisplayMemberBinding="{Binding P.Grade}" >
-                    </GridViewColumn>
-                    <GridViewColumn Header="Class" DisplayMemberBinding="{Binding P.Class}" >
-                    </GridViewColumn>
+                    <GridViewColumn Header="Keys" DisplayMemberBinding="{Binding L.Keys}"/>
                     <GridViewColumn Header="FirstName" DisplayMemberBinding="{Binding P.Firstname}" >
                     </GridViewColumn>
                     <GridViewColumn Header="LastName"  DisplayMemberBinding="{Binding P.Lastname}">
@@ -148,6 +144,11 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn Header="Grade" DisplayMemberBinding="{Binding P.Grade}" >
+                    </GridViewColumn>
+                    <GridViewColumn Header="Class" DisplayMemberBinding="{Binding P.Class}" >
+                    </GridViewColumn>
+                    <GridViewColumn Header="Year" DisplayMemberBinding="{Binding P.Year}" />
                     <GridViewColumn Width="300" Header="CommentLocker">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -159,7 +160,7 @@
                 </GridView>
             </ListView.View>
         </ListView >
-        <StackPanel Grid.Row="2" Grid.Column="2">
+        <StackPanel x:Name="spEdit" IsEnabled="False" Grid.Row="2" Grid.Column="2">
             <GroupBox Foreground="White" Header="Locker" >
                 <StackPanel>
                     <TextBlock x:Name="tbLockerNumber" Text="Locker:    "></TextBlock>
@@ -200,7 +201,7 @@
                     <TextBox KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbLockerComment"></TextBox>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Foreground="White" Header="Student">
+            <GroupBox Foreground="White" Header="Pupil">
                 <StackPanel>
                     <TextBlock Text="FirstName"></TextBlock>
                     <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilFirstname"></TextBox>

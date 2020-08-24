@@ -173,13 +173,10 @@ namespace KeyList
                 bRemovePupil.IsEnabled = false;
                 bAssignPupil.IsEnabled = false;
                 bSave.IsEnabled = false;
-            }
-            //listView.SelectedIndex == selected
-            if (listView.SelectedIndex == -1)
-            {
-
+                spEdit.IsEnabled = false;
                 return;
             }
+            spEdit.IsEnabled = true;
 
 
             Console.WriteLine(listView.SelectedIndex);
@@ -321,6 +318,7 @@ namespace KeyList
 
             try
             {
+
                 ListViewItem m = (ListViewItem)sender;
                 if (m.IsSelected)
                 {
@@ -378,6 +376,10 @@ namespace KeyList
                 status = (cbsStatus.SelectedIndex - 1) + "";
             }
             listView.ItemsSource = (sql.getAllLockers(tbSearch.Text, grade, classP, floor, status));
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            view.Culture = new CultureInfo("sv-SE");
+            view.SortDescriptions.Add(new SortDescription("L.Number", ListSortDirection.Ascending));
+            currentSort = "L.Number";
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -405,8 +407,10 @@ namespace KeyList
                 status = (cbsStatus.SelectedIndex - 1) + "";
             }
             listView.ItemsSource = (sql.getAllLockers(tbSearch.Text, grade, classP, floor, status));
-            Console.WriteLine(cbsStatus.Items[2]);
-            Console.WriteLine();
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            view.Culture = new CultureInfo("sv-SE");
+            view.SortDescriptions.Add(new SortDescription("L.Number", ListSortDirection.Ascending));
+            currentSort = "L.Number";
 
         }
 
@@ -473,6 +477,7 @@ namespace KeyList
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
                 bRemovePupil.IsEnabled = false;
+
                 bAssignPupil.IsEnabled = true;
 
             }

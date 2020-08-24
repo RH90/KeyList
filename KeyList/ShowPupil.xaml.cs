@@ -22,6 +22,8 @@ namespace KeyList
         public ShowPupil()
         {
             InitializeComponent();
+            InitializeComponent();
+            listView.ItemsSource = MainWindow.sql.getUnAssignedPupulList();
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)

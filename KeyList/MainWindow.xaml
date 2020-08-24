@@ -162,9 +162,13 @@
         <StackPanel Grid.Row="2" Grid.Column="2">
             <GroupBox Foreground="White" Header="Locker" >
                 <StackPanel>
-                    <TextBlock x:Name="tbLockerNumber" Text="Locker: "></TextBlock>
-                    <TextBlock Text="Keys"></TextBlock>
-                    <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbLockerKeys"></TextBox>
+                    <TextBlock x:Name="tbLockerNumber" Text="Locker:    "></TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Keys:      "></TextBlock>
+                        <TextBlock Width="15" x:Name="tbKeys"></TextBlock>
+                        <Button x:Name="bAddKey" Height="25" Width="25" Click="bAddKey_Click">+</Button>
+                        <Button x:Name="bSubKey" Height="25" Width="25" Click="bSubKey_Click">-</Button>
+                    </StackPanel>
                     <TextBlock Text="Status"></TextBlock>
                     <ComboBox PreviewMouseDown="TextBlock_KeyDown" x:Name="cbStatus" HorizontalAlignment="Left" Width="329">
                         <ComboBoxItem>

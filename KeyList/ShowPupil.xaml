@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:KeyList"
         mc:Ignorable="d"
         Title="ShowPupil" Height="450" Width="635.195">
-    <Grid>
+    <Grid Background="Black">
         <ListView Height="368" Margin="6,5,6,0" VerticalAlignment="Top">
             <ListView.View>
                 <GridView>
@@ -14,7 +14,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Margin="21,382,531,17"/>
-        <Button Content="Remove" Margin="120,382,432,17"/>
+        <Button Content="Add" Margin="21,382,531,0" Height="20" VerticalAlignment="Top"/>
+        <Button Content="Remove" Margin="120,382,432,0" Height="20" VerticalAlignment="Top"/>
     </Grid>
 </Window>

@@ -71,6 +71,20 @@ namespace KeyList
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
             view.SortDescriptions.Add(new SortDescription("L.Number", ListSortDirection.Ascending));
 
+            bSave.IsEnabledChanged += BSave_IsEnabledChanged;
+
+        }
+
+        private void BSave_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (bSave.IsEnabled == true)
+            {
+                bSave.Background = Brushes.LightCoral;
+            }
+            else
+            {
+                bSave.Background = Brushes.Transparent;
+            }
         }
 
         private void importXLSX(SQL sql)
@@ -187,7 +201,7 @@ namespace KeyList
             // selected = listView.SelectedIndex;
 
             tbLockerNumber.Text = "Locker: " + m.L.Number;
-            tbLockerKeys.Text = m.L.Keys + "";
+            tbKeys.Text = m.L.Keys + "";
             tbLockerComment.Text = m.L.Comment + "";
             tbPupilFirstname.Text = m.P.Firstname + "";
             tbPupilLastName.Text = m.P.Lastname + "";
@@ -423,7 +437,7 @@ namespace KeyList
 
             int tryNumber, tryKeys;
 
-            if (int.TryParse(tbLockerKeys.Text, out tryKeys))
+            if (int.TryParse(tbKeys.Text, out tryKeys))
             {
                 m.L.Keys = tryKeys;
             }
@@ -528,6 +542,33 @@ namespace KeyList
             if (e.Key == Key.Enter)
             {
                 Search();
+            }
+        }
+
+        private void bAddKey_Click(object sender, RoutedEventArgs e)
+        {
+            if (listView.SelectedIndex != -1)
+            {
+                int keys = int.Parse(tbKeys.Text);
+
+                keys++;
+                tbKeys.Text = keys + "";
+                bSave.IsEnabled = true;
+
+            }
+        }
+
+        private void bSubKey_Click(object sender, RoutedEventArgs e)
+        {
+            if (listView.SelectedIndex != -1)
+            {
+                int keys = int.Parse(tbKeys.Text);
+                if (keys > 0)
+                {
+                    keys--;
+                    tbKeys.Text = keys + "";
+                    bSave.IsEnabled = true;
+                }
             }
         }
     }

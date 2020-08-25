@@ -474,11 +474,11 @@ namespace KeyList
 
 
         }
-
+        // Remove pupil from locker
         private void bRemovePupil_Click(object sender, RoutedEventArgs e)
         {
             //TODO create alert window with accept or cancel, only if there is a owners
-            MessageBoxResult result = MessageBox.Show("Remove Pupil?", "My App", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("Remove Pupil from locker?", "My App", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 MyItem m = (MyItem)listView.SelectedItem;

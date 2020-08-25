@@ -46,11 +46,12 @@ namespace KeyList
                "inschool BOOLEAN DEFAULT 'true')", con).ExecuteNonQuery();
 
         }
+
         public long addPupil(String FirstName, String LastName, String Class, String Grade, String Year)
         {
             sem.WaitOne();
             long lastID = -1;
-            using (SQLiteCommand cmd = new SQLiteCommand("INSERT INTO pupil (firstname,lastname,class,grade,year) VALUES (@firstname,@lastname,@class,@grade,@year)", con))
+            using (SQLiteCommand cmd = new SQLiteCommand("INSERT INTO pupil (firstname,lastname,classP,grade,year) VALUES (@firstname,@lastname,@class,@grade,@year)", con))
             {
                 cmd.Parameters.Add("@firstname", DbType.String).Value = FirstName;
                 cmd.Parameters.Add("@lastname", DbType.String).Value = LastName;
@@ -63,6 +64,15 @@ namespace KeyList
             sem.Release();
 
             return lastID;
+        }
+
+        public void removePupil(int id)
+        {
+            using (SQLiteCommand cmd = new SQLiteCommand("DELETE FROM pupil where id=@id", con))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+            }
         }
 
         public Locker getLocker(int id)
@@ -273,6 +283,22 @@ namespace KeyList
                 }
             }
             return p;
+        }
+        public int getLastPupilID()
+        {
+            int lastId = -1;
+
+            using (SQLiteCommand cmd = new SQLiteCommand("SELECT id from pupil", con))
+            {
+                //cmd.Parameters.AddWithValue("@id", lastID);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    lastId = reader.GetInt32(reader.GetOrdinal("id"));
+                }
+            }
+            return lastId;
         }
         public void updateLocker(Locker l)
         {

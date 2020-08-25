@@ -18,7 +18,7 @@
                 <TextBlock Text="Class"></TextBlock>
                 <TextBox x:Name="tbPupilClass"></TextBox>
                 <TextBlock Text="Year"></TextBlock>
-                <TextBox x:Name="tbYear"></TextBox>
+                <TextBox x:Name="tbPupilYear"></TextBox>
                 <TextBlock Text="Comment"></TextBlock>
                 <TextBox AcceptsReturn="True" x:Name="tbPupilComment"></TextBox>
             </StackPanel>

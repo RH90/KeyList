@@ -22,6 +22,11 @@ namespace KeyList
         public AddPupil()
         {
             InitializeComponent();
+            Pupil p = MainWindow.sql.getPupil(MainWindow.sql.getLastPupilID());
+            tbPupilGrade.Text = p.Grade;
+            tbPupilClass.Text = p.Class;
+            tbPupilYear.Text = p.Year;
+
         }
 
         private void bOK_Click(object sender, RoutedEventArgs e)
@@ -29,7 +34,19 @@ namespace KeyList
             string firstname, lastname, grade, classP, year, comment;
 
 
+            firstname = tbPupilFirstname.Text;
+            lastname = tbPupilLastName.Text;
+            grade = tbPupilGrade.Text;
+            classP = tbPupilClass.Text;
+            comment = tbPupilComment.Text;
+            year = tbPupilYear.Text;
 
+            if (!(firstname.Equals("") || year.Equals("") || lastname.Equals("") || classP.Equals("")) && (grade.Equals("7") || grade.Equals("8") || grade.Equals("9")))
+            {
+
+                MainWindow.sql.addPupil(firstname, lastname, classP, grade, year);
+            }
+            Close();
 
         }
 

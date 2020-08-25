@@ -57,7 +57,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Margin="21,382,531,0" Height="20" VerticalAlignment="Top" Click="Button_Click"/>
-        <Button Content="Remove" Margin="120,382,432,0" Height="20" VerticalAlignment="Top"/>
+        <Button Content="Add" Margin="21,382,531,0" Height="20" VerticalAlignment="Top" Click="ADD_Button_Click"/>
+        <Button Content="Remove" Margin="120,382,432,0" Height="20" VerticalAlignment="Top" Click="REMOVE_Button_Click"/>
     </Grid>
 </Window>

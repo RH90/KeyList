@@ -60,6 +60,30 @@ namespace KeyList
         public int Owner_id { get => owner_id; set => owner_id = value; }
         public string Comment { get => comment; set => comment = value; }
 
+        public string CommentShort
+        {
+            get
+            {
+                string commentShort = "";
+                string[] parts = comment.Split('\n');
+
+                int cnt = 3;
+                for (int i = 0; i < parts.Length; i++)
+                {
+                    if (i >= (parts.Length - cnt))
+                    {
+                        commentShort += parts[i];
+                        if (i < (parts.Length - 1))
+                        {
+                            commentShort += "\n";
+                        }
+                    }
+
+                }
+
+                return commentShort;
+            }
+        }
         public string StatusText { get => Enum.GetName(typeof(StatusT), status); }
         public string StatusColor { get => Enum.GetName(typeof(StatusC), status); }
     }

@@ -152,7 +152,7 @@
                     <GridViewColumn Width="300" Header="CommentLocker">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox PreviewMouseDown="TextBox_MouseClick" Background="Transparent" Foreground="White" BorderThickness="0" MinWidth="100" TextWrapping="Wrap" IsReadOnly="True" AcceptsReturn="True" Text="{Binding L.Comment}" />
+                                <TextBox PreviewMouseDown="TextBox_MouseClick" Background="Transparent" Foreground="White" BorderThickness="0" MinWidth="100" TextWrapping="Wrap"  IsReadOnly="True" AcceptsReturn="True" Text="{Binding L.CommentShort,Mode=OneWay}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

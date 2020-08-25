@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="1300">
+        Title="KeyList" Height="750" Width="1300">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />

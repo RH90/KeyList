@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:KeyList"
         mc:Ignorable="d"
         Background="Black"
-        Title="Window1" Height="800" Width="1400">
+        Title="ShowFloors" Height="800" Width="1400">
     <Grid>
 
         <TabControl Margin="4,0,3,2" SelectionChanged="TabControl_SelectionChanged">

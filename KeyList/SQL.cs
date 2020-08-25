@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -20,12 +21,22 @@ namespace KeyList
         public SQL()
         {
 
+            if (File.Exists("skåp.db"))
+            {
+                con = new SQLiteConnection("Data Source=skåp.db;New=False;");
+            }
+            else if (File.Exists("C:\\Users\\rilhas\\Desktop\\KeyList\\skåp.db"))
+            {
+                con = new SQLiteConnection("Data Source=C:\\Users\\rilhas\\Desktop\\KeyList\\skåp.db;New=False;");
+            }
+            else
+            {
+                con = new SQLiteConnection("Data Source=skåp.db;New=True;");
+            }
 
-            con = new SQLiteConnection("Data Source=C:\\Users\\rilhas\\Desktop\\KeyList\\test.db;New=False;");
             con.Open();
 
-            new SQLiteCommand("CREATE TABLE IF NOT EXISTS " +
-               "locker(" +
+            new SQLiteCommand("CREATE TABLE IF NOT EXISTS locker(" +
                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                "keys Integer Default 0, " +
                "number Integer UNIQUE, " +
@@ -34,8 +45,7 @@ namespace KeyList
                "owner_id INTEGER UNIQUE," +
                "comment TEXT DEFAULT \"\")", con).ExecuteNonQuery();
 
-            new SQLiteCommand("CREATE TABLE IF NOT EXISTS " +
-               "pupil(" +
+            new SQLiteCommand("CREATE TABLE IF NOT EXISTS pupil(" +
                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                "grade TEXT DEFAULT \"\", " +
                "classP TEXT DEFAULT \"\"," +
@@ -43,8 +53,7 @@ namespace KeyList
                "firstname TEXT DEFAULT \"\"," +
                "lastname TEXT DEFAULT \"\"," +
                "comment TEXT DEFAULT \"\"," +
-               "inschool BOOLEAN DEFAULT 'true')", con).ExecuteNonQuery();
-
+               "inschool INTEGER DEFAULT 1)", con).ExecuteNonQuery();
         }
 
         public long addPupil(String FirstName, String LastName, String Class, String Grade, String Year)

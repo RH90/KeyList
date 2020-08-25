@@ -12,7 +12,17 @@
         <TabControl Margin="4,0,3,2" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Floor 1">
                 <Grid>
-                    <UniformGrid x:Name="tab1"  Rows="35" Columns="60" Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24*"/>
+                        <ColumnDefinition Width="80*"/>
+                        <ColumnDefinition Width="1275*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="267*"/>
+                        <RowDefinition Height="74*"/>
+                        <RowDefinition Height="396*"/>
+                    </Grid.RowDefinitions>
+                    <UniformGrid x:Name="tab1"  Rows="35" Columns="60" Background="#FFE5E5E5" Grid.RowSpan="3" Grid.ColumnSpan="3">
                         <Grid ></Grid>
                         <Grid ></Grid>
                         <Grid ></Grid>
@@ -2352,14 +2362,24 @@
                         <Grid ></Grid>
                         <Grid></Grid>
                     </UniformGrid>
-                    <Border Background="Beige" BorderBrush="{x:Null}" Margin="24,300,1283,375">
+                    <Border Background="Beige" BorderBrush="{x:Null}" Margin="0,9,8,3" Grid.Row="1" Grid.Column="1">
                         <TextBlock  Text="KÄLLARE" VerticalAlignment="Center" TextAlignment="Center"/>
                     </Border>
                 </Grid>
             </TabItem>
             <TabItem Header="Floor 2" Height="22" VerticalAlignment="Top">
                 <Grid>
-                    <UniformGrid  x:Name="tab2"   Rows="35" Columns="60" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="222*"/>
+                        <RowDefinition Height="60*"/>
+                        <RowDefinition Height="455*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="21*"/>
+                        <ColumnDefinition Width="108*"/>
+                        <ColumnDefinition Width="1250*"/>
+                    </Grid.ColumnDefinitions>
+                    <UniformGrid  x:Name="tab2"   Rows="35" Columns="60" Background="#FFE5E5E5" Grid.ColumnSpan="3" Grid.RowSpan="3">
                         <Grid ></Grid>
                         <Grid ></Grid>
                         <Grid ></Grid>
@@ -4691,14 +4711,25 @@
                         <Grid ></Grid>
                         <Grid></Grid>
                     </UniformGrid>
-                    <Border Background="Beige" BorderBrush="{x:Null}" Margin="11,250,1263,428">
+                    <Border Background="Beige" BorderBrush="{x:Null}" Margin="2,1,1,0" Height="59" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1">
                         <TextBlock  Text="HUVUDINGÅNG" VerticalAlignment="Center" TextAlignment="Center"/>
                     </Border>
                 </Grid>
             </TabItem>
             <TabItem Header="Floor 3">
                 <Grid>
-                    <UniformGrid  x:Name="tab3"  Rows="35" Columns="60" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="74*"/>
+                        <RowDefinition Height="75*"/>
+                        <RowDefinition Height="588*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="251*"/>
+                        <ColumnDefinition Width="222*"/>
+                        <ColumnDefinition Width="111*"/>
+                        <ColumnDefinition Width="795*"/>
+                    </Grid.ColumnDefinitions>
+                    <UniformGrid  x:Name="tab3"  Rows="35" Columns="60" Background="#FFE5E5E5" Grid.ColumnSpan="4" Grid.RowSpan="3">
                         <Grid ></Grid>
                         <Grid ></Grid>
                         <Grid ></Grid>
@@ -7127,7 +7158,7 @@
                         <Grid ></Grid>
                         <Grid></Grid>
                     </UniformGrid>
-                    <Border Background="Beige" BorderBrush="{x:Null}" Margin="485,85,803,593">
+                    <Border Background="Beige" BorderBrush="{x:Null}" Margin="4,11,8,5" Grid.Column="2" Grid.Row="1">
                         <TextBlock  Text="AULA" VerticalAlignment="Center" TextAlignment="Center"/>
                     </Border>
                 </Grid>

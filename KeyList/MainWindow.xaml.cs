@@ -576,7 +576,7 @@ namespace KeyList
                 m.L.Owner_id = window.pupilID;
                 m.P = sql.getPupil(window.pupilID);
                 m.L.Status = (int)Locker.StatusT.ELEVE_HAR_SLÅPET;
-                m.P.Comment += "\n** " + DateTime.Now.ToString("yyyy-MM-dd") + " ->" + m.L.Number;
+                m.P.Comment += "\n** " + DateTime.Now.ToString("yyyy-MM-dd") + ", ->" + m.L.Number;
 
                 sql.UpdatePupil(m.P);
 

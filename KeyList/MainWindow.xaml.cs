@@ -205,6 +205,7 @@ namespace KeyList
             tbPupilGrade.Text = m.P.Grade + "";
             tbPupilClass.Text = m.P.Class + "";
             cbStatus.SelectedIndex = m.L.Status;
+            tbPupilComment.Text = m.P.Comment;
 
             //Console.WriteLine(m.Locker);
 

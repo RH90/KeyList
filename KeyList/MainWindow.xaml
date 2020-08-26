@@ -156,7 +156,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="PupilComment" DisplayMemberBinding="{Binding P.Comment}"/>
+                    <GridViewColumn Header="PupilComment" DisplayMemberBinding="{Binding P.CommentShort}"/>
                 </GridView>
             </ListView.View>
         </ListView >

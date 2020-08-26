@@ -125,6 +125,7 @@ namespace KeyList
         }
         private void BSave_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+
             if (bSave.IsEnabled == true)
             {
                 bSave.Background = Brushes.LightCoral;

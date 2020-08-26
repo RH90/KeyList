@@ -219,7 +219,7 @@
             </Button>
             <Button IsEnabled="False" x:Name="bRemovePupil" Content="Remove Pupil" Click="bRemovePupil_Click">
             </Button>
-            <Button IsEnabled="False" x:Name="bSave" Content="Save" Click="bSave_Click">
+            <Button Style="{StaticResource RedButton}" Background="Red" IsEnabled="False" x:Name="bSave" Content="Save" Click="bSave_Click">
             </Button>
 
         </StackPanel>

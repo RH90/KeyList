@@ -75,6 +75,25 @@ namespace KeyList
             return lastID;
         }
 
+        public bool checkIfPupilExists(string firstname, string lastname)
+        {
+            bool check = false;
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                "SELECT * from pupil where firstname=@firstname AND lastname=@lastname", con))
+            {
+                cmd.Parameters.AddWithValue("@firstname", firstname);
+                cmd.Parameters.AddWithValue("@lastname", lastname);
+
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    check = true;
+                }
+            }
+            return check;
+        }
+
         public void removePupil(int id)
         {
             using (SQLiteCommand cmd = new SQLiteCommand("DELETE FROM pupil where id=@id", con))

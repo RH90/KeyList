@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -73,8 +74,55 @@ namespace KeyList
 
             bSave.IsEnabledChanged += BSave_IsEnabledChanged;
 
+            //string[] lines = File.ReadAllLines(@"C:\Users\rilhas\Desktop\KeyList\diff.txt");
+            //for (int i = 0; i < listView.Items.Count; i++)
+            //{
+            //    MyItem m = (MyItem)listView.Items[i];
+            //    if (m.L.Owner_id != -1)
+            //    {
+
+            //        bool check = checkPupil(m.P.Firstname, m.P.Lastname, lines);
+            //        if (!check)
+            //        {
+            //            Console.WriteLine(m.P.Grade + m.P.Class + ", " + m.P.Firstname + ", " + m.P.Lastname);
+            //        }
+
+            //    }
+
+            //}
+
+            //for (int i = 0; i < lines.Length; i++)
+            //{
+            //    string[] parts = lines[i].Split('\t');
+            //    string firstname = parts[1];
+            //    string lastname = parts[2];
+            //    bool check = sql.checkIfPupilExists(firstname, lastname);
+            //    Console.WriteLine(firstname + ", " + lastname + ", " + check);
+            //}
+
+
+
         }
 
+        public bool checkPupil(string firstname, string lastname, string[] lines)
+        {
+            bool check = false;
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string[] parts = lines[i].Split('\t');
+                string firstnameL = parts[1];
+                string lastnameL = parts[2];
+
+                if (firstname.ToLower().Equals(firstnameL.ToLower()) && lastname.ToLower().Equals(lastnameL.ToLower()))
+                {
+                    return true;
+                }
+
+            }
+            return check;
+
+        }
         private void BSave_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (bSave.IsEnabled == true)
@@ -281,7 +329,13 @@ namespace KeyList
                 view.Culture = new CultureInfo("sv-SE");
 
                 view.SortDescriptions.Clear();
-                if (currentSort == col)
+
+                if (col == "P.Lastname")
+                {
+                    view.SortDescriptions.Add(new SortDescription("P.Lastname", ListSortDirection.Ascending));
+                    view.SortDescriptions.Add(new SortDescription("P.Firstname", ListSortDirection.Ascending));
+                }
+                else if (currentSort == col)
                 {
                     if (ascending)
                     {
@@ -491,6 +545,12 @@ namespace KeyList
                 m.L.Status = (int)Locker.StatusT.LÅST_AV_SKOLAN;
                 cbStatus.SelectedIndex = m.L.Status;
 
+                tbPupilFirstname.Text = "";
+                tbPupilLastName.Text = "";
+                tbPupilGrade.Text = "";
+                tbPupilClass.Text = "";
+                tbPupilComment.Text = "";
+
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
                 bRemovePupil.IsEnabled = false;
@@ -515,11 +575,20 @@ namespace KeyList
                 m.L.Owner_id = window.pupilID;
                 m.P = sql.getPupil(window.pupilID);
                 m.L.Status = (int)Locker.StatusT.ELEVE_HAR_SLÅPET;
+
+                tbPupilFirstname.Text = m.P.Firstname;
+                tbPupilLastName.Text = m.P.Lastname;
+                tbPupilGrade.Text = m.P.Grade;
+                tbPupilClass.Text = m.P.Class;
+                tbPupilComment.Text = m.P.Comment;
+
                 cbStatus.SelectedIndex = m.L.Status;
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
                 bRemovePupil.IsEnabled = true;
                 bAssignPupil.IsEnabled = false;
+
+
             }
             // sql.assignPupilToLocker(m.L.Id,);
             Console.WriteLine(res.Value);

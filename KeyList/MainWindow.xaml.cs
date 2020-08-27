@@ -299,25 +299,25 @@ namespace KeyList
                 string col = "";
                 switch (gc.Content + "")
                 {
-                    case "Locker":
+                    case "Skåp":
                         col = "L.Number";
                         break;
-                    case "Keys":
+                    case "Nycklar":
                         col = "L.Keys";
                         break;
-                    case "Floor":
+                    case "Plan":
                         col = "L.Floor";
                         break;
                     case "Status":
                         col = "L.Status";
                         break;
-                    case "FirstName":
+                    case "Förnamn":
                         col = "P.Firstname";
                         break;
-                    case "LastName":
+                    case "Efternamn":
                         col = "P.Lastname";
                         break;
-                    case "Grade":
+                    case "Årskurs":
                         col = "P.Grade";
                         break;
                     default:

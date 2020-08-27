@@ -336,6 +336,15 @@ namespace KeyList
                     view.SortDescriptions.Add(new SortDescription("P.Lastname", ListSortDirection.Ascending));
                     view.SortDescriptions.Add(new SortDescription("P.Firstname", ListSortDirection.Ascending));
                 }
+                else if (col == "P.Grade")
+                {
+                    view.SortDescriptions.Add(new SortDescription("P.Grade", ListSortDirection.Ascending));
+                    view.SortDescriptions.Add(new SortDescription("P.Class", ListSortDirection.Ascending));
+                    view.SortDescriptions.Add(new SortDescription("P.Lastname", ListSortDirection.Ascending));
+                    view.SortDescriptions.Add(new SortDescription("P.Firstname", ListSortDirection.Ascending));
+                    view.SortDescriptions.Add(new SortDescription("L.Status", ListSortDirection.Ascending));
+                    view.SortDescriptions.Add(new SortDescription("L.Number", ListSortDirection.Ascending));
+                }
                 else if (currentSort == col)
                 {
                     if (ascending)
@@ -353,11 +362,7 @@ namespace KeyList
                 {
                     view.SortDescriptions.Add(new SortDescription(col, ListSortDirection.Ascending));
                 }
-                if (col == "P.Grade")
-                {
-                    view.SortDescriptions.Add(new SortDescription("P.Class", ListSortDirection.Ascending));
-                    view.SortDescriptions.Add(new SortDescription("P.Lastname", ListSortDirection.Ascending));
-                }
+
 
                 currentSort = col;
 
@@ -539,9 +544,19 @@ namespace KeyList
             {
                 MyItem m = (MyItem)listView.SelectedItem;
                 Console.WriteLine("Remove pupil from: " + m.L.Id);
+
+                if (!m.P.Comment.Equals(""))
+                {
+                    m.P.Comment += "\n";
+                }
+                m.P.Comment += "** " + DateTime.Now.ToString("yyyy-MM-dd") + ", " + m.L.Number + "->";
+                sql.UpdatePupil(m.P);
+
                 sql.removePupilFromLocker(m.L.Id);
                 m.L.Owner_id = -1;
                 m.P = new Pupil(-1, "", "", "", "", "", "");
+
+
 
                 m.L.Status = (int)Locker.StatusT.LÅST_AV_SKOLAN;
                 cbStatus.SelectedIndex = m.L.Status;
@@ -576,7 +591,11 @@ namespace KeyList
                 m.L.Owner_id = window.pupilID;
                 m.P = sql.getPupil(window.pupilID);
                 m.L.Status = (int)Locker.StatusT.ELEVE_HAR_SLÅPET;
-                m.P.Comment += "\n** " + DateTime.Now.ToString("yyyy-MM-dd") + ", ->" + m.L.Number;
+                if (!m.P.Comment.Equals(""))
+                {
+                    m.P.Comment += "\n";
+                }
+                m.P.Comment += "** " + DateTime.Now.ToString("yyyy-MM-dd") + ", ->" + m.L.Number;
 
                 sql.UpdatePupil(m.P);
 

@@ -539,7 +539,7 @@ namespace KeyList
         private void bRemovePupil_Click(object sender, RoutedEventArgs e)
         {
             //TODO create alert window with accept or cancel, only if there is a owners
-            MessageBoxResult result = MessageBox.Show("Remove Pupil from locker?", "My App", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("Ta bort elev från skåp?", "Ta Bort", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 MyItem m = (MyItem)listView.SelectedItem;

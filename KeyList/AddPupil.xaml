@@ -5,21 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyList"
         mc:Ignorable="d"
-        Title="AddPupil" Height="451.169" Width="319.61">
+        Title="Lägg till" Height="451.169" Width="319.61">
     <Grid Background="Black">
-        <GroupBox Foreground="White" Header="Pupil">
+        <GroupBox Foreground="White" Header="Elev">
             <StackPanel Margin="0,0,0,50">
-                <TextBlock Text="FirstName"></TextBlock>
+                <TextBlock Text="Förnamn"></TextBlock>
                 <TextBox x:Name="tbPupilFirstname"></TextBox>
-                <TextBlock Text="LastName"></TextBlock>
+                <TextBlock Text="Efternamn"></TextBlock>
                 <TextBox  x:Name="tbPupilLastName"></TextBox>
-                <TextBlock Text="Grade"></TextBlock>
+                <TextBlock Text="Årskurs"></TextBlock>
                 <TextBox  x:Name="tbPupilGrade"></TextBox>
-                <TextBlock Text="Class"></TextBlock>
+                <TextBlock Text="Klass"></TextBlock>
                 <TextBox x:Name="tbPupilClass"></TextBox>
-                <TextBlock Text="Year"></TextBlock>
+                <TextBlock Text="Start"></TextBlock>
                 <TextBox x:Name="tbPupilYear"></TextBox>
-                <TextBlock Text="Comment"></TextBlock>
+                <TextBlock Text="Kommentar"></TextBlock>
                 <TextBox AcceptsReturn="True" x:Name="tbPupilComment"></TextBox>
             </StackPanel>
         </GroupBox>

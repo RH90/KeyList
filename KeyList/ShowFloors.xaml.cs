@@ -83,14 +83,14 @@ namespace KeyList
                             ToolTipService.SetShowDuration(t, int.MaxValue);
                             ToolTipService.SetInitialShowDelay(t, 0);
                             t.ToolTip =
-                              "==Keys==\n" + l.Keys
-                            + "\n==Comment==\n" + l.Comment
+                              "==Nycklar==\n" + l.Keys
+                            + "\n==Kommentar==\n" + l.Comment
                             + "\n==Status==\n" + l.StatusText;
 
                             if (p != null)
                             {
                                 t.ToolTip +=
-                                    "\n==Pupil==\n" + p.Firstname + " " + p.Lastname + ", " + p.Grade + p.Class + ", " + p.Year;
+                                    "\n==Elev==\n" + p.Firstname + " " + p.Lastname + ", " + p.Grade + p.Class + ", " + p.Year;
                             }
                         }
 

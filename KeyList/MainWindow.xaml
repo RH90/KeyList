@@ -17,14 +17,14 @@
 
         </Grid.RowDefinitions>
         <StackPanel Height="20" Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Margin="0,37">
-            <ComboBox Margin="5,0,0,0" x:Name="cbsGrade" Width="62" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
-                <ComboBoxItem Content="Grade"/>
+            <ComboBox Margin="5,0,0,0" x:Name="cbsGrade" Width="75" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="Årskurs"/>
                 <ComboBoxItem Content="7"/>
                 <ComboBoxItem Content="8"/>
                 <ComboBoxItem Content="9"/>
             </ComboBox>
             <ComboBox Margin="5,0,0,0" x:Name="cbsClass" Width="73" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
-                <ComboBoxItem Content="Class"/>
+                <ComboBoxItem Content="Klass"/>
                 <ComboBoxItem Content="a"/>
                 <ComboBoxItem Content="b"/>
                 <ComboBoxItem Content="c"/>
@@ -33,7 +33,7 @@
                 <ComboBoxItem Content="f"/>
             </ComboBox>
             <ComboBox Margin="5,0,0,0" x:Name="cbsFloor" Width="60" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
-                <ComboBoxItem Content="Floor"/>
+                <ComboBoxItem Content="Plan"/>
                 <ComboBoxItem Content="1"/>
                 <ComboBoxItem Content="2"/>
                 <ComboBoxItem Content="3"/>
@@ -66,10 +66,10 @@
                 </ComboBoxItem>
             </ComboBox>
             <TextBox Margin="5,0,0,0"  Text="" x:Name="tbSearch" Width="217" KeyDown="tbSearch_Enter"></TextBox>
-            <Button x:Name="bSearch" Click="bSearch_Click">Search</Button>
-            <Button Margin="5,0,0,0" Click="Show_Pupil_Button_Click">Show Pupil</Button>
-            <Button Margin="5,0,0,0" Click="ShowFloors_Button_Click" >Show Floors</Button>
-            <Button Margin="5,0,0,0" Click="Export_List_Button_Click" >Export List</Button>
+            <Button x:Name="bSearch" Click="bSearch_Click">Sök</Button>
+            <Button Margin="5,0,0,0" Click="Show_Pupil_Button_Click">Se Elever</Button>
+            <Button Margin="5,0,0,0" Click="ShowFloors_Button_Click" >Se Planer</Button>
+            <Button Margin="5,0,0,0" Click="Export_List_Button_Click" >Exportera lista</Button>
             <TextBlock Margin="5,0,0,0" Foreground="White" Text="{Binding ElementName=listView, Path=Items.Count, Mode=OneWay,StringFormat=Antal Resultat: {0}}"></TextBlock>
 
         </StackPanel>
@@ -109,14 +109,12 @@
                             <Setter Property="Background" Value="Purple"></Setter>
                         </Trigger>
                     </Style.Triggers>
-
                 </Style>
-
             </ListView.ItemContainerStyle>
             <ListView.View >
                 <GridView>
 
-                    <GridViewColumn Header="Locker" >
+                    <GridViewColumn Header="Skåp" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Margin="-6,0" Background="#25FF0000" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
@@ -126,7 +124,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Floor" >
+                    <GridViewColumn Header="Plan" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Margin="-6,0" Background="#25FF0000" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
@@ -144,7 +142,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Keys">
+                    <GridViewColumn Header="Nycklar">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Margin="-6,0" Background="#25F0FF00" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
@@ -153,7 +151,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="FirstName">
+                    <GridViewColumn Header="Förnamn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Margin="-6,0" Background="#2500FF00" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
@@ -162,7 +160,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="LastName">
+                    <GridViewColumn Header="Efternamn">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Margin="-6,0" Background="#2500FF00" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
@@ -171,16 +169,16 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Grade" >
+                    <GridViewColumn Header="Årskurs" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Margin="-6,0" Background="#25008800" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
-                                    <TextBlock Padding="10,0,0,0" VerticalAlignment="Center" Text="{Binding P.Grade}" Background="Transparent" Foreground="White" />
+                                    <TextBlock Padding="30,0,0,0" VerticalAlignment="Center" Text="{Binding P.Grade}" Background="Transparent" Foreground="White" />
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Class">
+                    <GridViewColumn Header="Klass">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Margin="-6,0" Background="#25008800" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
@@ -189,7 +187,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Year">
+                    <GridViewColumn Header="Start">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Margin="-6,0" Background="#25006600" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
@@ -198,7 +196,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="300" Header="CommentLocker">
+                    <GridViewColumn Width="300" Header="Kommentar skåp">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Margin="-6,0" Background="#250000FF" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
@@ -207,7 +205,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="250" Header="PupilComment">
+                    <GridViewColumn Width="250" Header="Kommentar Elev">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Margin="-6,0" Background="#250000DD" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
@@ -220,11 +218,11 @@
             </ListView.View>
         </ListView >
         <StackPanel x:Name="spEdit" IsEnabled="False" Grid.Row="2" Grid.Column="2">
-            <GroupBox Foreground="White" Header="Locker" >
+            <GroupBox Foreground="White" Header="Skåp" >
                 <StackPanel>
-                    <TextBlock x:Name="tbLockerNumber" Text="Locker:    "></TextBlock>
+                    <TextBlock x:Name="tbLockerNumber" Text="Skåp:    "></TextBlock>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Keys:      "></TextBlock>
+                        <TextBlock Text="Nycklar:      "></TextBlock>
                         <TextBlock Width="15" x:Name="tbKeys"></TextBlock>
                         <Button x:Name="bAddKey" Height="25" Width="25" Click="bAddKey_Click">+</Button>
                         <Button x:Name="bSubKey" Height="25" Width="25" Click="bSubKey_Click">-</Button>
@@ -256,31 +254,30 @@
                             <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">UTAN NYCKEL ELEVINNEHÅLL</TextBlock>
                         </ComboBoxItem>
                     </ComboBox>
-                    <TextBlock Text="Comment"></TextBlock>
+                    <TextBlock Text="Kommentar"></TextBlock>
                     <TextBox KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbLockerComment"></TextBox>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Foreground="White" Header="Pupil">
+            <GroupBox Foreground="White" Header="Elev">
                 <StackPanel>
-                    <TextBlock Text="FirstName"></TextBlock>
+                    <TextBlock Text="Förnamn"></TextBlock>
                     <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilFirstname"></TextBox>
-                    <TextBlock Text="LastName"></TextBlock>
+                    <TextBlock Text="Efternamn"></TextBlock>
                     <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilLastName"></TextBox>
-                    <TextBlock Text="Grade"></TextBlock>
+                    <TextBlock Text="Årskurs"></TextBlock>
                     <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilGrade"></TextBox>
-                    <TextBlock Text="Class"></TextBlock>
+                    <TextBlock Text="Klass"></TextBlock>
                     <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilClass"></TextBox>
-                    <TextBlock Text="Comment"></TextBlock>
+                    <TextBlock Text="Kommentar"></TextBlock>
                     <TextBox KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbPupilComment"></TextBox>
                 </StackPanel>
             </GroupBox>
-            <Button IsEnabled="False" x:Name="bAssignPupil" Content="Assign Pupil to Locker" Click="bAssignPupil_Click">
+            <Button IsEnabled="False" x:Name="bAssignPupil" Content="Ge elev skåp" Click="bAssignPupil_Click">
             </Button>
-            <Button IsEnabled="False" x:Name="bRemovePupil" Content="Remove Pupil from Locker" Click="bRemovePupil_Click">
+            <Button IsEnabled="False" x:Name="bRemovePupil" Content="Ta bort elev från skåp" Click="bRemovePupil_Click">
             </Button>
-            <Button Style="{StaticResource RedButton}" Background="Red" IsEnabled="False" x:Name="bSave" Content="Save" Click="bSave_Click">
+            <Button Style="{StaticResource RedButton}" Background="Red" IsEnabled="False" x:Name="bSave" Content="Spara" Click="bSave_Click">
             </Button>
-
         </StackPanel>
     </Grid>
 </Window>

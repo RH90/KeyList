@@ -10,7 +10,7 @@
     <Grid>
 
         <TabControl Margin="4,0,3,2" SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Header="Floor 1">
+            <TabItem Header="Plan 1">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="24*"/>
@@ -2367,7 +2367,7 @@
                     </Border>
                 </Grid>
             </TabItem>
-            <TabItem Header="Floor 2" Height="22" VerticalAlignment="Top">
+            <TabItem Header="Plan 2" Height="22" VerticalAlignment="Top">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="222*"/>
@@ -4716,7 +4716,7 @@
                     </Border>
                 </Grid>
             </TabItem>
-            <TabItem Header="Floor 3">
+            <TabItem Header="Plan 3">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="74*"/>

@@ -48,12 +48,12 @@
             </ListView.ItemContainerStyle>
             <ListView.View >
                 <GridView>
-                    <GridViewColumn Header="FirstName" DisplayMemberBinding="{Binding P.Firstname}" />
-                    <GridViewColumn Header="LastName" DisplayMemberBinding="{Binding P.Lastname}"/>
-                    <GridViewColumn Header="Year" DisplayMemberBinding="{Binding P.Year}" />
-                    <GridViewColumn Header="Grade" DisplayMemberBinding="{Binding P.Grade}" />
-                    <GridViewColumn Header="Class" DisplayMemberBinding="{Binding P.Class}" />
-                    <GridViewColumn Header="PupilComment" DisplayMemberBinding="{Binding P.CommentShort}"/>
+                    <GridViewColumn Header="Förnamn" DisplayMemberBinding="{Binding P.Firstname}" />
+                    <GridViewColumn Header="Efternamn" DisplayMemberBinding="{Binding P.Lastname}"/>
+                    <GridViewColumn Header="Startade" DisplayMemberBinding="{Binding P.Year}" />
+                    <GridViewColumn Header="Årskurs" DisplayMemberBinding="{Binding P.Grade}" />
+                    <GridViewColumn Header="Klass" DisplayMemberBinding="{Binding P.Class}" />
+                    <GridViewColumn Header="Kommentar" DisplayMemberBinding="{Binding P.CommentShort}"/>
                 </GridView>
             </ListView.View>
         </ListView>

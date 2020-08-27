@@ -50,7 +50,7 @@ namespace KeyList
             if (listView.SelectedIndex != -1)
             {
                 MyItem m = (MyItem)listView.SelectedItem;
-                MessageBoxResult result = MessageBox.Show("Remove Pupil " + m.P.Firstname + " " + m.P.Lastname + "?", "My App", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Ta bort elev: " + m.P.Firstname + " " + m.P.Lastname + "?", "Ta Bort", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
 

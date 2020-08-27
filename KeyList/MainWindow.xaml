@@ -41,13 +41,13 @@
             <ComboBox Margin="5,0,0,0" x:Name="cbsStatus" Width="73" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
                 <ComboBoxItem Content="Status"/>
                 <ComboBoxItem>
-                    <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="Green">ELEV HAR SKÅPET</TextBlock>
+                    <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="LIMEGREEN">ELEV HAR SKÅPET</TextBlock>
                 </ComboBoxItem>
                 <ComboBoxItem>
                     <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Pink">LÅST AV SKOLAN</TextBlock>
                 </ComboBoxItem>
                 <ComboBoxItem>
-                    <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="YellowGreen">ELEV MED EGET LÅS</TextBlock>
+                    <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Yellow">ELEV MED EGET LÅS</TextBlock>
                 </ComboBoxItem>
                 <ComboBoxItem>
                     <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">SKÅPET REPARERAS</TextBlock>
@@ -173,13 +173,13 @@
                     <TextBlock Text="Status"></TextBlock>
                     <ComboBox PreviewMouseDown="TextBlock_KeyDown" x:Name="cbStatus" HorizontalAlignment="Left" Width="329">
                         <ComboBoxItem>
-                            <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="Green">ELEV HAR SKÅPET</TextBlock>
+                            <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="LIMEGREEN">ELEV HAR SKÅPET</TextBlock>
                         </ComboBoxItem>
                         <ComboBoxItem>
                             <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Pink">LÅST AV SKOLAN</TextBlock>
                         </ComboBoxItem>
                         <ComboBoxItem>
-                            <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="YellowGreen">ELEV MED EGET LÅS</TextBlock>
+                            <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Yellow">ELEV MED EGET LÅS</TextBlock>
                         </ComboBoxItem>
                         <ComboBoxItem>
                             <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">SKÅPET REPARERAS</TextBlock>

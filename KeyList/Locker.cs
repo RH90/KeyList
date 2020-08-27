@@ -23,7 +23,7 @@ namespace KeyList
         }
         public enum StatusC
         {
-            GREEN,
+            LIMEGREEN,
             PINK,
             YELLOW,
             ORANGE,
@@ -50,6 +50,10 @@ namespace KeyList
             this.status = status;
             this.owner_id = owner_id;
             this.comment = comment;
+        }
+        public string GetEnum(int i)
+        {
+            return "lime";
         }
 
         public int Id { get => id; set => id = value; }

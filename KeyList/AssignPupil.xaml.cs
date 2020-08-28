@@ -20,9 +20,11 @@ namespace KeyList
     public partial class AssignPupil : Window
     {
         public int pupilID = -1;
-        public AssignPupil()
+        public AssignPupil(int locker)
         {
+
             InitializeComponent();
+            Title = "Ge skåp nr." + locker;
             listView.ItemsSource = MainWindow.sql.getUnAssignedPupulList();
         }
 

@@ -93,7 +93,7 @@
                     </Setter>
                     <Style.Triggers>
                         <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                            <Setter Property="Background" Value="#111"></Setter>
+                            <Setter Property="Background" Value="#060606"></Setter>
                             <Setter Property="BorderBrush" Value="#222" />
                             <Setter Property="BorderThickness" Value="0,0,0,1" />
                         </Trigger>
@@ -217,67 +217,69 @@
                 </GridView>
             </ListView.View>
         </ListView >
-        <StackPanel x:Name="spEdit" IsEnabled="False" Grid.Row="2" Grid.Column="2">
-            <GroupBox Foreground="White" Header="Skåp" >
-                <StackPanel>
-                    <TextBlock x:Name="tbLockerNumber" Text="Skåp:    "></TextBlock>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Nycklar:      "></TextBlock>
-                        <TextBlock Width="15" x:Name="tbKeys"></TextBlock>
-                        <Button x:Name="bAddKey" Height="25" Width="25" Click="bAddKey_Click">+</Button>
-                        <Button x:Name="bSubKey" Height="25" Width="25" Click="bSubKey_Click">-</Button>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="2">
+            <StackPanel x:Name="spEdit" IsEnabled="False" >
+                <GroupBox Foreground="White" Header="Skåp" >
+                    <StackPanel>
+                        <TextBlock x:Name="tbLockerNumber" Text="Nummer:    "></TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Nycklar:      "></TextBlock>
+                            <TextBlock Width="15" x:Name="tbKeys"></TextBlock>
+                            <Button x:Name="bAddKey" Height="25" Width="25" Click="bAddKey_Click">+</Button>
+                            <Button x:Name="bSubKey" Height="25" Width="25" Click="bSubKey_Click">-</Button>
+                        </StackPanel>
+                        <TextBlock Text="Status"></TextBlock>
+                        <ComboBox PreviewMouseDown="TextBlock_KeyDown" x:Name="cbStatus" HorizontalAlignment="Left" Width="329">
+                            <ComboBoxItem>
+                                <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="LIMEGREEN">ELEV HAR SKÅPET</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Pink">LÅST AV SKOLAN</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Yellow">ELEV MED EGET LÅS</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">SKÅPET REPARERAS</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Blue">LÅST M. MULTILÅS</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">ELEV MED DED. SKÅP</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">ANVÄNDS INTE</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">UTAN NYCKEL ELEVINNEHÅLL</TextBlock>
+                            </ComboBoxItem>
+                        </ComboBox>
+                        <TextBlock Text="Kommentar"></TextBlock>
+                        <TextBox KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbLockerComment"></TextBox>
                     </StackPanel>
-                    <TextBlock Text="Status"></TextBlock>
-                    <ComboBox PreviewMouseDown="TextBlock_KeyDown" x:Name="cbStatus" HorizontalAlignment="Left" Width="329">
-                        <ComboBoxItem>
-                            <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="LIMEGREEN">ELEV HAR SKÅPET</TextBlock>
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Pink">LÅST AV SKOLAN</TextBlock>
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Yellow">ELEV MED EGET LÅS</TextBlock>
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">SKÅPET REPARERAS</TextBlock>
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Blue">LÅST M. MULTILÅS</TextBlock>
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">ELEV MED DED. SKÅP</TextBlock>
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">ANVÄNDS INTE</TextBlock>
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">UTAN NYCKEL ELEVINNEHÅLL</TextBlock>
-                        </ComboBoxItem>
-                    </ComboBox>
-                    <TextBlock Text="Kommentar"></TextBlock>
-                    <TextBox KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbLockerComment"></TextBox>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Foreground="White" Header="Elev">
-                <StackPanel>
-                    <TextBlock Text="Förnamn"></TextBlock>
-                    <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilFirstname"></TextBox>
-                    <TextBlock Text="Efternamn"></TextBlock>
-                    <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilLastName"></TextBox>
-                    <TextBlock Text="Årskurs"></TextBlock>
-                    <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilGrade"></TextBox>
-                    <TextBlock Text="Klass"></TextBlock>
-                    <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilClass"></TextBox>
-                    <TextBlock Text="Kommentar"></TextBlock>
-                    <TextBox KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbPupilComment"></TextBox>
-                </StackPanel>
-            </GroupBox>
-            <Button IsEnabled="False" x:Name="bAssignPupil" Content="Ge elev skåp" Click="bAssignPupil_Click">
-            </Button>
-            <Button IsEnabled="False" x:Name="bRemovePupil" Content="Ta bort elev från skåp" Click="bRemovePupil_Click">
-            </Button>
-            <Button Style="{StaticResource RedButton}" Background="Red" IsEnabled="False" x:Name="bSave" Content="Spara" Click="bSave_Click">
-            </Button>
-        </StackPanel>
+                </GroupBox>
+                <GroupBox Foreground="White" Header="Elev">
+                    <StackPanel>
+                        <TextBlock Text="Förnamn"></TextBlock>
+                        <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilFirstname"></TextBox>
+                        <TextBlock Text="Efternamn"></TextBlock>
+                        <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilLastName"></TextBox>
+                        <TextBlock Text="Årskurs"></TextBlock>
+                        <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilGrade"></TextBox>
+                        <TextBlock Text="Klass"></TextBlock>
+                        <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilClass"></TextBox>
+                        <TextBlock Text="Kommentar"></TextBlock>
+                        <TextBox KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbPupilComment"></TextBox>
+                    </StackPanel>
+                </GroupBox>
+                <Button IsEnabled="False" x:Name="bAssignPupil" Content="Ge elev skåp" Click="bAssignPupil_Click">
+                </Button>
+                <Button IsEnabled="False" x:Name="bRemovePupil" Content="Ta bort elev från skåp" Click="bRemovePupil_Click">
+                </Button>
+                <Button Style="{StaticResource RedButton}" Background="Red" IsEnabled="False" x:Name="bSave" Content="Spara" Click="bSave_Click">
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

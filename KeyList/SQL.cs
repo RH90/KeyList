@@ -18,16 +18,12 @@ namespace KeyList
         private Semaphore sem = new Semaphore(1, 1);
 
 
-        public SQL()
+        public SQL(string dbPath)
         {
 
-            if (File.Exists("skåp.db"))
+            if (File.Exists(dbPath))
             {
-                con = new SQLiteConnection("Data Source=skåp.db;New=False;");
-            }
-            else if (File.Exists("C:\\Users\\rilhas\\Desktop\\KeyList\\skåp.db"))
-            {
-                con = new SQLiteConnection("Data Source=C:\\Users\\rilhas\\Desktop\\KeyList\\skåp.db;New=False;");
+                con = new SQLiteConnection("Data Source=" + dbPath + ";New=False;");
             }
             else
             {

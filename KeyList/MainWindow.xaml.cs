@@ -30,13 +30,10 @@ namespace KeyList
 
     // ** TO DO **
     // History for owner_id for locker
-    // History for locker number for pupil
-    // Show list of pupils
     // add pupils
     // batch operations (remove,add pupils to lockers)
     // auto up grade on students? 
     // multi satus
-    // add column for pupil if they have ever never lost a key
     // go to item on letter click sensitive to column
 
     public partial class MainWindow : Window
@@ -45,7 +42,7 @@ namespace KeyList
         bool ascending = true;
         int selected = -2;
         ShowFloors showFloorWindow = null;
-
+        public string dir;
         public static SQL sql;
 
         public MainWindow()
@@ -62,7 +59,20 @@ namespace KeyList
                 Console.WriteLine(list[i]);
             }
             */
-            sql = new SQL();
+            // con = new SQLiteConnection("Data Source=skåp.db;New=False;");
+
+            if (File.Exists("C:\\Users\\rilhas\\Desktop\\KeyList\\skåp.db"))
+            {
+                sql = new SQL("C:\\Users\\rilhas\\Desktop\\KeyList\\skåp.db");
+                dir = ("C:\\Users\\rilhas\\Desktop\\KeyList\\");
+            }
+            else
+            {
+                sql = new SQL("skåp.db");
+                dir = "";
+            }
+
+
             //importXLSX(sql);
             listView.ItemsSource = (sql.getAllLockers("", "", "", "", ""));
 
@@ -246,7 +256,8 @@ namespace KeyList
 
             // selected = listView.SelectedIndex;
 
-            tbLockerNumber.Text = "Locker: " + m.L.Number;
+
+            tbLockerNumber.Text = String.Format("Nummer:{0,4}", m.L.Number);
             tbKeys.Text = m.L.Keys + "";
             tbLockerComment.Text = m.L.Comment + "";
             tbPupilFirstname.Text = m.P.Firstname + "";
@@ -573,17 +584,21 @@ namespace KeyList
 
                 bAssignPupil.IsEnabled = true;
 
+                ExportCSV();
+
             }
 
         }
 
         private void bAssignPupil_Click(object sender, RoutedEventArgs e)
         {
-            var window = new AssignPupil();
+            MyItem m = (MyItem)listView.SelectedItem;
+
+            var window = new AssignPupil(m.L.Number);
 
             Nullable<bool> res = window.ShowDialog();
 
-            MyItem m = (MyItem)listView.SelectedItem;
+
 
             if (m != null && res.Value)
             {
@@ -611,12 +626,42 @@ namespace KeyList
                 bRemovePupil.IsEnabled = true;
                 bAssignPupil.IsEnabled = false;
 
+                ExportCSV();
+                //Clipboard.SetText(text);
 
             }
             // sql.assignPupilToLocker(m.L.Id,);
             Console.WriteLine(res.Value);
             Console.WriteLine();
             // TODO only if there is no owner
+        }
+
+        private void ExportCSV()
+        {
+            String text = "";
+            text = "\"Skåp\",\"Nycklar\",\"Status\",\"Förnamn\",\"Efternamn\",\"Åk\",\"Klass\",\"År\",\"Commentar\"\n";
+
+
+            List<MyItem> list = sql.getAllLockers("", "", "", "", "");
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(list);
+            view.Culture = new CultureInfo("sv-SE");
+
+            view.SortDescriptions.Clear();
+
+            view.SortDescriptions.Add(new SortDescription("P.Grade", ListSortDirection.Ascending));
+            view.SortDescriptions.Add(new SortDescription("P.Class", ListSortDirection.Ascending));
+            view.SortDescriptions.Add(new SortDescription("P.Lastname", ListSortDirection.Ascending));
+            view.SortDescriptions.Add(new SortDescription("P.Firstname", ListSortDirection.Ascending));
+            view.SortDescriptions.Add(new SortDescription("L.Status", ListSortDirection.Ascending));
+            view.SortDescriptions.Add(new SortDescription("L.Number", ListSortDirection.Ascending));
+            list = view.Cast<MyItem>().ToList();
+            for (int i = 0; i < list.Count; i++)
+            {
+                MyItem n = list[i];
+                // Console.WriteLine("JJ" + m.L.Comment.Replace("\n", " ") + "JJ");
+                text += "\"" + n.L.Number + "\",\"" + n.L.Keys + "\",\"" + n.L.StatusText + "\",\"" + n.P.Firstname + "\",\"" + n.P.Lastname + "\",\"" + n.P.Grade + "\",\"" + n.P.Class + "\",\"" + n.P.Year + "\",\"" + n.L.Comment.Replace("\r\n", "").Replace("\n", "") + "\"\n";
+            }
+            File.WriteAllText(dir + "skåp.csv", text);
         }
 
         private void TextBlock_KeyDown(object sender, EventArgs e)

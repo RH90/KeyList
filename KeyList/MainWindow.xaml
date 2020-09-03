@@ -10,7 +10,7 @@
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="0.4*" />
+            <ColumnDefinition Width="0.3*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.15*" />
@@ -227,10 +227,9 @@
             <StackPanel x:Name="spEdit" IsEnabled="False" >
                 <GroupBox Foreground="White" Header="Skåp" >
                     <StackPanel>
-                        <TextBlock x:Name="tbLockerNumber" Text="Nummer:    "></TextBlock>
+                        <TextBlock TextDecorations="Underline" x:Name="tbLockerNumber" Text="Nummer:    "></TextBlock>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Nycklar:      "></TextBlock>
-                            <TextBlock Width="15" x:Name="tbKeys"></TextBlock>
+                            <TextBlock Margin="0,0,10,0" x:Name="tbKeys" TextDecorations="Underline" VerticalAlignment="Center" Text="Nycklar:      "></TextBlock>
                             <Button x:Name="bAddKey" Height="25" Width="25" Click="bAddKey_Click">+</Button>
                             <Button x:Name="bSubKey" Height="25" Width="25" Click="bSubKey_Click">-</Button>
                         </StackPanel>
@@ -262,7 +261,7 @@
                             </ComboBoxItem>
                         </ComboBox>
                         <TextBlock Text="Kommentar"></TextBlock>
-                        <TextBox KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbLockerComment"></TextBox>
+                        <TextBox TextWrapping="Wrap" KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbLockerComment"></TextBox>
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Foreground="White" Header="Elev">
@@ -276,7 +275,7 @@
                         <TextBlock Text="Klass"></TextBlock>
                         <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilClass"></TextBox>
                         <TextBlock Text="Kommentar"></TextBlock>
-                        <TextBox KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbPupilComment"></TextBox>
+                        <TextBox TextWrapping="Wrap" KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbPupilComment"></TextBox>
                     </StackPanel>
                 </GroupBox>
                 <Button IsEnabled="False" x:Name="bAssignPupil" Content="Ge elev skåp" Click="bAssignPupil_Click">

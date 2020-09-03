@@ -275,7 +275,7 @@ namespace KeyList
 
 
             tbLockerNumber.Text = String.Format("Nummer:{0,4}", m.L.Number);
-            tbKeys.Text = m.L.Keys + "";
+            tbKeys.Text = "Nycklar:      " + m.L.Keys;
             tbLockerComment.Text = m.L.Comment + "";
             tbPupilFirstname.Text = m.P.Firstname + "";
             tbPupilLastName.Text = m.P.Lastname + "";
@@ -552,12 +552,6 @@ namespace KeyList
 
             }
 
-            int tryNumber, tryKeys;
-
-            if (int.TryParse(tbKeys.Text, out tryKeys))
-            {
-                m.L.Keys = tryKeys;
-            }
             m.L.Status = cbStatus.SelectedIndex;
             m.L.Comment = tbLockerComment.Text;
 
@@ -751,10 +745,8 @@ namespace KeyList
         {
             if (listView.SelectedIndex != -1)
             {
-                int keys = int.Parse(tbKeys.Text);
-
-                keys++;
-                tbKeys.Text = keys + "";
+                MyItem m = (MyItem)listView.SelectedItem;
+                tbKeys.Text = "Nycklar:      " + (++m.L.Keys);
                 bSave.IsEnabled = true;
 
             }
@@ -764,11 +756,10 @@ namespace KeyList
         {
             if (listView.SelectedIndex != -1)
             {
-                int keys = int.Parse(tbKeys.Text);
-                if (keys > 0)
+                MyItem m = (MyItem)listView.SelectedItem;
+                if (m.L.Keys > 0)
                 {
-                    keys--;
-                    tbKeys.Text = keys + "";
+                    tbKeys.Text = "Nycklar:      " + (--m.L.Keys);
                     bSave.IsEnabled = true;
                 }
             }

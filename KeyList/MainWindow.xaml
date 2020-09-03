@@ -119,7 +119,6 @@
             </ListView.ItemContainerStyle>
             <ListView.View >
                 <GridView>
-
                     <GridViewColumn Header="Skåp" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -202,7 +201,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="300" Header="Kommentar skåp">
+                    <GridViewColumn Width="359" Header="Kommentar skåp">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Margin="-6,0" Background="#250000FF" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
@@ -211,7 +210,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="250" Header="Kommentar Elev">
+                    <GridViewColumn Width="275" Header="Kommentar Elev">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Margin="-6,0" Background="#250000DD" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:KeyList"
         mc:Ignorable="d"
         Title="KeyList" Height="750" Width="1300"
+        WindowState="Maximized"
         >
     <Grid >
         <Grid.ColumnDefinitions>
@@ -213,7 +214,7 @@
                     <GridViewColumn Width="275" Header="Kommentar Elev">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Grid Margin="-6,0" Background="#250000DD" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
+                                <Grid Margin="-6,0" Background="#251100AA" Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}">
                                     <TextBlock Padding="10,0,0,0" VerticalAlignment="Center" Text="{Binding P.CommentShort}" Background="Transparent" Foreground="White" />
                                 </Grid>
                             </DataTemplate>

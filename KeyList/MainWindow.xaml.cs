@@ -106,7 +106,7 @@ namespace KeyList
         }
         public void Diff_Button_Click(object sender, RoutedEventArgs e)
         {
-            string path = @"C:\Users\rilhas\Desktop\KeyList\diff.txt";
+            string path = dir + "diff.txt";
             if (File.Exists(path))
             {
                 List<MyItem> list = new List<MyItem>();

@@ -48,6 +48,7 @@ namespace KeyList
         public MainWindow()
         {
 
+
             InitializeComponent();
             // listView.Items.Add(new MyItem {FirstName="Rilind",LastName="Hasanaj safsa s" });
             //'Skåp-info -7$'
@@ -61,10 +62,15 @@ namespace KeyList
             */
             // con = new SQLiteConnection("Data Source=skåp.db;New=False;");
 
-            if (File.Exists("C:\\Users\\rilhas\\Desktop\\KeyList\\skåp.db"))
+            string[] args = Environment.GetCommandLineArgs();
+            Console.WriteLine(args.Length);
+
+
+            if (args.Length > 1 && Directory.Exists(args[1]))
             {
-                sql = new SQL("C:\\Users\\rilhas\\Desktop\\KeyList\\skåp.db");
-                dir = ("C:\\Users\\rilhas\\Desktop\\KeyList\\");
+                Console.WriteLine(args[1]);
+                sql = new SQL(args[1] + "\\skåp.db");
+                dir = (args[1] + "\\");
             }
             else
             {
@@ -84,22 +90,7 @@ namespace KeyList
 
             bSave.IsEnabledChanged += BSave_IsEnabledChanged;
 
-            //string[] lines = File.ReadAllLines(@"C:\Users\rilhas\Desktop\KeyList\diff.txt");
-            //for (int i = 0; i < listView.Items.Count; i++)
-            //{
-            //    MyItem m = (MyItem)listView.Items[i];
-            //    if (m.L.Owner_id != -1)
-            //    {
 
-            //        bool check = checkPupil(m.P.Firstname, m.P.Lastname, lines);
-            //        if (!check)
-            //        {
-            //            Console.WriteLine(m.P.Grade + m.P.Class + ", " + m.P.Firstname + ", " + m.P.Lastname);
-            //        }
-
-            //    }
-
-            //}
 
             //for (int i = 0; i < lines.Length; i++)
             //{
@@ -113,16 +104,42 @@ namespace KeyList
 
 
         }
-
+        public void Diff_Button_Click(object sender, RoutedEventArgs e)
+        {
+            string path = @"C:\Users\rilhas\Desktop\KeyList\diff.txt";
+            if (File.Exists(path))
+            {
+                List<MyItem> list = new List<MyItem>();
+                string[] lines = File.ReadAllLines(path);
+                for (int i = 0; i < listView.Items.Count; i++)
+                {
+                    MyItem m = (MyItem)listView.Items[i];
+                    if (m.L.Owner_id != -1)
+                    {
+                        bool check = checkPupil(m.P.Firstname, m.P.Lastname, lines);
+                        if (!check)
+                        {
+                            list.Add(m);
+                        }
+                    }
+                }
+                listView.ItemsSource = list;
+            }
+        }
         public bool checkPupil(string firstname, string lastname, string[] lines)
         {
             bool check = false;
 
             for (int i = 0; i < lines.Length; i++)
             {
-                string[] parts = lines[i].Split('\t');
+                lines[i] = lines[i].Replace(", ", ",");
+                string[] parts = lines[i].Split(',');
+                if (parts.Length < 2)
+                {
+                    continue;
+                }
                 string firstnameL = parts[1];
-                string lastnameL = parts[2];
+                string lastnameL = parts[0];
 
                 if (firstname.ToLower().Equals(firstnameL.ToLower()) && lastname.ToLower().Equals(lastnameL.ToLower()))
                 {
@@ -515,13 +532,20 @@ namespace KeyList
                 {
                     Console.WriteLine(firstname + "," + lastname + ", " + grade + ", " + classP + ", " + comment);
 
+
+                    bool commentCheck = false;
+                    if (!m.P.Comment.Equals(comment))
+                    {
+                        commentCheck = true;
+                    }
+
                     m.P.Firstname = firstname;
                     m.P.Lastname = lastname;
                     m.P.Grade = grade;
                     m.P.Class = classP;
                     m.P.Comment = comment;
 
-                    sql.UpdatePupil(m.P);
+                    sql.UpdatePupil(m.P, commentCheck);
                 }
 
 
@@ -553,6 +577,9 @@ namespace KeyList
             MessageBoxResult result = MessageBox.Show("Ta bort elev från skåp?", "Ta Bort", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
+
+
+
                 MyItem m = (MyItem)listView.SelectedItem;
                 Console.WriteLine("Remove pupil from: " + m.L.Id);
 
@@ -561,7 +588,7 @@ namespace KeyList
                     m.P.Comment += "\n";
                 }
                 m.P.Comment += "** " + DateTime.Now.ToString("yyyy-MM-dd") + ", " + m.L.Number + "->";
-                sql.UpdatePupil(m.P);
+                sql.UpdatePupil(m.P, false);
 
                 sql.removePupilFromLocker(m.L.Id);
                 m.L.Owner_id = -1;
@@ -612,7 +639,7 @@ namespace KeyList
                 }
                 m.P.Comment += "** " + DateTime.Now.ToString("yyyy-MM-dd") + ", ->" + m.L.Number;
 
-                sql.UpdatePupil(m.P);
+                sql.UpdatePupil(m.P, false);
 
                 tbPupilFirstname.Text = m.P.Firstname;
                 tbPupilLastName.Text = m.P.Lastname;
@@ -659,9 +686,18 @@ namespace KeyList
             {
                 MyItem n = list[i];
                 // Console.WriteLine("JJ" + m.L.Comment.Replace("\n", " ") + "JJ");
-                text += "\"" + n.L.Number + "\",\"" + n.L.Keys + "\",\"" + n.L.StatusText + "\",\"" + n.P.Firstname + "\",\"" + n.P.Lastname + "\",\"" + n.P.Grade + "\",\"" + n.P.Class + "\",\"" + n.P.Year + "\",\"" + n.L.Comment.Replace("\r\n", "").Replace("\n", "") + "\"\n";
+                string comment = n.L.Comment.Replace("\"", "'");
+                text += "\"" + n.L.Number + "\",\"" + n.L.Keys + "\",\"" + n.L.StatusText + "\",\"" + n.P.Firstname + "\",\"" + n.P.Lastname + "\",\"" + n.P.Grade + "\",\"" + n.P.Class + "\",\"" + n.P.Year + "\",\"" + comment + "\"\n";
             }
-            File.WriteAllText(dir + "skåp.csv", text);
+            try
+            {
+                File.WriteAllText(dir + "skåp.csv", text, Encoding.UTF8);
+            }
+            catch (Exception)
+            {
+
+            }
+
         }
 
         private void TextBlock_KeyDown(object sender, EventArgs e)
@@ -677,6 +713,12 @@ namespace KeyList
                 showFloorWindow = new ShowFloors();
 
             showFloorWindow.Show();
+        }
+        private void History_Button_Click(object sender, RoutedEventArgs e)
+        {
+            History history = new History();
+
+            history.ShowDialog();
         }
 
         private void Export_List_Button_Click(object sender, RoutedEventArgs e)

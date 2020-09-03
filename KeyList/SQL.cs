@@ -50,12 +50,21 @@ namespace KeyList
                "lastname TEXT DEFAULT \"\"," +
                "comment TEXT DEFAULT \"\"," +
                "inschool INTEGER DEFAULT 1)", con).ExecuteNonQuery();
+
+            new SQLiteCommand("CREATE TABLE IF NOT EXISTS history(" +
+               "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+               "comment TEXT DEFAULT \"\")", con).ExecuteNonQuery();
         }
 
         public long addPupil(String FirstName, String LastName, String Class, String Grade, String Year)
         {
             sem.WaitOne();
             long lastID = -1;
+
+            Pupil p = new Pupil(-1, Grade, Class, Year, FirstName, LastName, "");
+            String history = String.Format("{0} | Lag till: {1}", DateTime.Now.ToString("yyyy-MM-dd,HH:mm"), p.ToString);
+            InsertHistory(history);
+
             using (SQLiteCommand cmd = new SQLiteCommand("INSERT INTO pupil (firstname,lastname,classP,grade,year) VALUES (@firstname,@lastname,@class,@grade,@year)", con))
             {
                 cmd.Parameters.Add("@firstname", DbType.String).Value = FirstName;
@@ -69,6 +78,60 @@ namespace KeyList
             sem.Release();
 
             return lastID;
+        }
+
+        public int GetNumberOfHistory()
+        {
+            string query = "select count(*) from history";
+            int cnt = -1;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                query, con))
+            {
+
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    cnt = reader.GetInt32(reader.GetOrdinal("count(*)"));
+                }
+            }
+            return cnt;
+        }
+        public void InsertHistory(string comment)
+        {
+            int cnt = GetNumberOfHistory();
+            if (cnt > 100)
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("DELETE FROM history where id in (SELECT id FROM history limit 1)", con))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            using (SQLiteCommand cmd = new SQLiteCommand("INSERT INTO history (comment) VALUES (@comment)", con))
+            {
+                cmd.Parameters.AddWithValue("@comment", comment);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public List<String> GetHistory()
+        {
+            List<String> list = new List<string>();
+
+            using (SQLiteCommand cmd = new SQLiteCommand(
+               "SELECT * from history", con))
+            {
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    list.Add(reader.GetString(reader.GetOrdinal("comment")));
+                }
+            }
+
+
+            return list;
         }
 
         public bool checkIfPupilExists(string firstname, string lastname)
@@ -92,19 +155,56 @@ namespace KeyList
 
         public void removePupil(int id)
         {
+            Pupil p = getPupil(id);
+            String history = String.Format("{0} | Tog bort: {1}", DateTime.Now.ToString("yyyy-MM-dd,HH:mm"), p.ToString);
+            InsertHistory(history);
+
             using (SQLiteCommand cmd = new SQLiteCommand("DELETE FROM pupil where id=@id", con))
             {
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.ExecuteNonQuery();
             }
+
         }
 
-        public Locker getLocker(int id)
+        public Locker getLocker(int number)
         {
             Locker l = null;
 
             using (SQLiteCommand cmd = new SQLiteCommand(
-                "SELECT * from locker where number=@id", con))
+                "SELECT * from locker where number=@number", con))
+            {
+                cmd.Parameters.AddWithValue("@number", number);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    int owner;
+
+                    if (!int.TryParse(reader.GetValue(reader.GetOrdinal("owner_id")) + "", out owner))
+                    {
+
+                        owner = -1;
+                    }
+
+                    l = new Locker(
+                       reader.GetInt32(reader.GetOrdinal("id")),
+                       reader.GetInt32(reader.GetOrdinal("number")),
+                       reader.GetInt32(reader.GetOrdinal("keys")),
+                       reader.GetString(reader.GetOrdinal("floor")),
+                       reader.GetInt32(reader.GetOrdinal("status")),
+                       owner,
+                       reader.GetString(reader.GetOrdinal("comment")));
+                }
+            }
+            return l;
+        }
+        public Locker getLockerID(int id)
+        {
+            Locker l = null;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                "SELECT * from locker where id=@id", con))
             {
                 cmd.Parameters.AddWithValue("@id", id);
                 SQLiteDataReader reader = cmd.ExecuteReader();
@@ -375,6 +475,13 @@ namespace KeyList
 
         public void removePupilFromLocker(int id)
         {
+            Locker l = getLockerID(id);
+            Pupil p = getPupil(l.Owner_id);
+            Console.WriteLine(id);
+            Console.WriteLine(l.Number);
+            String history = String.Format("{0} | Tog bort från skåp nr.{1}: {2}", DateTime.Now.ToString("yyyy-MM-dd,HH:mm"), l.Number, p.ToString);
+            InsertHistory(history);
+
             string query = "UPDATE locker set owner_id=null,status=1 where id=@id";
 
             using (SQLiteCommand cmd = new SQLiteCommand(
@@ -387,6 +494,12 @@ namespace KeyList
 
         public void assignPupilToLocker(int id, int pupilID)
         {
+            Locker l = getLockerID(id);
+            Pupil p = getPupil(pupilID);
+            String history = String.Format("{0} | Lag till skåp nr.{1}: {2}", DateTime.Now.ToString("yyyy-MM-dd,HH:mm"), l.Number, p.ToString);
+            InsertHistory(history);
+
+
             string query = "UPDATE locker set owner_id=@owner_id,status=0 where id=@id";
 
             using (SQLiteCommand cmd = new SQLiteCommand(
@@ -398,8 +511,17 @@ namespace KeyList
             }
         }
 
-        public void UpdatePupil(Pupil p)
+        public void UpdatePupil(Pupil p, bool comment)
         {
+            if (comment)
+            {
+                string[] com = p.Comment.Split('\n');
+
+                String history = String.Format("{0} | {1}, Komment: {2}", DateTime.Now.ToString("yyyy-MM-dd,HH:mm"), p.ToString, com[com.Length - 1]);
+                InsertHistory(history);
+            }
+
+
             string query = "UPDATE pupil set firstname=@firstname,lastname=@lastname,grade=@grade,classP=@classP,comment=@comment where id=@id";
 
             using (SQLiteCommand cmd = new SQLiteCommand(

@@ -34,6 +34,15 @@ namespace KeyList
         public string Firstname { get => firstname; set => firstname = value; }
         public string Lastname { get => lastname; set => lastname = value; }
         public string Comment { get => comment; set => comment = value; }
+
+        public string ToString
+        {
+            get
+            {
+                return Firstname + " " + Lastname + ", " + Grade + Class;
+            }
+        }
+
         public string CommentShort
         {
             get

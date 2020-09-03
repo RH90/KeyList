@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyList"
         mc:Ignorable="d"
-        Title="KeyList" Height="750" Width="1300">
-    <Grid>
+        Title="KeyList" Height="750" Width="1300"
+        >
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="0.4*" />
@@ -16,7 +17,7 @@
             <RowDefinition Height="1*" />
 
         </Grid.RowDefinitions>
-        <StackPanel Height="20" Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Margin="0,37">
+        <StackPanel  Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Margin="0,30,0,0" Height="30" VerticalAlignment="Top">
             <ComboBox Margin="5,0,0,0" x:Name="cbsGrade" Width="75" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
                 <ComboBoxItem Content="Årskurs"/>
                 <ComboBoxItem Content="7"/>
@@ -38,7 +39,7 @@
                 <ComboBoxItem Content="2"/>
                 <ComboBoxItem Content="3"/>
             </ComboBox>
-            <ComboBox Margin="5,0,0,0" x:Name="cbsStatus" Width="73" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+            <ComboBox  Margin="5,0,0,0" x:Name="cbsStatus" Width="73" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
                 <ComboBoxItem Content="Status"/>
                 <ComboBoxItem>
                     <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="LIMEGREEN">ELEV HAR SKÅPET</TextBlock>
@@ -65,12 +66,14 @@
                     <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">UTAN NYCKEL ELEVINNEHÅLL</TextBlock>
                 </ComboBoxItem>
             </ComboBox>
-            <TextBox Margin="5,0,0,0"  Text="" x:Name="tbSearch" Width="217" KeyDown="tbSearch_Enter"></TextBox>
-            <Button x:Name="bSearch" Click="bSearch_Click">Sök</Button>
+            <TextBox VerticalContentAlignment="Center" Height="30"  Margin="5,0,0,0"  Text="" x:Name="tbSearch" Width="217" KeyDown="tbSearch_Enter"></TextBox>
+            <Button Width="30" x:Name="bSearch" Click="bSearch_Click">Sök</Button>
             <Button Margin="5,0,0,0" Click="Show_Pupil_Button_Click">Se Elever</Button>
             <Button Margin="5,0,0,0" Click="ShowFloors_Button_Click" >Se Planer</Button>
             <Button Margin="5,0,0,0" Click="Export_List_Button_Click" >Exportera lista</Button>
-            <TextBlock Margin="5,0,0,0" Foreground="White" Text="{Binding ElementName=listView, Path=Items.Count, Mode=OneWay,StringFormat=Antal Resultat: {0}}"></TextBlock>
+            <Button Margin="5,0,0,0" Click="History_Button_Click" >Historia</Button>
+            <Button Margin="5,0,0,0" Click="Diff_Button_Click" >Diff</Button>
+            <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Foreground="White" Text="{Binding ElementName=listView, Path=Items.Count, Mode=OneWay,StringFormat=Antal Resultat: {0}}"></TextBlock>
 
         </StackPanel>
         <StackPanel HorizontalAlignment="Left" Height="100" Grid.Row="0" VerticalAlignment="Top" Width="auto"/>
@@ -82,6 +85,9 @@
                     <Setter Property="BorderBrush" Value="#222" />
                     <Setter Property="BorderThickness" Value="0,0,0,1" />
                     <Setter Property="Foreground" Value="White" />
+                    <!--
+                      <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="False" />
+                    -->
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListViewItem}">

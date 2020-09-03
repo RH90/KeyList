@@ -464,6 +464,7 @@ namespace KeyList
             {
                 status = (cbsStatus.SelectedIndex - 1) + "";
             }
+
             listView.ItemsSource = (sql.getAllLockers(tbSearch.Text, grade, classP, floor, status));
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
             view.Culture = new CultureInfo("sv-SE");

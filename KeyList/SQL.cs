@@ -353,7 +353,7 @@ namespace KeyList
                             if (!l.Number.ToString().Equals(parts[i]))
                                 check = false;
                         }
-                        else if (!p.Firstname.ToLower().Contains(parts[i]) && !p.Lastname.ToLower().Contains(parts[i]) && !l.Comment.ToLower().Contains(parts[i]))
+                        else if (!p.Comment.ToLower().Contains(parts[i]) && !p.Firstname.ToLower().Contains(parts[i]) && !p.Lastname.ToLower().Contains(parts[i]) && !l.Comment.ToLower().Contains(parts[i]))
                         {
                             check = false;
                         }

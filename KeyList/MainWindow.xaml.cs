@@ -582,7 +582,7 @@ namespace KeyList
                 {
                     m.P.Comment += "\n";
                 }
-                m.P.Comment += "** " + DateTime.Now.ToString("yyyy-MM-dd") + ", " + m.L.Number + "->";
+                m.P.Comment += "** " + DateTime.Now.ToString("yyyy-MM-dd_HHmm") + ", " + m.L.Number + "->";
                 sql.UpdatePupil(m.P, false);
 
                 sql.removePupilFromLocker(m.L.Id);
@@ -607,7 +607,24 @@ namespace KeyList
                 bAssignPupil.IsEnabled = true;
 
                 ExportCSV();
-                listView.Focus();
+
+                //listView.
+                // listView.UpdateLayout();
+
+
+                ListViewItem item = listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem) as ListViewItem;
+                if (item != null)
+                {
+                    item.Focus();
+                }
+                else
+                {
+                    Console.WriteLine("item null");
+                }
+
+
+
+
 
             }
 
@@ -633,7 +650,7 @@ namespace KeyList
                 {
                     m.P.Comment += "\n";
                 }
-                m.P.Comment += "** " + DateTime.Now.ToString("yyyy-MM-dd") + ", ->" + m.L.Number;
+                m.P.Comment += "** " + DateTime.Now.ToString("yyyy-MM-dd_HHmm") + ", ->" + m.L.Number;
 
                 sql.UpdatePupil(m.P, false);
 
@@ -646,11 +663,25 @@ namespace KeyList
                 cbStatus.SelectedIndex = m.L.Status;
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
+
                 bRemovePupil.IsEnabled = true;
                 bAssignPupil.IsEnabled = false;
 
                 ExportCSV();
-                listView.Focus();
+
+                //listView.UpdateLayout();
+                ListViewItem item = listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem) as ListViewItem;
+                if (item != null)
+                {
+                    item.Focus();
+                }
+                else
+                {
+                    Console.WriteLine("item null");
+                }
+
+
+
                 //Clipboard.SetText(text);
 
             }

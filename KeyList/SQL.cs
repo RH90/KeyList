@@ -62,7 +62,7 @@ namespace KeyList
             long lastID = -1;
 
             Pupil p = new Pupil(-1, Grade, Class, Year, FirstName, LastName, "");
-            String history = String.Format("{0} | Lag till: {1}", DateTime.Now.ToString("yyyy-MM-dd,HH:mm"), p.ToString);
+            String history = String.Format("{0} | Lag till: {1}", DateTime.Now.ToString("yyyy-MM-dd_HHmm"), p.ToString);
             InsertHistory(history);
 
             using (SQLiteCommand cmd = new SQLiteCommand("INSERT INTO pupil (firstname,lastname,classP,grade,year) VALUES (@firstname,@lastname,@class,@grade,@year)", con))
@@ -156,7 +156,7 @@ namespace KeyList
         public void removePupil(int id)
         {
             Pupil p = getPupil(id);
-            String history = String.Format("{0} | Tog bort: {1}", DateTime.Now.ToString("yyyy-MM-dd,HH:mm"), p.ToString);
+            String history = String.Format("{0} | Tog bort: {1}", DateTime.Now.ToString("yyyy-MM-dd_HHmm"), p.ToString);
             InsertHistory(history);
 
             using (SQLiteCommand cmd = new SQLiteCommand("DELETE FROM pupil where id=@id", con))
@@ -479,7 +479,7 @@ namespace KeyList
             Pupil p = getPupil(l.Owner_id);
             Console.WriteLine(id);
             Console.WriteLine(l.Number);
-            String history = String.Format("{0} | Tog bort från skåp nr.{1}: {2}", DateTime.Now.ToString("yyyy-MM-dd,HH:mm"), l.Number, p.ToString);
+            String history = String.Format("{0} | Tog bort från skåp nr.{1}: {2}", DateTime.Now.ToString("yyyy-MM-dd_HHmm"), l.Number, p.ToString);
             InsertHistory(history);
 
             string query = "UPDATE locker set owner_id=null,status=1 where id=@id";
@@ -496,7 +496,7 @@ namespace KeyList
         {
             Locker l = getLockerID(id);
             Pupil p = getPupil(pupilID);
-            String history = String.Format("{0} | Lag till skåp nr.{1}: {2}", DateTime.Now.ToString("yyyy-MM-dd,HH:mm"), l.Number, p.ToString);
+            String history = String.Format("{0} | Lag till skåp nr.{1}: {2}", DateTime.Now.ToString("yyyy-MM-dd_HHmm"), l.Number, p.ToString);
             InsertHistory(history);
 
 
@@ -517,7 +517,7 @@ namespace KeyList
             {
                 string[] com = p.Comment.Split('\n');
 
-                String history = String.Format("{0} | {1}, Komment: {2}", DateTime.Now.ToString("yyyy-MM-dd,HH:mm"), p.ToString, com[com.Length - 1]);
+                String history = String.Format("{0} | {1}, Komment: {2}", DateTime.Now.ToString("yyyy-MM-dd_HHmm"), p.ToString, com[com.Length - 1]);
                 InsertHistory(history);
             }
 

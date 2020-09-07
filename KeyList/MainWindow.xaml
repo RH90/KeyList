@@ -230,8 +230,8 @@
                         <TextBlock TextDecorations="Underline" x:Name="tbLockerNumber" Text="Nummer:    "></TextBlock>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Margin="0,0,10,0" x:Name="tbKeys" TextDecorations="Underline" VerticalAlignment="Center" Text="Nycklar:      "></TextBlock>
-                            <Button x:Name="bAddKey" Height="25" Width="25" Click="bAddKey_Click">+</Button>
                             <Button x:Name="bSubKey" Height="25" Width="25" Click="bSubKey_Click">-</Button>
+                            <Button x:Name="bAddKey" Height="25" Width="25" Click="bAddKey_Click">+</Button>
                         </StackPanel>
                         <TextBlock Text="Status"></TextBlock>
                         <ComboBox PreviewMouseDown="TextBlock_KeyDown" x:Name="cbStatus" HorizontalAlignment="Left" Width="329">

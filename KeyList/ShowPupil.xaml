@@ -5,9 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyList"
         mc:Ignorable="d"
-        Title="ShowPupil" Height="450" Width="635.195">
+        Title="ShowPupil" Height="550" Width="635.195">
     <Grid Background="Black">
-        <ListView Height="368" Margin="6,5,6,0" VerticalAlignment="Top" Background="Black" AlternationCount="2" x:Name="listView" SelectionChanged="listView_SelectionChanged" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="0.07*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Margin="6,5,6,0"  Background="Black" AlternationCount="2" x:Name="listView" SelectionChanged="listView_SelectionChanged" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="BorderBrush" Value="#222" />
@@ -57,7 +65,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Margin="21,382,531,0" Height="20" VerticalAlignment="Top" Click="ADD_Button_Click"/>
-        <Button Content="Remove" Margin="120,382,432,0" Height="20" VerticalAlignment="Top" Click="REMOVE_Button_Click"/>
+        <Button  Margin="5,5,5,5" Grid.Column="0" Grid.Row="1" Content="Add"  Click="ADD_Button_Click"/>
+        <Button Margin="5,5,5,5" Grid.Column="1" Grid.Row="1" Content="Remove" Click="REMOVE_Button_Click"/>
     </Grid>
 </Window>

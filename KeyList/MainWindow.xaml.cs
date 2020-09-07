@@ -607,6 +607,7 @@ namespace KeyList
                 bAssignPupil.IsEnabled = true;
 
                 ExportCSV();
+                listView.Focus();
 
             }
 
@@ -649,6 +650,7 @@ namespace KeyList
                 bAssignPupil.IsEnabled = false;
 
                 ExportCSV();
+                listView.Focus();
                 //Clipboard.SetText(text);
 
             }

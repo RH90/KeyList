@@ -26,6 +26,11 @@ namespace KeyList
             InitializeComponent();
             Title = "Ge skåp nr." + locker;
             listView.ItemsSource = MainWindow.sql.getUnAssignedPupulList();
+
+            if (listView.Items.Count > 0)
+            {
+                listView.SelectedIndex = 0;
+            }
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -69,8 +69,8 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="bAccept" Grid.Column="0" Click="bAccept_Click">ACCEPT</Button>
-            <Button x:Name="bCancel" Grid.Column="1" Click="bCancel_Click">CANCEL</Button>
+            <Button Margin="5,5,5,5" x:Name="bAccept" Grid.Column="0" Click="bAccept_Click">ACCEPT</Button>
+            <Button Margin="5,5,5,5" x:Name="bCancel" Grid.Column="1" Click="bCancel_Click">CANCEL</Button>
         </Grid>
 
     </Grid>

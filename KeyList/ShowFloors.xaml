@@ -6,10 +6,19 @@
         xmlns:local="clr-namespace:KeyList"
         mc:Ignorable="d"
         Background="Black"
-        Title="ShowFloors" Height="800" Width="1400">
+        Title="ShowFloors" Height="800" Width="1400"
+        WindowState="Maximized">
     <Grid>
 
         <TabControl Margin="4,0,3,2" SelectionChanged="TabControl_SelectionChanged">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="FontStretch" Value="ExtraExpanded" />
+                </Style>
+                <Style TargetType="{x:Type UniformGrid}">
+                    <Setter Property="Background" Value="#888" />
+                </Style>
+            </TabControl.Resources>
             <TabItem Header="Plan 1">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -22,7 +31,7 @@
                         <RowDefinition Height="74*"/>
                         <RowDefinition Height="396*"/>
                     </Grid.RowDefinitions>
-                    <UniformGrid x:Name="tab1"  Rows="35" Columns="60" Background="#FFE5E5E5" Grid.RowSpan="3" Grid.ColumnSpan="3">
+                    <UniformGrid x:Name="tab1"  Rows="35" Columns="60" Grid.RowSpan="3" Grid.ColumnSpan="3">
                         <Grid ></Grid>
                         <Grid ></Grid>
                         <Grid ></Grid>
@@ -2379,7 +2388,7 @@
                         <ColumnDefinition Width="108*"/>
                         <ColumnDefinition Width="1250*"/>
                     </Grid.ColumnDefinitions>
-                    <UniformGrid  x:Name="tab2"   Rows="35" Columns="60" Background="#FFE5E5E5" Grid.ColumnSpan="3" Grid.RowSpan="3">
+                    <UniformGrid  x:Name="tab2"   Rows="35" Columns="60" Grid.ColumnSpan="3" Grid.RowSpan="3">
                         <Grid ></Grid>
                         <Grid ></Grid>
                         <Grid ></Grid>
@@ -4729,7 +4738,7 @@
                         <ColumnDefinition Width="111*"/>
                         <ColumnDefinition Width="795*"/>
                     </Grid.ColumnDefinitions>
-                    <UniformGrid  x:Name="tab3"  Rows="35" Columns="60" Background="#FFE5E5E5" Grid.ColumnSpan="4" Grid.RowSpan="3">
+                    <UniformGrid  x:Name="tab3"  Rows="35" Columns="60"  Grid.ColumnSpan="4" Grid.RowSpan="3">
                         <Grid ></Grid>
                         <Grid ></Grid>
                         <Grid ></Grid>

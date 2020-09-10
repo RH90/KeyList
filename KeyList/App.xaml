@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:KeyList"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+
         <Style TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Background" Value="Black" />
             <Setter Property="Foreground" Value="White" />

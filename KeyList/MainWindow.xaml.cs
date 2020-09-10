@@ -29,12 +29,19 @@ namespace KeyList
     /// 
 
     // ** TO DO **
+    // global add student(buttons above tabControl)
+    // tab item for just pupils?
     // History for owner_id for locker
     // add pupils
     // batch operations (remove,add pupils to lockers)
     // auto up grade on students? 
     // multi satus
     // go to item on letter click sensitive to column
+
+    // Datorer
+    // list of students 
+    // columns: serial, type, computer comment, pupil comment(history of computers)
+    // Add computers
 
     public partial class MainWindow : Window
     {
@@ -50,6 +57,30 @@ namespace KeyList
 
 
             InitializeComponent();
+
+
+            //GridView myGridView = new GridView();
+            //myGridView.AllowsColumnReorder = true;
+
+            //GridViewColumn gvc1 = new GridViewColumn();
+            //Grid g1 = new Grid();
+
+
+            //gvc1.CellTemplate = new DataTemplate();
+
+            //myGridView.Columns.Add(gvc1);
+            //GridViewColumn gvc2 = new GridViewColumn();
+            //gvc2.DisplayMemberBinding = new Binding("LastName");
+            //gvc2.Header = "Last Name";
+            //gvc2.Width = 100;
+            //myGridView.Columns.Add(gvc2);
+            //GridViewColumn gvc3 = new GridViewColumn();
+            //gvc3.DisplayMemberBinding = new Binding("EmployeeNumber");
+            //gvc3.Header = "Employee No.";
+            //gvc3.Width = 100;
+            //myGridView.Columns.Add(gvc3);
+
+
             // listView.Items.Add(new MyItem {FirstName="Rilind",LastName="Hasanaj safsa s" });
             //'Skåp-info -7$'
             /*
@@ -102,6 +133,52 @@ namespace KeyList
             //}
 
 
+
+        }
+        public GridViewColumn GetColumn(string textBind, Color background)
+        {
+
+            //   < Grid Margin = "-6,0" Background = "#25FF0000" Width = "{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height = "{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}" >
+
+            //< TextBlock Padding = "10,0,0,0" VerticalAlignment = "Center" Text = "{Binding L.Number}" Background = "Transparent" Foreground = "White" />
+
+
+            GridViewColumn gvc = new GridViewColumn();
+            Grid g = new Grid()
+            {
+                Margin = new Thickness(-6),
+                Background = new SolidColorBrush(Color.FromArgb(0x25, 0xFF, 0x00, 0x00))
+            };
+            Binding bH = new Binding("ActualHeight");
+            bH.RelativeSource.Mode = RelativeSourceMode.FindAncestor;
+            bH.RelativeSource.AncestorType = typeof(ListViewItem);
+            bH.RelativeSource.AncestorLevel = 1;
+
+            Binding bW = new Binding("ActualWidth");
+            bW.RelativeSource.Mode = RelativeSourceMode.FindAncestor;
+            bW.RelativeSource.AncestorType = typeof(ListViewItem);
+            bW.RelativeSource.AncestorLevel = 1;
+
+            g.SetBinding(Grid.HeightProperty, bH);
+            g.SetBinding(Grid.WidthProperty, bW);
+
+            TextBlock tb = new TextBlock()
+            {
+                Padding = new Thickness(10, 0, 0, 0),
+                VerticalAlignment = VerticalAlignment.Center,
+                Background = Brushes.Transparent,
+                Foreground = Brushes.White
+            };
+            Binding bT = new Binding(textBind);
+            tb.SetBinding(TextBlock.TextProperty, bT);
+
+            g.Children.Add(tb);
+
+            gvc.CellTemplate = new DataTemplate(g);
+
+
+
+            return gvc;
 
         }
         public void Diff_Button_Click(object sender, RoutedEventArgs e)

@@ -1,5 +1,6 @@
 ﻿using KeyList;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,10 +17,12 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace KeyList
 {
@@ -51,47 +54,13 @@ namespace KeyList
         ShowFloors showFloorWindow = null;
         public string dir;
         public static SQL sql;
+        public List<GridViewColumn> listGVC = new List<GridViewColumn>();
 
         public MainWindow()
         {
-
-
             InitializeComponent();
 
-
-            //GridView myGridView = new GridView();
-            //myGridView.AllowsColumnReorder = true;
-
-            //GridViewColumn gvc1 = new GridViewColumn();
-            //Grid g1 = new Grid();
-
-
-            //gvc1.CellTemplate = new DataTemplate();
-
-            //myGridView.Columns.Add(gvc1);
-            //GridViewColumn gvc2 = new GridViewColumn();
-            //gvc2.DisplayMemberBinding = new Binding("LastName");
-            //gvc2.Header = "Last Name";
-            //gvc2.Width = 100;
-            //myGridView.Columns.Add(gvc2);
-            //GridViewColumn gvc3 = new GridViewColumn();
-            //gvc3.DisplayMemberBinding = new Binding("EmployeeNumber");
-            //gvc3.Header = "Employee No.";
-            //gvc3.Width = 100;
-            //myGridView.Columns.Add(gvc3);
-
-
-            // listView.Items.Add(new MyItem {FirstName="Rilind",LastName="Hasanaj safsa s" });
-            //'Skåp-info -7$'
-            /*
-            List<String> list= GetExcelSheetNames(@"C:\Users\rilhas\Desktop\test.xlsx");
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                Console.WriteLine(list[i]);
-            }
-            */
-            // con = new SQLiteConnection("Data Source=skåp.db;New=False;");
+            gridView.Columns.Add(GetColumn("test", new SolidColorBrush(Color.FromArgb(0x25, 0x25, 0xDD, 0x55)), "P.Firstname"));
 
             string[] args = Environment.GetCommandLineArgs();
             Console.WriteLine(args.Length);
@@ -109,8 +78,6 @@ namespace KeyList
                 dir = "";
             }
 
-
-            //importXLSX(sql);
             listView.ItemsSource = (sql.getAllLockers("", "", "", "", ""));
 
             Console.WriteLine(listView.Items.Count);
@@ -120,67 +87,54 @@ namespace KeyList
             view.SortDescriptions.Add(new SortDescription("L.Number", ListSortDirection.Ascending));
 
             bSave.IsEnabledChanged += BSave_IsEnabledChanged;
+            view.Refresh();
 
-
-
-            //for (int i = 0; i < lines.Length; i++)
-            //{
-            //    string[] parts = lines[i].Split('\t');
-            //    string firstname = parts[1];
-            //    string lastname = parts[2];
-            //    bool check = sql.checkIfPupilExists(firstname, lastname);
-            //    Console.WriteLine(firstname + ", " + lastname + ", " + check);
-            //}
-
-
+            gbPupil.IsEnabledChanged += Is_GbPupil_Enabled;
 
         }
-        public GridViewColumn GetColumn(string textBind, Color background)
+        public GridViewColumn GetColumn(string header, SolidColorBrush background, string binding)
         {
-
-            //   < Grid Margin = "-6,0" Background = "#25FF0000" Width = "{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" Height = "{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}" >
-
-            //< TextBlock Padding = "10,0,0,0" VerticalAlignment = "Center" Text = "{Binding L.Number}" Background = "Transparent" Foreground = "White" />
-
-
             GridViewColumn gvc = new GridViewColumn();
-            Grid g = new Grid()
-            {
-                Margin = new Thickness(-6),
-                Background = new SolidColorBrush(Color.FromArgb(0x25, 0xFF, 0x00, 0x00))
-            };
-            Binding bH = new Binding("ActualHeight");
-            bH.RelativeSource.Mode = RelativeSourceMode.FindAncestor;
-            bH.RelativeSource.AncestorType = typeof(ListViewItem);
-            bH.RelativeSource.AncestorLevel = 1;
+            gvc.Header = header;
 
-            Binding bW = new Binding("ActualWidth");
-            bW.RelativeSource.Mode = RelativeSourceMode.FindAncestor;
-            bW.RelativeSource.AncestorType = typeof(ListViewItem);
-            bW.RelativeSource.AncestorLevel = 1;
+            var tb = new FrameworkElementFactory(typeof(TextBlock));
+            tb.SetValue(TextBlock.MarginProperty, new Thickness(-6, 0, -6, 0));
+            tb.SetValue(TextBlock.PaddingProperty, new Thickness(10, 0, 0, 0));
+            tb.SetValue(TextBlock.VerticalAlignmentProperty, VerticalAlignment.Center);
+            tb.SetValue(TextBlock.BackgroundProperty, background);
+            tb.SetValue(TextBlock.ForegroundProperty, Brushes.White);
 
-            g.SetBinding(Grid.HeightProperty, bH);
-            g.SetBinding(Grid.WidthProperty, bW);
+            Binding bText = new Binding();
+            bText.Path = new PropertyPath(binding);
 
-            TextBlock tb = new TextBlock()
-            {
-                Padding = new Thickness(10, 0, 0, 0),
-                VerticalAlignment = VerticalAlignment.Center,
-                Background = Brushes.Transparent,
-                Foreground = Brushes.White
-            };
-            Binding bT = new Binding(textBind);
-            tb.SetBinding(TextBlock.TextProperty, bT);
+            Binding bWidth = new Binding();
+            bWidth.Path = new PropertyPath("ActualWidth");
+            RelativeSource rsW = new RelativeSource();
+            rsW.Mode = RelativeSourceMode.FindAncestor;
+            rsW.AncestorType = typeof(ListViewItem);
+            rsW.AncestorLevel = 1;
+            bWidth.RelativeSource = rsW;
 
-            g.Children.Add(tb);
+            Binding bHeight = new Binding();
+            bHeight.Path = new PropertyPath("ActualHeight");
+            RelativeSource rsH = new RelativeSource();
+            rsH.Mode = RelativeSourceMode.FindAncestor;
+            rsH.AncestorType = typeof(ListViewItem);
+            rsH.AncestorLevel = 1;
+            bHeight.RelativeSource = rsH;
 
-            gvc.CellTemplate = new DataTemplate(g);
+            tb.SetBinding(TextBlock.TextProperty, bText);
+            tb.SetBinding(TextBlock.WidthProperty, bWidth);
+            tb.SetBinding(TextBlock.HeightProperty, bHeight);
 
+            DataTemplate dt = new DataTemplate() { VisualTree = tb };
+
+            gvc.CellTemplate = dt;
 
 
             return gvc;
-
         }
+
         public void Diff_Button_Click(object sender, RoutedEventArgs e)
         {
             string path = dir + "diff.txt";
@@ -203,6 +157,7 @@ namespace KeyList
                 listView.ItemsSource = list;
             }
         }
+        //compare pupil on current list with pupil in diff.txt
         public bool checkPupil(string firstname, string lastname, string[] lines)
         {
             bool check = false;
@@ -321,16 +276,10 @@ namespace KeyList
 
             if (listView.SelectedIndex == -1)
             {
-                Console.WriteLine("clear buttons");
-                Console.WriteLine(listView.SelectedItem);
-                bRemovePupil.IsEnabled = false;
-                bAssignPupil.IsEnabled = false;
-                bSave.IsEnabled = false;
                 spEdit.IsEnabled = false;
                 return;
             }
             spEdit.IsEnabled = true;
-
 
             Console.WriteLine(listView.SelectedIndex);
 
@@ -338,34 +287,31 @@ namespace KeyList
 
             if (m.P.Id == -1)
             {
-                bRemovePupil.IsEnabled = false;
-                bAssignPupil.IsEnabled = true;
+                gbPupil.IsEnabled = false;
             }
             else
             {
-                bRemovePupil.IsEnabled = true;
-                bAssignPupil.IsEnabled = false;
+                gbPupil.IsEnabled = true;
             }
-            // bSave.IsEnabled = true;
 
-            // selected = listView.SelectedIndex;
+            UpdateTextBoxes(m);
 
+        }
 
+        private void UpdateTextBoxes(MyItem m)
+        {
             tbLockerNumber.Text = String.Format("Nummer:{0,4}", m.L.Number);
             tbKeys.Text = "Nycklar:      " + m.L.Keys;
             tbLockerComment.Text = m.L.Comment + "";
+            cbStatus.SelectedIndex = m.L.Status;
+
             tbPupilFirstname.Text = m.P.Firstname + "";
             tbPupilLastName.Text = m.P.Lastname + "";
             tbPupilGrade.Text = m.P.Grade + "";
             tbPupilClass.Text = m.P.Class + "";
-            cbStatus.SelectedIndex = m.L.Status;
             tbPupilComment.Text = m.P.Comment;
-
-            //Console.WriteLine(m.Locker);
-
-            //Console.WriteLine(m.ToString());
-
         }
+
         private List<String> GetExcelSheetNames(string filePath)
         {
             OleDbConnectionStringBuilder sbConnection = new OleDbConnectionStringBuilder();
@@ -396,10 +342,8 @@ namespace KeyList
         {
             try
             {
-
                 GridViewColumnHeader gc = (GridViewColumnHeader)e.OriginalSource;
                 Console.WriteLine(gc.Content);
-
 
                 string col = "";
                 switch (gc.Content + "")
@@ -541,12 +485,15 @@ namespace KeyList
             {
                 status = (cbsStatus.SelectedIndex - 1) + "";
             }
-
             listView.ItemsSource = (sql.getAllLockers(tbSearch.Text, grade, classP, floor, status));
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
             view.Culture = new CultureInfo("sv-SE");
             view.SortDescriptions.Add(new SortDescription("L.Number", ListSortDirection.Ascending));
             currentSort = "L.Number";
+
+            //listView.UpdateLayout();
+
+            //System.GC.Collect();
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -555,39 +502,29 @@ namespace KeyList
             {
                 return;
             }
-            string status = "", grade = "", floor = "", classP = "";
-
-            if (cbsGrade.SelectedIndex != 0)
-            {
-                grade = ((ComboBoxItem)cbsGrade.SelectedItem).Content + "";
-            }
-            if (cbsFloor.SelectedIndex != 0)
-            {
-                floor = ((ComboBoxItem)cbsFloor.SelectedItem).Content + "";
-            }
-            if (cbsClass.SelectedIndex != 0)
-            {
-                classP = ((ComboBoxItem)cbsClass.SelectedItem).Content + "";
-            }
-            if (cbsStatus.SelectedIndex != 0)
-            {
-                status = (cbsStatus.SelectedIndex - 1) + "";
-            }
-            listView.ItemsSource = (sql.getAllLockers(tbSearch.Text, grade, classP, floor, status));
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
-            view.Culture = new CultureInfo("sv-SE");
-            view.SortDescriptions.Add(new SortDescription("L.Number", ListSortDirection.Ascending));
-            currentSort = "L.Number";
+            Search();
 
         }
 
         private void Show_Pupil_Button_Click(object sender, RoutedEventArgs e)
         {
             var window = new ShowPupil();
-
             window.ShowDialog();
-
             Console.WriteLine("hallow");
+        }
+        private void Is_GbPupil_Enabled(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Console.WriteLine("Is_GbPupil_Enabled: " + e.NewValue);
+            if (((bool)e.NewValue) == false)
+            {
+                bRemovePupil.IsEnabled = false;
+                bAssignPupil.IsEnabled = true;
+            }
+            else
+            {
+                bRemovePupil.IsEnabled = true;
+                bAssignPupil.IsEnabled = false;
+            }
 
         }
 
@@ -669,25 +606,16 @@ namespace KeyList
 
 
                 m.L.Status = (int)Locker.StatusT.LÅST_AV_SKOLAN;
-                cbStatus.SelectedIndex = m.L.Status;
 
-                tbPupilFirstname.Text = "";
-                tbPupilLastName.Text = "";
-                tbPupilGrade.Text = "";
-                tbPupilClass.Text = "";
-                tbPupilComment.Text = "";
+                UpdateTextBoxes(m);
 
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
-                bRemovePupil.IsEnabled = false;
 
-                bAssignPupil.IsEnabled = true;
+
+                gbPupil.IsEnabled = false;
 
                 ExportCSV();
-
-                //listView.
-                // listView.UpdateLayout();
-
 
                 ListViewItem item = listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem) as ListViewItem;
                 if (item != null)
@@ -719,6 +647,9 @@ namespace KeyList
 
             if (m != null && res.Value)
             {
+                gbPupil.IsEnabled = true;
+
+
                 sql.assignPupilToLocker(m.L.Id, window.pupilID);
                 m.L.Owner_id = window.pupilID;
                 m.P = sql.getPupil(window.pupilID);
@@ -731,22 +662,13 @@ namespace KeyList
 
                 sql.UpdatePupil(m.P, false);
 
-                tbPupilFirstname.Text = m.P.Firstname;
-                tbPupilLastName.Text = m.P.Lastname;
-                tbPupilGrade.Text = m.P.Grade;
-                tbPupilClass.Text = m.P.Class;
-                tbPupilComment.Text = m.P.Comment;
+                UpdateTextBoxes(m);
 
-                cbStatus.SelectedIndex = m.L.Status;
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
 
-                bRemovePupil.IsEnabled = true;
-                bAssignPupil.IsEnabled = false;
-
                 ExportCSV();
 
-                //listView.UpdateLayout();
                 ListViewItem item = listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem) as ListViewItem;
                 if (item != null)
                 {
@@ -872,6 +794,53 @@ namespace KeyList
                     tbKeys.Text = "Nycklar:      " + (--m.L.Keys);
                     bSave.IsEnabled = true;
                 }
+            }
+        }
+
+        private void RadioButton_PC_Checked(object sender, RoutedEventArgs e)
+        {
+
+            if (gridView != null && gridView.Columns.Count > 11)
+            {
+                Console.WriteLine("PC checked");
+                Console.WriteLine();
+                gridView.Columns.RemoveAt(11);
+                gridView.Columns.Add(GetColumn("PC", new SolidColorBrush(Color.FromArgb(0x25, 0xAA, 0x00, 0x00)), "P.Year"));
+
+                ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                view.Refresh();
+                System.GC.Collect();
+            }
+        }
+        private void RadioButton_Locker_Checked(object sender, RoutedEventArgs e)
+        {
+
+            if (gridView != null && gridView.Columns.Count > 11)
+            {
+                Console.WriteLine("Locker checked");
+                Console.WriteLine(gridView.Columns.Count);
+                gridView.Columns.RemoveAt(11);
+                gridView.Columns.Add(GetColumn("locker", new SolidColorBrush(Color.FromArgb(0x25, 0x00, 0xAA, 0x00)), "P.Firstname"));
+
+                ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                view.Refresh();
+                System.GC.Collect();
+            }
+
+        }
+        private void RadioButton_Books_Checked(object sender, RoutedEventArgs e)
+        {
+
+            if (gridView != null && gridView.Columns.Count > 11)
+            {
+                Console.WriteLine("Books checked");
+                Console.WriteLine(gridView.Columns.Count);
+                gridView.Columns.RemoveAt(11);
+                gridView.Columns.Add(GetColumn("book", new SolidColorBrush(Color.FromArgb(0x25, 0x00, 0x00, 0xAA)), "P.Lastname"));
+
+                ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                view.Refresh();
+                System.GC.Collect();
             }
         }
     }

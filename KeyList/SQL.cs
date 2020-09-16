@@ -101,7 +101,7 @@ namespace KeyList
         public void InsertHistory(string comment)
         {
             int cnt = GetNumberOfHistory();
-            if (cnt > 100)
+            if (cnt > 2000)
             {
                 using (SQLiteCommand cmd = new SQLiteCommand("DELETE FROM history where id in (SELECT id FROM history limit 1)", con))
                 {

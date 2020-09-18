@@ -10,7 +10,7 @@
         WindowState="Maximized">
     <Grid>
 
-        <TabControl Margin="4,0,3,2" SelectionChanged="TabControl_SelectionChanged">
+        <TabControl x:Name="tc" Margin="4,0,3,2" SelectionChanged="TabControl_SelectionChanged">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TextBlock}">
                     <Setter Property="FontStretch" Value="ExtraExpanded" />

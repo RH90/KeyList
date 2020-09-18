@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,18 +18,16 @@ namespace KeyList
     /// <summary>
     /// Interaction logic for History.xaml
     /// </summary>
-    public partial class History : Window
+    public partial class ShowHistory : Window
     {
-        public History()
+        public ShowHistory()
         {
             InitializeComponent();
 
-            List<String> list = MainWindow.sql.GetHistory();
+            listView.ItemsSource = MainWindow.sql.GetHistory();
 
-            for (int i = list.Count - 1; i >= 0; i--)
-            {
-                listView.Items.Add(list[i]);
-            }
+            ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            view.Refresh();
 
         }
     }

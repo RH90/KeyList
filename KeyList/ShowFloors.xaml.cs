@@ -37,67 +37,55 @@ namespace KeyList
 
             InitializeComponent();
 
-
-            addToolTip(tab1);
-            addToolTip(tab2);
-            addToolTip(tab3);
-
-            //for (int i = 0; i < test.Children.Count; i++)
-            //{
-            //    if (test.Children[i] is Border)
-            //    {
-            //        try
-            //        {
-            //            Border b = (Border)test.Children[i];
-            //            TextBlock t = (TextBlock)b.Child;
-            //            string bindingText = t.GetBindingExpression(TextBlock.BackgroundProperty).ParentBinding.Path.Path;
-            //            if (!bindingText.Contains(t.Text))
-            //                Console.WriteLine("Error: " + t.Text);
-            //        }
-            //        catch
-            //        { }
-
-            //    }
-            //}
+            InitTabs(tab1);
+            InitTabs(tab2);
+            InitTabs(tab3);
 
         }
 
-        private void addToolTip(UniformGrid tab)
+        private void InitTabs(UniformGrid ug)
         {
-            for (int i = 0; i < tab.Children.Count; i++)
+            for (int i = 0; i < ug.Children.Count; i++)
             {
-                if (tab.Children[i] is Border)
+                if (ug.Children[i].GetType() == typeof(Border))
                 {
                     try
                     {
-                        Border b = (Border)tab.Children[i];
-                        TextBlock t = (TextBlock)b.Child;
-                        Locker l = MainWindow.sql.getLocker(int.Parse(t.Text));
+                        Border b = (Border)ug.Children[i];
+                        TextBlock tb = (TextBlock)b.Child;
 
-                        //MainWindow.sql.getPupil();
+                        tb.FontWeight = FontWeights.Bold;
+                        Locker l = MainWindow.sql.getLocker(int.Parse(tb.Text));
                         if (l != null)
                         {
+                            if (l.Keys > 2)
+                            {
+                                tb.Foreground = new SolidColorBrush(Color.FromRgb(0x00, 0x00, 0xAA));
+                            }
+                            else if (l.Keys <= 1)
+                            {
+                                tb.Foreground = new SolidColorBrush(Color.FromRgb(0xAA, 0x00, 0x00));
+                            }
+
+
+                            //Tooltip
                             Pupil p = MainWindow.sql.getPupil(l.Owner_id);
-
-
-                            ToolTipService.SetShowDuration(t, int.MaxValue);
-                            ToolTipService.SetInitialShowDelay(t, 0);
-                            t.ToolTip =
+                            ToolTipService.SetShowDuration(tb, int.MaxValue);
+                            ToolTipService.SetInitialShowDelay(tb, 0);
+                            tb.ToolTip =
                               "==Nycklar==\n" + l.Keys
                             + "\n==Kommentar==\n" + l.Comment
                             + "\n==Status==\n" + l.StatusText;
 
                             if (p != null)
                             {
-                                t.ToolTip +=
+                                tb.ToolTip +=
                                     "\n==Elev==\n" + p.Firstname + " " + p.Lastname + ", " + p.Grade + p.Class + ", " + p.Year;
                             }
                         }
-
                     }
+                    catch { }
 
-                    catch
-                    { }
 
                 }
             }

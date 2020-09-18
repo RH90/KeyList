@@ -101,8 +101,9 @@
     <Compile Include="AssignPupil.xaml.cs">
       <DependentUpon>AssignPupil.xaml</DependentUpon>
     </Compile>
-    <Compile Include="History.xaml.cs">
-      <DependentUpon>History.xaml</DependentUpon>
+    <Compile Include="History.cs" />
+    <Compile Include="ShowHistory.xaml.cs">
+      <DependentUpon>ShowHistory.xaml</DependentUpon>
     </Compile>
     <Compile Include="Locker.cs" />
     <Compile Include="Pupil.cs" />
@@ -121,7 +122,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="History.xaml">
+    <Page Include="ShowHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -35,7 +35,6 @@ namespace KeyList
     // global add student(buttons above tabControl)
     // tab item for just pupils?
     // History for owner_id for locker
-    // add pupils
     // batch operations (remove,add pupils to lockers)
     // auto up grade on students? 
     // multi satus
@@ -45,6 +44,8 @@ namespace KeyList
     // list of students 
     // columns: serial, type, computer comment, pupil comment(history of computers)
     // Add computers
+
+    // give student temp removed status when graduated or removed early
 
     public partial class MainWindow : Window
     {
@@ -60,7 +61,21 @@ namespace KeyList
         {
             InitializeComponent();
 
-            gridView.Columns.Add(GetColumn("test", new SolidColorBrush(Color.FromArgb(0x25, 0x25, 0xDD, 0x55)), "P.Firstname"));
+            //gridView.Columns.Clear();
+            //gridView.Columns.Add(GetColumn("Firstname", new SolidColorBrush(Color.FromArgb(0x25, 0x25, 0xDD, 0x55)), "P.Firstname", "", ""));
+            //gridView.Columns.Add(GetColumn("Lastname", new SolidColorBrush(Color.FromArgb(0x25, 0x25, 0xDD, 0x55)), "P.Lastname", "", ""));
+            //gridView.Columns.Add(GetColumn("Klass", new SolidColorBrush(Color.FromArgb(0x25, 0x25, 0xDD, 0x55)), "P.GradeClass", "", ""));
+            //gridView.Columns.Add(GetColumn("Start", new SolidColorBrush(Color.FromArgb(0x25, 0x25, 0xDD, 0x55)), "P.Year", "", ""));
+
+            //gridView.Columns.Add(GetColumn("Skåp", new SolidColorBrush(Color.FromArgb(0x25, 0xDD, 0x25, 0x25)), "L.Number", "", ""));
+            //gridView.Columns.Add(GetColumn("Plan", new SolidColorBrush(Color.FromArgb(0x25, 0xDD, 0x25, 0x25)), "L.Floor", "", ""));
+            //gridView.Columns.Add(GetColumn("Status", new SolidColorBrush(Color.FromArgb(0x25, 0xDD, 0x25, 0x25)), "L.StatusText", "", "L.StatusColor"));
+            //gridView.Columns.Add(GetColumn("Nycklar", new SolidColorBrush(Color.FromArgb(0x25, 0xDD, 0x25, 0x25)), "L.Keys", "", ""));
+
+            //gridView.Columns.Add(GetColumn("Kommentar skåp", new SolidColorBrush(Color.FromArgb(0x25, 0x25, 0x25, 0xDD)), "L.CommentShort", "359", ""));
+            //gridView.Columns.Add(GetColumn("Kommentar Elev", new SolidColorBrush(Color.FromArgb(0x25, 0x55, 0x25, 0xFF)), "P.CommentShort", "275", ""));
+
+            //gridView.Columns.Move(3, 0);
 
             string[] args = Environment.GetCommandLineArgs();
             Console.WriteLine(args.Length);
@@ -92,17 +107,24 @@ namespace KeyList
             gbPupil.IsEnabledChanged += Is_GbPupil_Enabled;
 
         }
-        public GridViewColumn GetColumn(string header, SolidColorBrush background, string binding)
+
+        public void InitLockerColumns()
+        {
+
+        }
+        public GridViewColumn GetColumn(string header, SolidColorBrush background, string binding, string width, string foregroundBinding)
         {
             GridViewColumn gvc = new GridViewColumn();
             gvc.Header = header;
 
             var tb = new FrameworkElementFactory(typeof(TextBlock));
             tb.SetValue(TextBlock.MarginProperty, new Thickness(-6, 0, -6, 0));
-            tb.SetValue(TextBlock.PaddingProperty, new Thickness(10, 0, 0, 0));
+            tb.SetValue(TextBlock.PaddingProperty, new Thickness(5, 0, 5, 0));
             tb.SetValue(TextBlock.VerticalAlignmentProperty, VerticalAlignment.Center);
             tb.SetValue(TextBlock.BackgroundProperty, background);
             tb.SetValue(TextBlock.ForegroundProperty, Brushes.White);
+            if (width != "")
+                gvc.SetValue(WidthProperty, Double.Parse(width));
 
             Binding bText = new Binding();
             bText.Path = new PropertyPath(binding);
@@ -115,6 +137,14 @@ namespace KeyList
             rsW.AncestorLevel = 1;
             bWidth.RelativeSource = rsW;
 
+            if (foregroundBinding != "")
+            {
+                Binding bForeground = new Binding();
+                bForeground.Path = new PropertyPath(foregroundBinding);
+                tb.SetBinding(TextBlock.ForegroundProperty, bForeground);
+            }
+
+
             Binding bHeight = new Binding();
             bHeight.Path = new PropertyPath("ActualHeight");
             RelativeSource rsH = new RelativeSource();
@@ -126,6 +156,7 @@ namespace KeyList
             tb.SetBinding(TextBlock.TextProperty, bText);
             tb.SetBinding(TextBlock.WidthProperty, bWidth);
             tb.SetBinding(TextBlock.HeightProperty, bHeight);
+
 
             DataTemplate dt = new DataTemplate() { VisualTree = tb };
 
@@ -366,8 +397,8 @@ namespace KeyList
                     case "Efternamn":
                         col = "P.Lastname";
                         break;
-                    case "Årskurs":
-                        col = "P.Grade";
+                    case "Klass":
+                        col = "P.GradeClass";
                         break;
                     default:
                         return;
@@ -385,7 +416,7 @@ namespace KeyList
                     view.SortDescriptions.Add(new SortDescription("P.Lastname", ListSortDirection.Ascending));
                     view.SortDescriptions.Add(new SortDescription("P.Firstname", ListSortDirection.Ascending));
                 }
-                else if (col == "P.Grade")
+                else if (col == "P.GradeClass")
                 {
                     view.SortDescriptions.Add(new SortDescription("P.Grade", ListSortDirection.Ascending));
                     view.SortDescriptions.Add(new SortDescription("P.Class", ListSortDirection.Ascending));
@@ -743,7 +774,7 @@ namespace KeyList
         }
         private void History_Button_Click(object sender, RoutedEventArgs e)
         {
-            History history = new History();
+            ShowHistory history = new ShowHistory();
 
             history.ShowDialog();
         }
@@ -802,14 +833,14 @@ namespace KeyList
 
             if (gridView != null && gridView.Columns.Count > 11)
             {
-                Console.WriteLine("PC checked");
-                Console.WriteLine();
-                gridView.Columns.RemoveAt(11);
-                gridView.Columns.Add(GetColumn("PC", new SolidColorBrush(Color.FromArgb(0x25, 0xAA, 0x00, 0x00)), "P.Year"));
+                //Console.WriteLine("PC checked");
+                //Console.WriteLine();
+                //gridView.Columns.RemoveAt(11);
+                //gridView.Columns.Add(GetColumn("PC", new SolidColorBrush(Color.FromArgb(0x25, 0xAA, 0x00, 0x00)), "P.Year"));
 
-                ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
-                view.Refresh();
-                System.GC.Collect();
+                //ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                //view.Refresh();
+                //System.GC.Collect();
             }
         }
         private void RadioButton_Locker_Checked(object sender, RoutedEventArgs e)
@@ -817,14 +848,14 @@ namespace KeyList
 
             if (gridView != null && gridView.Columns.Count > 11)
             {
-                Console.WriteLine("Locker checked");
-                Console.WriteLine(gridView.Columns.Count);
-                gridView.Columns.RemoveAt(11);
-                gridView.Columns.Add(GetColumn("locker", new SolidColorBrush(Color.FromArgb(0x25, 0x00, 0xAA, 0x00)), "P.Firstname"));
+                //Console.WriteLine("Locker checked");
+                //Console.WriteLine(gridView.Columns.Count);
+                //gridView.Columns.RemoveAt(11);
+                //gridView.Columns.Add(GetColumn("locker", new SolidColorBrush(Color.FromArgb(0x25, 0x00, 0xAA, 0x00)), "P.Firstname"));
 
-                ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
-                view.Refresh();
-                System.GC.Collect();
+                //ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                //view.Refresh();
+                //System.GC.Collect();
             }
 
         }
@@ -833,14 +864,14 @@ namespace KeyList
 
             if (gridView != null && gridView.Columns.Count > 11)
             {
-                Console.WriteLine("Books checked");
-                Console.WriteLine(gridView.Columns.Count);
-                gridView.Columns.RemoveAt(11);
-                gridView.Columns.Add(GetColumn("book", new SolidColorBrush(Color.FromArgb(0x25, 0x00, 0x00, 0xAA)), "P.Lastname"));
+                //Console.WriteLine("Books checked");
+                //Console.WriteLine(gridView.Columns.Count);
+                //gridView.Columns.RemoveAt(11);
+                //gridView.Columns.Add(GetColumn("book", new SolidColorBrush(Color.FromArgb(0x25, 0x00, 0x00, 0xAA)), "P.Lastname"));
 
-                ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
-                view.Refresh();
-                System.GC.Collect();
+                //ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                //view.Refresh();
+                //System.GC.Collect();
             }
         }
     }

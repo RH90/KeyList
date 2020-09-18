@@ -1,4 +1,4 @@
-﻿<Window x:Class="KeyList.History"
+﻿<Window x:Class="KeyList.ShowHistory"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -45,7 +45,11 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="History"/>
+                    <GridViewColumn Header="Origin" DisplayMemberBinding="{Binding Origin}"/>
+                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}"/>
+                    <GridViewColumn Header="Comment" DisplayMemberBinding="{Binding Comment}"/>
+                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}"/>
+                    <GridViewColumn Header="Owner" DisplayMemberBinding="{Binding Owner}"/>
                 </GridView>
             </ListView.View>
         </ListView>

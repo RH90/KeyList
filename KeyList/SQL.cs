@@ -277,15 +277,28 @@ namespace KeyList
 
                         owner = -1;
                     }
+                    int id = reader.GetInt32(reader.GetOrdinal("id"));
+
+                    List<History> histories = GetHistory(1, id);
+                    string comment = "";
+
+                    for (int i = 0; i < histories.Count; i++)
+                    {
+                        comment += "** " + histories[i].Date + ", " + histories[i].Comment;
+                        if (i < histories.Count - 1)
+                        {
+                            comment += "\n";
+                        }
+                    }
 
                     l = new Locker(
-                       reader.GetInt32(reader.GetOrdinal("id")),
+                       id,
                        reader.GetInt32(reader.GetOrdinal("number")),
                        reader.GetInt32(reader.GetOrdinal("keys")),
                        reader.GetString(reader.GetOrdinal("floor")),
                        reader.GetInt32(reader.GetOrdinal("status")),
                        owner,
-                       reader.GetString(reader.GetOrdinal("comment")));
+                       comment);
                 }
             }
             return l;
@@ -310,6 +323,18 @@ namespace KeyList
                         owner = -1;
                     }
 
+                    List<History> histories = GetHistory(1, id);
+                    string comment = "";
+
+                    for (int i = 0; i < histories.Count; i++)
+                    {
+                        comment += "** " + histories[i].Date + ", " + histories[i].Comment;
+                        if (i < histories.Count - 1)
+                        {
+                            comment += "\n";
+                        }
+                    }
+
                     l = new Locker(
                        reader.GetInt32(reader.GetOrdinal("id")),
                        reader.GetInt32(reader.GetOrdinal("number")),
@@ -317,7 +342,7 @@ namespace KeyList
                        reader.GetString(reader.GetOrdinal("floor")),
                        reader.GetInt32(reader.GetOrdinal("status")),
                        owner,
-                       reader.GetString(reader.GetOrdinal("comment")));
+                       comment);
                 }
             }
             return l;
@@ -409,15 +434,28 @@ namespace KeyList
                         owner = -1;
                     }
 
+                    int id = reader.GetInt32(reader.GetOrdinal("id"));
+                    List<History> histories = GetHistory(1, id);
+                    string comment = "";
+
+                    for (int i = 0; i < histories.Count; i++)
+                    {
+                        comment += "** " + histories[i].Date + ", " + histories[i].Comment;
+                        if (i < histories.Count - 1)
+                        {
+                            comment += "\n";
+                        }
+                    }
+
                     Pupil p = null;
                     Locker l = new Locker(
-                        reader.GetInt32(reader.GetOrdinal("id")),
+                        id,
                         reader.GetInt32(reader.GetOrdinal("number")),
                         reader.GetInt32(reader.GetOrdinal("keys")),
                         reader.GetString(reader.GetOrdinal("floor")),
                         reader.GetInt32(reader.GetOrdinal("status")),
                         owner,
-                        reader.GetString(reader.GetOrdinal("comment")));
+                        comment);
 
                     // Console.WriteLine(l.Owner_id);
 

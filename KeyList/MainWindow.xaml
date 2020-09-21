@@ -290,10 +290,6 @@
                                 <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">UTAN NYCKEL ELEVINNEHÅLL</TextBlock>
                             </ComboBoxItem>
                         </ComboBox>
-                        <TextBlock Text="Kommentar"></TextBlock>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="200">
-                            <TextBox TextWrapping="Wrap" KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbLockerComment"></TextBox>
-                        </ScrollViewer>
                         <TextBlock Text="Historia"></TextBlock>
                         <ListView MaxHeight="150" x:Name="listLockerHistory">
                             <ListView.View>

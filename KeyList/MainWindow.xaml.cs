@@ -335,7 +335,7 @@ namespace KeyList
         {
             tbLockerNumber.Text = String.Format("Nummer:{0,4}", m.L.Number);
             tbKeys.Text = "Nycklar:      " + m.L.Keys;
-            tbLockerComment.Text = m.L.Comment + "";
+            //tbLockerComment.Text = m.L.Comment + "";
             cbStatus.SelectedIndex = m.L.Status;
 
             dateLocker.SelectedDate = DateTime.Now;
@@ -621,7 +621,7 @@ namespace KeyList
             }
 
             m.L.Status = cbStatus.SelectedIndex;
-            m.L.Comment = tbLockerComment.Text;
+            //m.L.Comment = tbLockerComment.Text;
 
 
             sql.updateLocker(m.L);

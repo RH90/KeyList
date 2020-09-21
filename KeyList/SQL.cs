@@ -52,9 +52,27 @@ namespace KeyList
                "comment TEXT DEFAULT \"\"," +
                "inschool INTEGER DEFAULT 1)", con).ExecuteNonQuery();
 
-            new SQLiteCommand("CREATE TABLE IF NOT EXISTS history(" +
-               "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-               "comment TEXT DEFAULT \"\")", con).ExecuteNonQuery();
+            new SQLiteCommand("CREATE TABLE IF NOT EXISTS \"history\"(\n" +
+            "\t\"id\"\tINTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+            "\t\"origin\"\tINTEGER DEFAULT -1,\n" +
+            "\t\"owner_id\"\tINTEGER DEFAULT -1,\n" +
+            "\t\"type\"\tTEXT,\n" +
+            "\t\"comment\"\tTEXT DEFAULT \"\",\n" +
+            "\t\"date\"\tINTEGER DEFAULT 0\n" +
+            ");", con).ExecuteNonQuery();
+
+            new SQLiteCommand("CREATE TABLE IF NOT EXISTS \"computer\"(" +
+                "\"id\"    INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "\"brand\" TEXT DEFAULT \"\"," +
+                "\"model\" TEXT DEFAULT \"\"," +
+                "\"serial\"    TEXT UNIQUE," +
+                "\"owner_id\"  INTEGER UNIQUE," +
+                "\"status\"    INTEGER DEFAULT 0," +
+                "\"comment\"   TEXT DEFAULT \"\"" +
+                "); ", con).ExecuteNonQuery();
+
+
+
         }
 
         public long addPupil(String FirstName, String LastName, String Class, String Grade, String Year)
@@ -63,7 +81,7 @@ namespace KeyList
             long lastID = -1;
 
             Pupil p = new Pupil(-1, Grade, Class, Year, FirstName, LastName, "");
-            InsertHistory("general", -1, "added", p.ToString, DateTime.Now.ToString("yyyy-MM-dd_HHmm"));
+            InsertHistory(-1, -1, "added", p.ToString, DateTime.Now.Ticks);
 
             using (SQLiteCommand cmd = new SQLiteCommand("INSERT INTO pupil (firstname,lastname,classP,grade,year) VALUES (@firstname,@lastname,@class,@grade,@year)", con))
             {
@@ -98,7 +116,7 @@ namespace KeyList
             }
             return cnt;
         }
-        public void InsertHistory(string origin, int owner_id, string type, string comment, string date)
+        public void InsertHistory(int origin, int owner_id, string type, string comment, long date)
         {
             using (SQLiteCommand cmd = new SQLiteCommand("INSERT INTO history (origin,owner_id,type,comment,date) VALUES (@origin,@owner_id,@type,@comment,@date)", con))
             {
@@ -112,6 +130,7 @@ namespace KeyList
                 cmd.ExecuteNonQuery();
             }
         }
+        // origin: pupil=0,locker=1,computer=2,general=-1
         public List<History> GetHistory()
         {
             List<History> list = new List<History>();
@@ -131,19 +150,19 @@ namespace KeyList
                     }
                     try
                     {
-                        string origin, type, comment, date, owner = "";
-                        int owner_id;
 
-                        origin = reader.GetString(reader.GetOrdinal("origin"));
+                        string type, comment, date, owner = "";
+                        int owner_id, origin;
+
+
+                        origin = reader.GetInt32(reader.GetOrdinal("origin"));
                         type = reader.GetString(reader.GetOrdinal("type"));
                         comment = reader.GetString(reader.GetOrdinal("comment"));
-                        date = reader.GetString(reader.GetOrdinal("date"));
-                        Console.WriteLine("TEst");
+                        date = new DateTime(reader.GetInt64(reader.GetOrdinal("date"))).ToString("yyyy-MM-dd_HHmm");
                         owner_id = reader.GetInt32(reader.GetOrdinal("owner_id"));
 
 
-
-                        if (origin.Equals("pupil"))
+                        if (origin == 0)
                         {
                             Pupil p = getPupil(owner_id);
                             if (p == null)
@@ -156,11 +175,11 @@ namespace KeyList
                             }
 
                         }
-                        else if (origin.Equals("locker"))
+                        else if (origin == 1)
                         {
                             owner = getLocker(owner_id).Number + "";
                         }
-                        else if (origin.Equals("computer"))
+                        else if (origin == 2)
                         {
                             //TODO
                         }
@@ -174,6 +193,37 @@ namespace KeyList
             }
 
 
+            return list;
+        }
+        public List<History> GetHistory(int origin, int id)
+        {
+            List<History> list = new List<History>();
+
+            int cnt = GetNumberOfHistory();
+            using (SQLiteCommand cmd = new SQLiteCommand(
+               "SELECT * from history where origin=@origin AND owner_id=@owner_id", con))
+            {
+                cmd.Parameters.AddWithValue("@origin", origin);
+                cmd.Parameters.AddWithValue("@owner_id", id);
+
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    try
+                    {
+                        string type, comment, date;
+                        type = reader.GetString(reader.GetOrdinal("type"));
+                        comment = reader.GetString(reader.GetOrdinal("comment"));
+                        date = new DateTime(reader.GetInt64(reader.GetOrdinal("date"))).ToString("yyyy-MM-dd_HHmm");
+
+                        History h = new History(origin, type, comment, date, "");
+                        list.Add(h);
+                    }
+                    catch { }
+                }
+            }
+            //list.Reverse();
             return list;
         }
 
@@ -198,7 +248,7 @@ namespace KeyList
         public void removePupil(int id)
         {
             Pupil p = getPupil(id);
-            InsertHistory("general", -1, "removed", p.ToString, DateTime.Now.ToString("yyyy-MM-dd_HHmm"));
+            InsertHistory(-1, -1, "removed", p.ToString, DateTime.Now.Ticks);
 
             using (SQLiteCommand cmd = new SQLiteCommand("DELETE FROM pupil where id=@id", con))
             {
@@ -437,6 +487,17 @@ namespace KeyList
 
                 if (reader.Read())
                 {
+                    List<History> histories = GetHistory(0, id);
+                    string comment = "";
+
+                    for (int i = 0; i < histories.Count; i++)
+                    {
+                        comment += "** " + histories[i].Date + ", " + histories[i].Comment;
+                        if (i < histories.Count - 1)
+                        {
+                            comment += "\n";
+                        }
+                    }
                     p = new Pupil(
                         id,
                         reader.GetString(reader.GetOrdinal("grade")),
@@ -444,7 +505,7 @@ namespace KeyList
                         reader.GetString(reader.GetOrdinal("year")),
                         reader.GetString(reader.GetOrdinal("firstname")),
                         reader.GetString(reader.GetOrdinal("lastname")),
-                        reader.GetString(reader.GetOrdinal("comment")));
+                        comment);
                 }
             }
             return p;
@@ -521,7 +582,7 @@ namespace KeyList
             Console.WriteLine(id);
             Console.WriteLine(l.Number);
 
-            InsertHistory("pupil", p.Id, "locker", l.Number + "->", DateTime.Now.ToString("yyyy-MM-dd_HHmm"));
+            InsertHistory(0, p.Id, "locker", l.Number + "->", DateTime.Now.Ticks);
 
             string query = "UPDATE locker set owner_id=null,status=1 where id=@id";
 
@@ -537,7 +598,7 @@ namespace KeyList
         {
             Locker l = getLockerID(id);
             Pupil p = getPupil(pupilID);
-            InsertHistory("pupil", p.Id, "locker", "->" + l.Number, DateTime.Now.ToString("yyyy-MM-dd_HHmm"));
+            InsertHistory(0, p.Id, "locker", "->" + l.Number, DateTime.Now.Ticks);
 
             string query = "UPDATE locker set owner_id=@owner_id,status=0 where id=@id";
 

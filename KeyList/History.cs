@@ -8,9 +8,10 @@ namespace KeyList
 {
     public class History
     {
-        string origin, type, comment, date, owner;
+        int origin;
+        string type, comment, date, owner;
 
-        public History(string origin, string type, string comment, string date, string owner)
+        public History(int origin, string type, string comment, string date, string owner)
         {
             this.origin = origin;
             this.type = type;
@@ -19,7 +20,7 @@ namespace KeyList
             this.owner = owner;
         }
 
-        public string Origin { get => origin; set => origin = value; }
+        public int Origin { get => origin; set => origin = value; }
         public string Type { get => type; set => type = value; }
         public string Comment { get => comment; set => comment = value; }
         public string Date { get => date; set => date = value; }

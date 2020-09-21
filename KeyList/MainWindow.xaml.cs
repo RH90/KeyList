@@ -46,6 +46,8 @@ namespace KeyList
     // Add computers
 
     // give student temp removed status when graduated or removed early
+    // remove history
+    //replace comment with history
 
     public partial class MainWindow : Window
     {
@@ -304,7 +306,7 @@ namespace KeyList
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Console.WriteLine("test");
-
+            bSave.IsEnabled = false;
             if (listView.SelectedIndex == -1)
             {
                 spEdit.IsEnabled = false;
@@ -336,11 +338,32 @@ namespace KeyList
             tbLockerComment.Text = m.L.Comment + "";
             cbStatus.SelectedIndex = m.L.Status;
 
+            dateLocker.SelectedDate = DateTime.Now;
+            tbLockerHistory.Text = "";
+
+            listLockerHistory.ItemsSource = sql.GetHistory(1, m.L.Id);
+            CollectionView viewLocker = (CollectionView)CollectionViewSource.GetDefaultView(listLockerHistory.ItemsSource);
+            viewLocker.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+            viewLocker.Refresh();
+
             tbPupilFirstname.Text = m.P.Firstname + "";
             tbPupilLastName.Text = m.P.Lastname + "";
             tbPupilGrade.Text = m.P.Grade + "";
             tbPupilClass.Text = m.P.Class + "";
-            tbPupilComment.Text = m.P.Comment;
+            // tbPupilComment.Text = m.P.Comment;
+
+            tbPupilHistory.Text = "";
+
+            if (m.P.Id != -1)
+            {
+                listPupilHistory.ItemsSource = sql.GetHistory(0, m.P.Id);
+                datePupil.SelectedDate = DateTime.Now;
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listPupilHistory.ItemsSource);
+                view.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+                view.Refresh();
+            }
+
+
         }
 
         private List<String> GetExcelSheetNames(string filePath)
@@ -566,32 +589,32 @@ namespace KeyList
             if (m.L.Owner_id != -1)
             {
                 //TODO edit pupil
-                string firstname, lastname, grade, classP, comment;
+                string firstname, lastname, grade, classP;
 
                 firstname = tbPupilFirstname.Text;
                 lastname = tbPupilLastName.Text;
                 grade = tbPupilGrade.Text;
                 classP = tbPupilClass.Text;
-                comment = tbPupilComment.Text;
+                //comment = tbPupilComment.Text;
 
                 if (!(firstname.Equals("") || lastname.Equals("") || classP.Equals("")) && (grade.Equals("7") || grade.Equals("8") || grade.Equals("9")))
                 {
-                    Console.WriteLine(firstname + "," + lastname + ", " + grade + ", " + classP + ", " + comment);
+                    Console.WriteLine(firstname + "," + lastname + ", " + grade + ", " + classP);
 
 
                     bool commentCheck = false;
-                    if (!m.P.Comment.Equals(comment))
-                    {
-                        commentCheck = true;
-                    }
+
 
                     m.P.Firstname = firstname;
                     m.P.Lastname = lastname;
                     m.P.Grade = grade;
                     m.P.Class = classP;
-                    m.P.Comment = comment;
+                    // m.P.Comment = comment;
 
                     sql.UpdatePupil(m.P, commentCheck);
+
+
+                    m.P = sql.getPupil(m.P.Id);
                 }
 
 
@@ -872,6 +895,78 @@ namespace KeyList
                 //ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 //view.Refresh();
                 //System.GC.Collect();
+            }
+        }
+
+        private void Add_Pupil_History_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbPupilHistory.Text.Equals(""))
+                return;
+
+            string origin = "pupil",
+                type = cbPupiHistory.Text,
+                comment = tbPupilHistory.Text;
+
+            MyItem m = (MyItem)listView.SelectedItem;
+            int owner_id = m.P.Id;
+            long date = datePupil.SelectedDate.Value.Ticks;
+
+            try
+            {
+                sql.InsertHistory(0, owner_id, type, comment, date);
+
+                listPupilHistory.ItemsSource = sql.GetHistory(0, m.P.Id);
+
+
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listPupilHistory.ItemsSource);
+                view.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+                view.Refresh();
+
+                datePupil.SelectedDate = DateTime.Now;
+                tbPupilHistory.Text = "";
+
+                m.P = sql.getPupil(m.P.Id);
+                CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                view1.Refresh();
+
+            }
+            catch
+            {
+
+            }
+        }
+        private void Add_Locker_History_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbLockerHistory.Text.Equals(""))
+                return;
+
+            string comment = tbLockerHistory.Text;
+
+            MyItem m = (MyItem)listView.SelectedItem;
+            int id = m.L.Id;
+            long date = dateLocker.SelectedDate.Value.Ticks;
+
+            try
+            {
+                sql.InsertHistory(1, id, "comment", comment, date);
+
+                listLockerHistory.ItemsSource = sql.GetHistory(1, m.L.Id);
+
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listLockerHistory.ItemsSource);
+                view.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+                view.Refresh();
+
+                dateLocker.SelectedDate = DateTime.Now;
+                tbLockerHistory.Text = "";
+
+                m.L = sql.getLockerID(m.L.Id);
+                CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                view1.Refresh();
+
+            }
+            catch
+            {
+
             }
         }
     }

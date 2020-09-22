@@ -151,14 +151,15 @@ namespace KeyList
                     try
                     {
 
-                        string type, comment, date, owner = "";
+                        string type, comment, owner = "";
                         int owner_id, origin;
+                        long date;
 
 
                         origin = reader.GetInt32(reader.GetOrdinal("origin"));
                         type = reader.GetString(reader.GetOrdinal("type"));
                         comment = reader.GetString(reader.GetOrdinal("comment"));
-                        date = new DateTime(reader.GetInt64(reader.GetOrdinal("date"))).ToString("yyyy-MM-dd_HHmm");
+                        date = reader.GetInt64(reader.GetOrdinal("date"));
                         owner_id = reader.GetInt32(reader.GetOrdinal("owner_id"));
 
 
@@ -212,10 +213,10 @@ namespace KeyList
                 {
                     try
                     {
-                        string type, comment, date;
+                        string type, comment;
                         type = reader.GetString(reader.GetOrdinal("type"));
                         comment = reader.GetString(reader.GetOrdinal("comment"));
-                        date = new DateTime(reader.GetInt64(reader.GetOrdinal("date"))).ToString("yyyy-MM-dd_HHmm");
+                        long date = reader.GetInt64(reader.GetOrdinal("date"));
 
                         History h = new History(origin, type, comment, date, "");
                         list.Add(h);
@@ -284,7 +285,7 @@ namespace KeyList
 
                     for (int i = 0; i < histories.Count; i++)
                     {
-                        comment += "** " + histories[i].Date + ", " + histories[i].Comment;
+                        comment += "** " + histories[i].DateString + ", " + histories[i].Comment;
                         if (i < histories.Count - 1)
                         {
                             comment += "\n";
@@ -328,7 +329,7 @@ namespace KeyList
 
                     for (int i = 0; i < histories.Count; i++)
                     {
-                        comment += "** " + histories[i].Date + ", " + histories[i].Comment;
+                        comment += "** " + histories[i].DateString + ", " + histories[i].Comment;
                         if (i < histories.Count - 1)
                         {
                             comment += "\n";
@@ -440,7 +441,7 @@ namespace KeyList
 
                     for (int i = 0; i < histories.Count; i++)
                     {
-                        comment += "** " + histories[i].Date + ", " + histories[i].Comment;
+                        comment += "** " + histories[i].DateString + ", " + histories[i].Comment;
                         if (i < histories.Count - 1)
                         {
                             comment += "\n";
@@ -530,7 +531,7 @@ namespace KeyList
 
                     for (int i = 0; i < histories.Count; i++)
                     {
-                        comment += "** " + histories[i].Date + ", " + histories[i].Comment;
+                        comment += "** " + histories[i].DateString + ", " + histories[i].Comment;
                         if (i < histories.Count - 1)
                         {
                             comment += "\n";
@@ -620,7 +621,11 @@ namespace KeyList
             Console.WriteLine(id);
             Console.WriteLine(l.Number);
 
+            //pupil histopry
             InsertHistory(0, p.Id, "locker", l.Number + "->", DateTime.Now.Ticks);
+
+            //locker history
+            InsertHistory(1, l.Id, "comment", p.ToString + "->", DateTime.Now.Ticks);
 
             string query = "UPDATE locker set owner_id=null,status=1 where id=@id";
 
@@ -636,7 +641,12 @@ namespace KeyList
         {
             Locker l = getLockerID(id);
             Pupil p = getPupil(pupilID);
+
+            //pupil history
             InsertHistory(0, p.Id, "locker", "->" + l.Number, DateTime.Now.Ticks);
+
+            //locker history
+            InsertHistory(1, l.Id, "comment", "->" + p.ToString, DateTime.Now.Ticks);
 
             string query = "UPDATE locker set owner_id=@owner_id,status=0 where id=@id";
 

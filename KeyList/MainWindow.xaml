@@ -206,7 +206,7 @@
             <StackPanel x:Name="spEdit" IsEnabled="False" >
                 <Button Style="{StaticResource RedButton}" Background="Red" IsEnabled="False" x:Name="bSave" Content="Spara" Click="bSave_Click">
                 </Button>
-                <GroupBox x:Name="gbPupil" Foreground="White" Header="Elev">
+                <GroupBox BorderBrush="Blue" x:Name="gbPupil" Foreground="White" Header="Elev">
                     <StackPanel>
                         <TextBlock Text="Förnamn"></TextBlock>
                         <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilFirstname"></TextBox>
@@ -216,46 +216,49 @@
                         <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilGrade"></TextBox>
                         <TextBlock Text="Klass"></TextBlock>
                         <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPupilClass"></TextBox>
-                        <TextBlock Text="Historia"></TextBlock>
-                        <ListView MaxHeight="150" x:Name="listPupilHistory">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}"/>
-                                    <GridViewColumn Header="Typ" DisplayMemberBinding="{Binding Type}"/>
-                                    <GridViewColumn Width="250" Header="Text">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=GridViewColumn, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                        <TextBlock Text="Lägg till kommentar"></TextBlock>
-                        <TextBox AcceptsReturn="True" TextWrapping="Wrap" x:Name="tbPupilHistory"></TextBox>
-                        <StackPanel Orientation="Horizontal">
-                            <ComboBox x:Name="cbPupiHistory" HorizontalAlignment="Left" SelectedIndex="0">
-                                <ComboBoxItem>
-                                    <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">comment</TextBlock>
-                                </ComboBoxItem>
-                                <ComboBoxItem>
-                                    <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="LIMEGREEN">computer</TextBlock>
-                                </ComboBoxItem>
-                                <ComboBoxItem>
-                                    <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Pink">locker</TextBlock>
-                                </ComboBoxItem>
-                                <ComboBoxItem>
-                                    <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Yellow">invoice</TextBlock>
-                                </ComboBoxItem>
-                            </ComboBox>
-                            <DatePicker x:Name="datePupil"></DatePicker>
-                            <Button Click="Add_Pupil_History_Button_Click">add</Button>
-                        </StackPanel>
-
+                        <GroupBox Foreground="White" Header="Historia">
+                            <ListView MinHeight="50" MaxHeight="150" x:Name="listPupilHistory">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Date" DisplayMemberBinding="{Binding DateString}"/>
+                                        <GridViewColumn Header="Typ" DisplayMemberBinding="{Binding Type}"/>
+                                        <GridViewColumn Width="250" Header="Text">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=GridViewColumn, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </GroupBox>
+                        <GroupBox Foreground="White" Header="Lägg till kommentar">
+                            <StackPanel>
+                                <TextBox AcceptsReturn="True" TextWrapping="Wrap" x:Name="tbPupilHistory"></TextBox>
+                                <StackPanel Orientation="Horizontal">
+                                    <ComboBox x:Name="cbPupiHistory" HorizontalAlignment="Left" SelectedIndex="0">
+                                        <ComboBoxItem>
+                                            <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">comment</TextBlock>
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="LIMEGREEN">computer</TextBlock>
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Pink">locker</TextBlock>
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Yellow">invoice</TextBlock>
+                                        </ComboBoxItem>
+                                    </ComboBox>
+                                    <DatePicker x:Name="datePupil"></DatePicker>
+                                    <Button Click="Add_Pupil_History_Button_Click">Lägg till</Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox  x:Name="gbLocker" Foreground="White" Header="Skåp" >
+                <GroupBox BorderBrush="red" x:Name="gbLocker" Foreground="White" Header="Skåp" >
                     <StackPanel>
                         <TextBlock TextDecorations="Underline" x:Name="tbLockerNumber" Text="Nummer:    "></TextBlock>
                         <StackPanel Orientation="Horizontal">
@@ -290,27 +293,31 @@
                                 <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Gray">UTAN NYCKEL ELEVINNEHÅLL</TextBlock>
                             </ComboBoxItem>
                         </ComboBox>
-                        <TextBlock Text="Historia"></TextBlock>
-                        <ListView MaxHeight="150" x:Name="listLockerHistory">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}"/>
-                                    <GridViewColumn Width="250" Header="Text">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=GridViewColumn, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                        <TextBlock Text="Lägg till kommentar"></TextBlock>
-                        <TextBox AcceptsReturn="True" TextWrapping="Wrap" x:Name="tbLockerHistory"></TextBox>
-                        <StackPanel Orientation="Horizontal">
-                            <DatePicker x:Name="dateLocker"></DatePicker>
-                            <Button Click="Add_Locker_History_Button_Click">add</Button>
-                        </StackPanel>
+                        <GroupBox Foreground="White" Header="Historia">
+                            <ListView MinHeight="50" MaxHeight="150" x:Name="listLockerHistory">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Date" DisplayMemberBinding="{Binding DateString}"/>
+                                        <GridViewColumn Width="250" Header="Text">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=GridViewColumn, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </GroupBox>
+                        <GroupBox Foreground="White" Header="Lägg till kommentar">
+                            <StackPanel>
+                                <TextBox AcceptsReturn="True" TextWrapping="Wrap" x:Name="tbLockerHistory"></TextBox>
+                                <StackPanel Orientation="Horizontal">
+                                    <DatePicker x:Name="dateLocker"></DatePicker>
+                                    <Button Click="Add_Locker_History_Button_Click">Lägg till</Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
                         <Button Margin="0,10,0,0" IsEnabled="False" x:Name="bAssignPupil" Content="Ge elev skåp" Click="bAssignPupil_Click">
                         </Button>
                         <Button IsEnabled="False" x:Name="bRemovePupil" Content="Ta bort elev från skåp" Click="bRemovePupil_Click">
@@ -344,14 +351,37 @@
                                 <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">DATOR SPÄRRAD</TextBlock>
                             </ComboBoxItem>
                         </ComboBox>
-
+                        <GroupBox Foreground="White" Header="Historia">
+                            <ListView MinHeight="50" MaxHeight="150" x:Name="listPCHistory">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Date" DisplayMemberBinding="{Binding DateString}"/>
+                                        <GridViewColumn Width="250" Header="Text">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=GridViewColumn, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </GroupBox>
+                        <GroupBox Foreground="White" Header="Lägg till kommentar">
+                            <StackPanel>
+                                <TextBox AcceptsReturn="True" TextWrapping="Wrap" x:Name="tbPCHistory"></TextBox>
+                                <StackPanel Orientation="Horizontal">
+                                    <DatePicker x:Name="datePC"></DatePicker>
+                                    <Button Click="Add_Locker_History_Button_Click">Lägg till</Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
                         <Button Margin="0,10,0,0" IsEnabled="False" Content="Ge elev Dator" >
                         </Button>
                         <Button IsEnabled="False" Content="Ta bort dator från elev" >
                         </Button>
                     </StackPanel>
                 </GroupBox>
-
             </StackPanel>
         </ScrollViewer>
         <GridSplitter Grid.Column="0" Grid.Row="2" Width="5" Opacity="0"/>

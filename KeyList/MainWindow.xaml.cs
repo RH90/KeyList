@@ -1,4 +1,5 @@
 ﻿using KeyList;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -78,6 +79,42 @@ namespace KeyList
             //gridView.Columns.Add(GetColumn("Kommentar Elev", new SolidColorBrush(Color.FromArgb(0x25, 0x55, 0x25, 0xFF)), "P.CommentShort", "275", ""));
 
             //gridView.Columns.Move(3, 0);
+
+            //var path = @"C:\Users\rilhas\Desktop\chrome.csv"; // Habeeb, "Dubai Media City, Dubai"
+            //                                                  //using (TextFieldParser csvParser = new TextFieldParser(path))
+            //                                                  //{
+
+            //string text = File.ReadAllText(path);
+
+            //int a = 0;
+            //for (int i = 0; i < text.Length; i++)
+            //{
+
+            //}
+            //    csvParser.CommentTokens = new string[] { "\"" };
+            //    csvParser.SetDelimiters(new string[] { "," });
+            //    csvParser.HasFieldsEnclosedInQuotes = false;
+
+
+            //    // Skip the row with the column names
+            //    csvParser.ReadLine();
+
+            //    while (!csvParser.EndOfData)
+            //    {
+            //        // Read current line fields, pointer moves to the next line.
+            //        string[] fields = csvParser.ReadFields();
+            //        for (int i = 0; i < fields.Length; i++)
+            //        {
+            //            if (i < 5)
+            //                Console.Write(fields[i] + "\t\t");
+
+            //        }
+            //        Console.WriteLine();
+            //    }
+            //}
+
+
+
 
             string[] args = Environment.GetCommandLineArgs();
             Console.WriteLine(args.Length);
@@ -586,6 +623,7 @@ namespace KeyList
         {
             MyItem m = (MyItem)listView.SelectedItem;
 
+
             if (m.L.Owner_id != -1)
             {
                 //TODO edit pupil
@@ -619,12 +657,11 @@ namespace KeyList
 
 
             }
-
-            m.L.Status = cbStatus.SelectedIndex;
-            //m.L.Comment = tbLockerComment.Text;
-
-
-            sql.updateLocker(m.L);
+            if (m.L.Id != -1)
+            {
+                m.L.Status = cbStatus.SelectedIndex;
+                sql.updateLocker(m.L);
+            }
 
             ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
             view.Refresh();
@@ -705,6 +742,7 @@ namespace KeyList
 
 
                 sql.assignPupilToLocker(m.L.Id, window.pupilID);
+
                 m.L.Owner_id = window.pupilID;
                 m.P = sql.getPupil(window.pupilID);
                 m.L.Status = (int)Locker.StatusT.ELEVE_HAR_SLÅPET;

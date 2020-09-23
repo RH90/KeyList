@@ -151,7 +151,7 @@ namespace KeyList
         {
 
         }
-        public GridViewColumn GetColumn(string header, SolidColorBrush background, string binding, string width, string foregroundBinding)
+        public GridViewColumn GetColumn(string header, SolidColorBrush background, string binding, string width, string foregroundBinding, TextAlignment textAlignment)
         {
             GridViewColumn gvc = new GridViewColumn();
             gvc.Header = header;
@@ -162,19 +162,14 @@ namespace KeyList
             tb.SetValue(TextBlock.VerticalAlignmentProperty, VerticalAlignment.Center);
             tb.SetValue(TextBlock.BackgroundProperty, background);
             tb.SetValue(TextBlock.ForegroundProperty, Brushes.White);
+            tb.SetValue(TextBlock.ForegroundProperty, Brushes.White);
+            tb.SetValue(TextBlock.TextAlignmentProperty, textAlignment);
+
             if (width != "")
                 gvc.SetValue(WidthProperty, Double.Parse(width));
 
             Binding bText = new Binding();
             bText.Path = new PropertyPath(binding);
-
-            Binding bWidth = new Binding();
-            bWidth.Path = new PropertyPath("ActualWidth");
-            RelativeSource rsW = new RelativeSource();
-            rsW.Mode = RelativeSourceMode.FindAncestor;
-            rsW.AncestorType = typeof(ListViewItem);
-            rsW.AncestorLevel = 1;
-            bWidth.RelativeSource = rsW;
 
             if (foregroundBinding != "")
             {
@@ -193,7 +188,6 @@ namespace KeyList
             bHeight.RelativeSource = rsH;
 
             tb.SetBinding(TextBlock.TextProperty, bText);
-            tb.SetBinding(TextBlock.WidthProperty, bWidth);
             tb.SetBinding(TextBlock.HeightProperty, bHeight);
 
 

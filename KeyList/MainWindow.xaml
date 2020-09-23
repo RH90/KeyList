@@ -109,14 +109,10 @@
                     </Setter>
                     <Style.Triggers>
                         <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                            <Setter Property="Background" Value="#060606"></Setter>
-                            <Setter Property="BorderBrush" Value="#222" />
-                            <Setter Property="BorderThickness" Value="0,0,0,1" />
+                            <Setter Property="Background" Value="#080808"></Setter>
                         </Trigger>
                         <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                            <Setter Property="Background" Value="Black"></Setter>
-                            <Setter Property="BorderBrush" Value="#222" />
-                            <Setter Property="BorderThickness" Value="0,0,0,1" />
+                            <Setter Property="Background" Value="#000"></Setter>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="Background" Value="red"></Setter>

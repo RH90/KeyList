@@ -26,7 +26,8 @@ namespace KeyList
 
             listView.ItemsSource = MainWindow.sql.GetHistory();
 
-            ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            view.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
             view.Refresh();
 
         }

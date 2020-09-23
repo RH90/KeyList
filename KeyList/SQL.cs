@@ -152,10 +152,10 @@ namespace KeyList
                     {
 
                         string type, comment, owner = "";
-                        int owner_id, origin;
+                        int owner_id, origin, id;
                         long date;
 
-
+                        id = reader.GetInt32(reader.GetOrdinal("id"));
                         origin = reader.GetInt32(reader.GetOrdinal("origin"));
                         type = reader.GetString(reader.GetOrdinal("type"));
                         comment = reader.GetString(reader.GetOrdinal("comment"));
@@ -178,15 +178,14 @@ namespace KeyList
                         }
                         else if (origin == 1)
                         {
-                            owner = getLocker(owner_id).Number + "";
+                            owner = getLockerID(owner_id).Number + "";
                         }
                         else if (origin == 2)
                         {
                             //TODO
                         }
 
-
-                        History h = new History(origin, type, comment, date, owner);
+                        History h = new History(id, origin, type, comment, date, owner);
                         list.Add(h);
                     }
                     catch { }
@@ -214,11 +213,13 @@ namespace KeyList
                     try
                     {
                         string type, comment;
+                        int id_history;
                         type = reader.GetString(reader.GetOrdinal("type"));
                         comment = reader.GetString(reader.GetOrdinal("comment"));
                         long date = reader.GetInt64(reader.GetOrdinal("date"));
+                        id_history = reader.GetInt32(reader.GetOrdinal("id"));
 
-                        History h = new History(origin, type, comment, date, "");
+                        History h = new History(id_history, origin, type, comment, date, "");
                         list.Add(h);
                     }
                     catch { }

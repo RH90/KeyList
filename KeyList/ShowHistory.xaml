@@ -45,10 +45,10 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Origin" DisplayMemberBinding="{Binding Origin}"/>
+                    <GridViewColumn Header="Origin" DisplayMemberBinding="{Binding OriginText}"/>
                     <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}"/>
                     <GridViewColumn Header="Comment" DisplayMemberBinding="{Binding Comment}"/>
-                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}"/>
+                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding DateString}"/>
                     <GridViewColumn Header="Owner" DisplayMemberBinding="{Binding Owner}"/>
                 </GridView>
             </ListView.View>

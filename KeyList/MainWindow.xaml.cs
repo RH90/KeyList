@@ -700,6 +700,8 @@ namespace KeyList
 
                 UpdateTextBoxes(m);
 
+                m.L = sql.getLockerID(m.L.Id);
+
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
 
@@ -754,7 +756,11 @@ namespace KeyList
 
                 sql.UpdatePupil(m.P, false);
 
+
+
                 UpdateTextBoxes(m);
+
+                m.L = sql.getLockerID(m.L.Id);
 
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();

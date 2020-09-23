@@ -102,13 +102,13 @@
     <Compile Include="AssignPupil.xaml.cs">
       <DependentUpon>AssignPupil.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Computer.cs" />
-    <Compile Include="History.cs" />
+    <Compile Include="Objects\Computer.cs" />
+    <Compile Include="Objects\History.cs" />
     <Compile Include="ShowHistory.xaml.cs">
       <DependentUpon>ShowHistory.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Locker.cs" />
-    <Compile Include="Pupil.cs" />
+    <Compile Include="Objects\Locker.cs" />
+    <Compile Include="Objects\Pupil.cs" />
     <Compile Include="ShowPupil.xaml.cs">
       <DependentUpon>ShowPupil.xaml</DependentUpon>
     </Compile>
@@ -176,6 +176,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.113.1\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.113.1\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

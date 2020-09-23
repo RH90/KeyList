@@ -51,7 +51,7 @@ namespace KeyList
                 string commentShort = "";
                 string[] parts = comment.Split('\n');
 
-                int cnt = 3;
+                int cnt = 5;
                 for (int i = 0; i < parts.Length; i++)
                 {
                     if (i >= (parts.Length - cnt))

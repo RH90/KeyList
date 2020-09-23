@@ -9,10 +9,11 @@ namespace KeyList
     class Computer
     {
         private string brand, model, serielnumber, comment, smartwater;
-        private int buy_out, status, owner_id;
+        private int id, buy_out, status, owner_id;
 
-        public Computer(string brand, string model, string serielnumber, string comment, string smartwater, int buy_out, int status, int owner_id)
+        public Computer(int id, string brand, string model, string serielnumber, string comment, string smartwater, int buy_out, int status, int owner_id)
         {
+            this.id = id;
             this.brand = brand;
             this.model = model;
             this.serielnumber = serielnumber;
@@ -31,5 +32,6 @@ namespace KeyList
         public int Buy_out { get => buy_out; set => buy_out = value; }
         public int Status { get => status; set => status = value; }
         public int Owner_id { get => owner_id; set => owner_id = value; }
+        public int Id { get => id; set => id = value; }
     }
 }

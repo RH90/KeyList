@@ -60,7 +60,7 @@
                     <GridViewColumn Header="Start" DisplayMemberBinding="{Binding P.Year}" />
                     <GridViewColumn Header="Årskurs" DisplayMemberBinding="{Binding P.Grade}" />
                     <GridViewColumn Header="Klass" DisplayMemberBinding="{Binding P.Class}" />
-                    <GridViewColumn Header="Kommentar" DisplayMemberBinding="{Binding P.CommentShort}"/>
+                    <GridViewColumn Header="Kommentar" DisplayMemberBinding="{Binding P.HistoryShort}"/>
                 </GridView>
             </ListView.View>
         </ListView>

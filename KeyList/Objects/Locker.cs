@@ -39,9 +39,9 @@ namespace KeyList
         private string floor;
         private int status;
         private int owner_id;
-        private string comment;
+        private string historyShort;
 
-        public Locker(int id, int number, int keys, string floor, int status, int owner_id, string comment)
+        public Locker(int id, int number, int keys, string floor, int status, int owner_id, string historyShort)
         {
             this.id = id;
             this.number = number;
@@ -49,7 +49,7 @@ namespace KeyList
             this.floor = floor;
             this.status = status;
             this.owner_id = owner_id;
-            this.comment = comment;
+            this.historyShort = historyShort;
         }
         public string GetEnum(int i)
         {
@@ -62,33 +62,33 @@ namespace KeyList
         public string Floor { get => floor; set => floor = value; }
         public int Status { get => status; set => status = value; }
         public int Owner_id { get => owner_id; set => owner_id = value; }
-        public string Comment { get => comment; set => comment = value; }
+        //public string Comment { get => comment; set => comment = value; }
 
-        public string CommentShort
-        {
-            get
-            {
-                string commentShort = "";
-                string[] parts = comment.Split('\n');
+        //public string CommentShort
+        //{
+        //    get
+        //    {
+        //        string commentShort = "";
+        //        string[] parts = comment.Split('\n');
+        //        int cnt = 5;
+        //        if (parts.Length < 5)
+        //        {
+        //            cnt = parts.Length;
+        //        }
 
-                int cnt = 5;
-                for (int i = 0; i < parts.Length; i++)
-                {
-                    if (i >= (parts.Length - cnt))
-                    {
-                        commentShort += parts[i];
-                        if (i < (parts.Length - 1))
-                        {
-                            commentShort += "\n";
-                        }
-                    }
-
-                }
-
-                return commentShort;
-            }
-        }
+        //        for (int i = parts.Length - 1; i >= 0 && i >= (parts.Length - cnt); i--)
+        //        {
+        //            commentShort += parts[i];
+        //            if (i > (parts.Length - cnt))
+        //            {
+        //                commentShort += "\n";
+        //            }
+        //        }
+        //        return commentShort;
+        //    }
+        //}
         public string StatusText { get => Enum.GetName(typeof(StatusT), status); }
         public string StatusColor { get => Enum.GetName(typeof(StatusC), status); }
+        public string HistoryShort { get => historyShort; set => historyShort = value; }
     }
 }

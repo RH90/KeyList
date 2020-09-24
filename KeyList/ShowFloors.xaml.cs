@@ -74,7 +74,7 @@ namespace KeyList
                             ToolTipService.SetInitialShowDelay(tb, 0);
                             tb.ToolTip =
                               "==Nycklar==\n" + l.Keys
-                            + "\n==Kommentar==\n" + l.Comment
+                            + "\n==Historia==\n" + l.HistoryShort
                             + "\n==Status==\n" + l.StatusText;
 
                             if (p != null)

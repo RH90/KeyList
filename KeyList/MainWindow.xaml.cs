@@ -677,11 +677,6 @@ namespace KeyList
                 MyItem m = (MyItem)listView.SelectedItem;
                 Console.WriteLine("Remove pupil from: " + m.L.Id);
 
-                if (!m.P.Comment.Equals(""))
-                {
-                    m.P.Comment += "\n";
-                }
-                m.P.Comment += "** " + DateTime.Now.ToString("yyyy-MM-dd_HHmm") + ", " + m.L.Number + "->";
                 sql.UpdatePupil(m.P, false);
 
                 sql.removePupilFromLocker(m.L.Id);
@@ -742,12 +737,6 @@ namespace KeyList
                 m.L.Owner_id = window.pupilID;
                 m.P = sql.getPupil(window.pupilID);
                 m.L.Status = (int)Locker.StatusT.ELEVE_HAR_SLÅPET;
-                if (!m.P.Comment.Equals(""))
-                {
-                    m.P.Comment += "\n";
-                }
-                m.P.Comment += "** " + DateTime.Now.ToString("yyyy-MM-dd_HHmm") + ", ->" + m.L.Number;
-
                 sql.UpdatePupil(m.P, false);
 
 
@@ -805,8 +794,8 @@ namespace KeyList
             {
                 MyItem n = list[i];
                 // Console.WriteLine("JJ" + m.L.Comment.Replace("\n", " ") + "JJ");
-                string comment = n.L.Comment.Replace("\"", "'");
-                text += "\"" + n.L.Number + "\",\"" + n.L.Keys + "\",\"" + n.L.StatusText + "\",\"" + n.P.Firstname + "\",\"" + n.P.Lastname + "\",\"" + n.P.Grade + "\",\"" + n.P.Class + "\",\"" + n.P.Year + "\",\"" + comment + "\"\n";
+                string history = n.L.HistoryShort.Replace("\"", "'");
+                text += "\"" + n.L.Number + "\",\"" + n.L.Keys + "\",\"" + n.L.StatusText + "\",\"" + n.P.Firstname + "\",\"" + n.P.Lastname + "\",\"" + n.P.Grade + "\",\"" + n.P.Class + "\",\"" + n.P.Year + "\",\"" + history + "\"\n";
             }
             try
             {
@@ -851,7 +840,7 @@ namespace KeyList
 
                 MyItem m = (MyItem)listView.Items[i];
                 // Console.WriteLine("JJ" + m.L.Comment.Replace("\n", " ") + "JJ");
-                text += m.L.Number + "\t" + m.L.Keys + "\t" + m.L.StatusText + "\t" + m.P.Firstname + "\t" + m.P.Lastname + "\t" + m.P.Grade + "\t" + m.P.Class + "\t" + m.P.Year + "\t" + m.L.Comment.Replace("\r\n", "").Replace("\n", "") + "\n";
+                text += m.L.Number + "\t" + m.L.Keys + "\t" + m.L.StatusText + "\t" + m.P.Firstname + "\t" + m.P.Lastname + "\t" + m.P.Grade + "\t" + m.P.Class + "\t" + m.P.Year + "\t" + m.L.HistoryShort.Replace("\r\n", "").Replace("\n", "") + "\n";
             }
 
             Clipboard.SetText(text);

@@ -282,16 +282,8 @@ namespace KeyList
                     int id = reader.GetInt32(reader.GetOrdinal("id"));
 
                     List<History> histories = GetHistory(1, id);
-                    string comment = "";
 
-                    for (int i = 0; i < histories.Count; i++)
-                    {
-                        comment += "** " + histories[i].DateString + ", " + histories[i].Comment;
-                        if (i < histories.Count - 1)
-                        {
-                            comment += "\n";
-                        }
-                    }
+                    string comment = getHistoryShort(histories, 5);
 
                     l = new Locker(
                        id,
@@ -326,16 +318,7 @@ namespace KeyList
                     }
 
                     List<History> histories = GetHistory(1, id);
-                    string comment = "";
-
-                    for (int i = 0; i < histories.Count; i++)
-                    {
-                        comment += "** " + histories[i].DateString + ", " + histories[i].Comment;
-                        if (i < histories.Count - 1)
-                        {
-                            comment += "\n";
-                        }
-                    }
+                    string comment = getHistoryShort(histories, 5);
 
                     l = new Locker(
                        reader.GetInt32(reader.GetOrdinal("id")),
@@ -348,6 +331,27 @@ namespace KeyList
                 }
             }
             return l;
+        }
+
+        private static string getHistoryShort(List<History> histories, int cnt)
+        {
+            string comment = "";
+
+            if (cnt > histories.Count)
+            {
+                cnt = histories.Count;
+            }
+
+            for (int i = histories.Count - 1; i >= 0 && i >= histories.Count - 5; i--)
+            {
+                comment += "** " + histories[i].DateString + ", " + histories[i].Comment;
+                if (i > (histories.Count - cnt))
+                {
+                    comment += "\n";
+                }
+            }
+
+            return comment;
         }
 
         public long addLocker(String Locker, string Status, string Keys, string CommentLocker, long OwnerID)
@@ -438,16 +442,8 @@ namespace KeyList
 
                     int id = reader.GetInt32(reader.GetOrdinal("id"));
                     List<History> histories = GetHistory(1, id);
-                    string comment = "";
 
-                    for (int i = 0; i < histories.Count; i++)
-                    {
-                        comment += "** " + histories[i].DateString + ", " + histories[i].Comment;
-                        if (i < histories.Count - 1)
-                        {
-                            comment += "\n";
-                        }
-                    }
+                    string comment = getHistoryShort(histories, 5);
 
                     Pupil p = null;
                     Locker l = new Locker(
@@ -484,7 +480,7 @@ namespace KeyList
                             if (!l.Number.ToString().Equals(parts[i]))
                                 check = false;
                         }
-                        else if (!p.Comment.ToLower().Contains(parts[i]) && !p.Firstname.ToLower().Contains(parts[i]) && !p.Lastname.ToLower().Contains(parts[i]) && !l.Comment.ToLower().Contains(parts[i]))
+                        else if (!p.Firstname.ToLower().Contains(parts[i]) && !p.Lastname.ToLower().Contains(parts[i]))
                         {
                             check = false;
                         }
@@ -528,16 +524,9 @@ namespace KeyList
                 if (reader.Read())
                 {
                     List<History> histories = GetHistory(0, id);
-                    string comment = "";
+                    string comment = getHistoryShort(histories, 5);
 
-                    for (int i = 0; i < histories.Count; i++)
-                    {
-                        comment += "** " + histories[i].DateString + ", " + histories[i].Comment;
-                        if (i < histories.Count - 1)
-                        {
-                            comment += "\n";
-                        }
-                    }
+
                     p = new Pupil(
                         id,
                         reader.GetString(reader.GetOrdinal("grade")),
@@ -568,14 +557,13 @@ namespace KeyList
         }
         public void updateLocker(Locker l)
         {
-            string query = "UPDATE locker set keys=@keys,status=@status,comment=@comment where id=@id";
+            string query = "UPDATE locker set keys=@keys,status=@status where id=@id";
 
             using (SQLiteCommand cmd = new SQLiteCommand(
                 query, con))
             {
                 cmd.Parameters.AddWithValue("@keys", l.Keys);
                 cmd.Parameters.AddWithValue("@status", l.Status);
-                cmd.Parameters.AddWithValue("@comment", l.Comment);
                 cmd.Parameters.AddWithValue("@id", l.Id);
                 cmd.ExecuteNonQuery();
             }
@@ -671,7 +659,7 @@ namespace KeyList
             }
 
 
-            string query = "UPDATE pupil set firstname=@firstname,lastname=@lastname,grade=@grade,classP=@classP,comment=@comment where id=@id";
+            string query = "UPDATE pupil set firstname=@firstname,lastname=@lastname,grade=@grade,classP=@classP where id=@id";
 
             using (SQLiteCommand cmd = new SQLiteCommand(
                 query, con))
@@ -680,7 +668,6 @@ namespace KeyList
                 cmd.Parameters.AddWithValue("@lastname", p.Lastname);
                 cmd.Parameters.AddWithValue("@grade", p.Grade);
                 cmd.Parameters.AddWithValue("@classP", p.Class);
-                cmd.Parameters.AddWithValue("@comment", p.Comment);
                 cmd.Parameters.AddWithValue("@id", p.Id);
                 cmd.ExecuteNonQuery();
             }

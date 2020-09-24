@@ -184,14 +184,14 @@
                     <GridViewColumn  Width="300" Header="Kommentar skåp">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="-6,0" Padding="10,0,0,0" VerticalAlignment="Center" Text="{Binding L.CommentShort,Mode=OneWay}" Background="#250000FF" Foreground="White"  Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}"/>
+                                <TextBlock Margin="-6,0" Padding="10,0,0,0" VerticalAlignment="Center" Text="{Binding L.HistoryShort,Mode=OneWay}" Background="#250000FF" Foreground="White"  Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Width="300" Header="Kommentar Elev">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="-6,0" Padding="10,0,0,0" VerticalAlignment="Center" Text="{Binding P.CommentShort}" Background="#251100AA" Foreground="White"  Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}"/>
+                                <TextBlock Margin="-6,0" Padding="10,0,0,0" VerticalAlignment="Center" Text="{Binding P.HistoryShort}" Background="#251100AA" Foreground="White"  Height="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualHeight}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -209,7 +209,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="1*" />
-
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*" />
@@ -218,10 +219,10 @@
                                 <RowDefinition Height="1*" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Förnamn"></TextBlock>
-                            <TextBox  Grid.Row="1" Grid.Column="0"  KeyUp="TextBlock_KeyDown" x:Name="tbPupilFirstname"></TextBox>
-                            <TextBlock Margin="5,0,0,0" Grid.Row="0" Grid.Column="1"  Text="Efternamn"></TextBlock>
-                            <TextBox Margin="5,0,0,0" Grid.Row="1" Grid.Column="1"  KeyUp="TextBlock_KeyDown" x:Name="tbPupilLastName"></TextBox>
+                            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Text="Förnamn"></TextBlock>
+                            <TextBox  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0"  KeyUp="TextBlock_KeyDown" x:Name="tbPupilFirstname"></TextBox>
+                            <TextBlock Margin="5,0,0,0" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="2"  Text="Efternamn"></TextBlock>
+                            <TextBox Margin="5,0,0,0" Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="2"  KeyUp="TextBlock_KeyDown" x:Name="tbPupilLastName"></TextBox>
 
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Årskurs"></TextBlock>
                             <TextBox Grid.Row="3" Grid.Column="0" KeyUp="TextBlock_KeyDown" x:Name="tbPupilGrade"></TextBox>
@@ -240,7 +241,7 @@
                                         <GridViewColumn Width="250" Header="Text">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=GridViewColumn, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
+                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -329,7 +330,7 @@
                                         <GridViewColumn Width="250" Header="Text">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=GridViewColumn, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
+                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -387,7 +388,7 @@
                                         <GridViewColumn Width="250" Header="Text">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=GridViewColumn, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
+                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>

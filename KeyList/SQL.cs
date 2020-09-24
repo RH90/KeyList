@@ -283,7 +283,7 @@ namespace KeyList
 
                     List<History> histories = GetHistory(1, id);
 
-                    string comment = getHistoryShort(histories, 5);
+                    string comment = getHistoryShort(histories, 2);
 
                     l = new Locker(
                        id,
@@ -305,6 +305,7 @@ namespace KeyList
                 "SELECT * from locker where id=@id", con))
             {
                 cmd.Parameters.AddWithValue("@id", id);
+
                 SQLiteDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -318,7 +319,7 @@ namespace KeyList
                     }
 
                     List<History> histories = GetHistory(1, id);
-                    string comment = getHistoryShort(histories, 5);
+                    string comment = getHistoryShort(histories, 2);
 
                     l = new Locker(
                        reader.GetInt32(reader.GetOrdinal("id")),
@@ -342,7 +343,7 @@ namespace KeyList
                 cnt = histories.Count;
             }
 
-            for (int i = histories.Count - 1; i >= 0 && i >= histories.Count - 5; i--)
+            for (int i = histories.Count - 1; i >= 0 && i >= histories.Count - cnt; i--)
             {
                 comment += "** " + histories[i].DateString + ", " + histories[i].Comment;
                 if (i > (histories.Count - cnt))
@@ -443,7 +444,7 @@ namespace KeyList
                     int id = reader.GetInt32(reader.GetOrdinal("id"));
                     List<History> histories = GetHistory(1, id);
 
-                    string comment = getHistoryShort(histories, 5);
+                    string comment = getHistoryShort(histories, 2);
 
                     Pupil p = null;
                     Locker l = new Locker(

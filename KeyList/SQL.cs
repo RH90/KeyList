@@ -134,20 +134,13 @@ namespace KeyList
         public List<History> GetHistory()
         {
             List<History> list = new List<History>();
-
-            int cnt = GetNumberOfHistory();
             using (SQLiteCommand cmd = new SQLiteCommand(
-               "SELECT * from history", con))
+               "SELECT * from history ORDER BY date DESC", con))
             {
                 SQLiteDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                int cnt = 0;
+                while (reader.Read() && cnt < 2000)
                 {
-                    if (cnt > 2000)
-                    {
-                        cnt--;
-                        continue;
-                    }
                     try
                     {
 
@@ -187,6 +180,7 @@ namespace KeyList
 
                         History h = new History(id, origin, type, comment, date, owner);
                         list.Add(h);
+                        cnt++;
                     }
                     catch { }
                 }
@@ -199,16 +193,16 @@ namespace KeyList
         {
             List<History> list = new List<History>();
 
-            int cnt = GetNumberOfHistory();
             using (SQLiteCommand cmd = new SQLiteCommand(
-               "SELECT * from history where origin=@origin AND owner_id=@owner_id", con))
+               "SELECT * from history where origin=@origin AND owner_id=@owner_id ORDER BY date DESC", con))
             {
                 cmd.Parameters.AddWithValue("@origin", origin);
                 cmd.Parameters.AddWithValue("@owner_id", id);
 
                 SQLiteDataReader reader = cmd.ExecuteReader();
 
-                while (reader.Read())
+                int cnt = 0;
+                while (reader.Read() && cnt < 50)
                 {
                     try
                     {
@@ -221,6 +215,7 @@ namespace KeyList
 
                         History h = new History(id_history, origin, type, comment, date, "");
                         list.Add(h);
+                        cnt++;
                     }
                     catch { }
                 }
@@ -338,15 +333,10 @@ namespace KeyList
         {
             string comment = "";
 
-            if (cnt > histories.Count)
-            {
-                cnt = histories.Count;
-            }
-
-            for (int i = histories.Count - 1; i >= 0 && i >= histories.Count - cnt; i--)
+            for (int i = 0; i < histories.Count && i < cnt; i++)
             {
                 comment += "** " + histories[i].DateString + ", " + histories[i].Comment;
-                if (i > (histories.Count - cnt))
+                if (i < (cnt - 1) && i < (histories.Count - 1))
                 {
                     comment += "\n";
                 }

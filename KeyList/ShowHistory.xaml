@@ -46,10 +46,10 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Origin" DisplayMemberBinding="{Binding OriginText}"/>
+                    <GridViewColumn Header="Owner" DisplayMemberBinding="{Binding Owner}"/>
                     <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}"/>
                     <GridViewColumn Header="Comment" DisplayMemberBinding="{Binding Comment}"/>
                     <GridViewColumn Header="Date" DisplayMemberBinding="{Binding DateString}"/>
-                    <GridViewColumn Header="Owner" DisplayMemberBinding="{Binding Owner}"/>
                 </GridView>
             </ListView.View>
         </ListView>

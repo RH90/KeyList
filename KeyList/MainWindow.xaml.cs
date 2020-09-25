@@ -209,7 +209,7 @@ namespace KeyList
                 for (int i = 0; i < listView.Items.Count; i++)
                 {
                     MyItem m = (MyItem)listView.Items[i];
-                    if (m.L.Owner_id != -1)
+                    if (m.P.Id != -1)
                     {
                         bool check = checkPupil(m.P.Firstname, m.P.Lastname, lines);
                         if (!check)
@@ -374,7 +374,7 @@ namespace KeyList
 
             listLockerHistory.ItemsSource = sql.GetHistory(1, m.L.Id);
             CollectionView viewLocker = (CollectionView)CollectionViewSource.GetDefaultView(listLockerHistory.ItemsSource);
-            viewLocker.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+            //viewLocker.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
             viewLocker.Refresh();
 
             tbPupilFirstname.Text = m.P.Firstname + "";
@@ -390,7 +390,7 @@ namespace KeyList
                 listPupilHistory.ItemsSource = sql.GetHistory(0, m.P.Id);
                 datePupil.SelectedDate = DateTime.Now;
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listPupilHistory.ItemsSource);
-                view.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+                //view.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
                 view.Refresh();
             }
 
@@ -618,7 +618,7 @@ namespace KeyList
             MyItem m = (MyItem)listView.SelectedItem;
 
 
-            if (m.L.Owner_id != -1)
+            if (m.P.Id != -1)
             {
                 //TODO edit pupil
                 string firstname, lastname, grade, classP;
@@ -946,7 +946,7 @@ namespace KeyList
 
 
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listPupilHistory.ItemsSource);
-                view.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+                //view.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
                 view.Refresh();
 
                 datePupil.SelectedDate = DateTime.Now;
@@ -980,7 +980,7 @@ namespace KeyList
                 listLockerHistory.ItemsSource = sql.GetHistory(1, m.L.Id);
 
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listLockerHistory.ItemsSource);
-                view.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+                //view.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
                 view.Refresh();
 
                 dateLocker.SelectedDate = DateTime.Now;

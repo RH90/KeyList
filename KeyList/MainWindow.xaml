@@ -73,6 +73,7 @@
             </ComboBox>
             <TextBox VerticalContentAlignment="Center" Height="30"  Margin="5,0,0,0"  Text="" x:Name="tbSearch" Width="217" KeyDown="tbSearch_Enter"></TextBox>
             <Button Width="30" x:Name="bSearch" Click="bSearch_Click">Sök</Button>
+            <Button Margin="5,0,0,0" Click="Free_PC_Button_Click">Lediga datorer</Button>
             <Button Margin="5,0,0,0" Click="Show_Pupil_Button_Click">Elever utan skåp</Button>
             <Button Margin="5,0,0,0" Click="ShowFloors_Button_Click" >Skåp Layout</Button>
             <Button Margin="5,0,0,0" Click="Export_List_Button_Click" >Exportera lista</Button>

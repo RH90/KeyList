@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace KeyList
 {
-    class Computer
+    public class Computer
     {
-        private string brand, model, serielnumber, comment, smartwater;
+        private string brand, model, serielnumber, comment, smartwater, historyShort;
         private int id, buy_out, status, owner_id;
 
-        public Computer(int id, string brand, string model, string serielnumber, string comment, string smartwater, int buy_out, int status, int owner_id)
+        public Computer(int id, string brand, string model, string serielnumber, string comment, string smartwater, int buy_out, int status, int owner_id, string historyShort)
         {
             this.id = id;
             this.brand = brand;
@@ -22,6 +22,7 @@ namespace KeyList
             this.buy_out = buy_out;
             this.status = status;
             this.owner_id = owner_id;
+            this.historyShort = historyShort;
         }
 
         public string Brand { get => brand; set => brand = value; }
@@ -33,5 +34,6 @@ namespace KeyList
         public int Status { get => status; set => status = value; }
         public int Owner_id { get => owner_id; set => owner_id = value; }
         public int Id { get => id; set => id = value; }
+        public string HistoryShort { get => historyShort; set => historyShort = value; }
     }
 }

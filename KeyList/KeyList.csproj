@@ -96,6 +96,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddComputer.xaml.cs">
+      <DependentUpon>AddComputer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddPupil.xaml.cs">
       <DependentUpon>AddPupil.xaml</DependentUpon>
     </Compile>
@@ -104,6 +107,9 @@
     </Compile>
     <Compile Include="Objects\Computer.cs" />
     <Compile Include="Objects\History.cs" />
+    <Compile Include="ShowComputers.xaml.cs">
+      <DependentUpon>ShowComputers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShowHistory.xaml.cs">
       <DependentUpon>ShowHistory.xaml</DependentUpon>
     </Compile>
@@ -116,11 +122,19 @@
     <Compile Include="ShowFloors.xaml.cs">
       <DependentUpon>ShowFloors.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddComputer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddPupil.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AssignPupil.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowComputers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

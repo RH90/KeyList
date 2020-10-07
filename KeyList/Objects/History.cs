@@ -13,7 +13,9 @@ namespace KeyList
         {
             GENERAL = -1,
             PUPIL = 0,
-            LOCKER = 1
+            LOCKER = 1,
+            COMPUTER = 2
+
         }
 
         int origin, id;

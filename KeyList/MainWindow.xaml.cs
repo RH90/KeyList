@@ -659,10 +659,9 @@ namespace KeyList
 
                 sql.updateComputer(m.C);
             }
-
-
             ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
             view.Refresh();
+            listView.UpdateLayout();
 
             bSave.IsEnabled = false;
 
@@ -697,7 +696,7 @@ namespace KeyList
 
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
-
+                listView.UpdateLayout();
 
                 gbPupil.IsEnabled = false;
 
@@ -751,6 +750,7 @@ namespace KeyList
 
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
+                listView.UpdateLayout();
 
                 ExportCSV();
 
@@ -907,6 +907,7 @@ namespace KeyList
                 gridView.Columns.Add(GetColumn("Kommentar Dator", new SolidColorBrush(Color.FromArgb(0x25, 0x00, 0, 0xFF)), "C.HistoryShort", "300", "", TextAlignment.Left));
                 gridView.Columns.Add(GetColumn("Kommentar Elev", new SolidColorBrush(Color.FromArgb(0x25, 0, 0x22, 0xFF)), "P.HistoryShort", "300", "", TextAlignment.Left));
 
+                listView.UpdateLayout();
                 System.GC.Collect();
             }
         }
@@ -933,6 +934,7 @@ namespace KeyList
                 gridView.Columns.Add(GetColumn("Kommentar Skåp", new SolidColorBrush(Color.FromArgb(0x25, 0, 0x00, 0xFF)), "L.HistoryShort", "300", "", TextAlignment.Left));
                 gridView.Columns.Add(GetColumn("Kommentar Elev", new SolidColorBrush(Color.FromArgb(0x25, 0, 0x22, 0xFF)), "P.HistoryShort", "300", "", TextAlignment.Left));
 
+                listView.UpdateLayout();
                 System.GC.Collect();
 
             }
@@ -1069,6 +1071,7 @@ namespace KeyList
                 m.C = sql.getComputerSerial(window.s);
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
+                listView.UpdateLayout();
 
                 bGivePC.IsEnabled = false;
                 bAddGivePC.IsEnabled = false;
@@ -1102,7 +1105,7 @@ namespace KeyList
 
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
-
+                listView.UpdateLayout();
 
                 bGivePC.IsEnabled = true;
                 bAddGivePC.IsEnabled = true;
@@ -1140,6 +1143,7 @@ namespace KeyList
 
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
+                listView.UpdateLayout();
 
                 bGivePC.IsEnabled = false;
                 bAddGivePC.IsEnabled = false;

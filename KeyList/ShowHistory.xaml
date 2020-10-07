@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyList"
         mc:Ignorable="d"
-        Title="History" Height="454.675" Width="600">
+        Title="History" Height="454.675" Width="650">
     <Grid Background="Black">
         <ListView  Background="Black" AlternationCount="2" x:Name="listView" Grid.Row="1" Margin="10,0,10,10" >
             <ListView.ItemContainerStyle>

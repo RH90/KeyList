@@ -255,9 +255,18 @@ namespace KeyList
                         }
                         else if (origin == 2)
                         {
-                            //TODO
-                        }
+                            Computer c = getComputer(owner_id);
+                            if (c == null)
+                            {
+                                owner = "null";
+                            }
+                            else
+                            {
+                                owner = c.Serielnumber + "";
 
+                            }
+
+                        }
                         History h = new History(id, origin, type, comment, date, owner);
                         list.Add(h);
                         cnt++;

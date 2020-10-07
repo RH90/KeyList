@@ -1,6 +1,6 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,50 +16,29 @@ using System.Windows.Shapes;
 namespace KeyList
 {
     /// <summary>
-    /// Interaction logic for AssignPupil.xaml
+    /// Interaction logic for AssignComputer.xaml
     /// </summary>
-    public partial class AssignPupil : Window
+    public partial class AssignComputer : Window
     {
-        public int pupilID = -1;
-        public AssignPupil(int locker)
+        public string s = "";
+        public AssignComputer()
         {
-
             InitializeComponent();
-            Title = "Ge skåp nr." + locker;
-            listView.ItemsSource = MainWindow.sql.getUnAssignedPupulList();
-
-            if (listView.Items.Count > 0)
-            {
-                listView.SelectedIndex = 0;
-            }
+            listView.ItemsSource = MainWindow.sql.getUnAssignedComputerList("");
         }
 
-        private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void bOK_Click(object sender, RoutedEventArgs e)
         {
-            if (listView.SelectedIndex != -1)
+            if (listView.SelectedIndex != -1 )
             {
                 MyItem m = (MyItem)listView.SelectedItem;
-                pupilID = m.P.Id;
-            }
-        }
-        public void listView_MouseClick(object sender, MouseButtonEventArgs e)
-        {
-
-
-
-        }
-        private void bAccept_Click(object sender, RoutedEventArgs e)
-        {
-            if (listView.SelectedIndex != -1 && pupilID != -1)
-            {
+                s = m.C.Serielnumber;
                 this.DialogResult = true;
             }
             else
             {
                 this.DialogResult = false;
             }
-
-
 
             this.Close();
         }
@@ -68,6 +47,18 @@ namespace KeyList
         {
             this.DialogResult = false;
             this.Close();
+        }
+
+        private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void bSearch_Click(object sender, RoutedEventArgs e)
+        {
+            listView.ItemsSource = MainWindow.sql.getUnAssignedComputerList(tbSearch.Text);
+            ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            view.Refresh();
         }
     }
 }

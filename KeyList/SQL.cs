@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.CodeDom;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
@@ -72,6 +73,82 @@ namespace KeyList
                 "); ", con).ExecuteNonQuery();
 
 
+
+        }
+        //TODO add history
+        public void removeComputer(int id)
+        {
+            //    Pupil p = getPupil(id);
+            //    InsertHistory(-1, -1, "removed", p.ToString, DateTime.Now.Ticks);
+
+            using (SQLiteCommand cmd = new SQLiteCommand("DELETE FROM computer where id=@id", con))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        // TODO add hsitory
+        public List<MyItem> getUnAssignedComputerList(string search)
+        {
+            List<MyItem> list = new List<MyItem>();
+            string query = "select * from computer where owner_id=-1 OR owner_id isnull;";
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                query, con))
+            {
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    search = search.ToLower();
+
+
+
+                    Computer c = new Computer(
+                        reader.GetInt32(reader.GetOrdinal("id")),
+                        reader.GetString(reader.GetOrdinal("brand")),
+                        reader.GetString(reader.GetOrdinal("model")),
+                        reader.GetString(reader.GetOrdinal("serial")),
+                        reader.GetString(reader.GetOrdinal("comment")),
+                        reader.GetString(reader.GetOrdinal("smartwater")),
+                        reader.GetInt32(reader.GetOrdinal("buy_out")),
+                        reader.GetInt32(reader.GetOrdinal("status")),
+                        -1,
+                        "");
+
+                    if (c.Serielnumber.ToLower().Contains(search) || c.Model.ToLower().Contains(search) || c.Smartwater.ToLower().Contains(search) || c.Brand.ToLower().Contains(search))
+                        list.Add(new MyItem
+                        {
+                            C = c
+                        });
+                }
+            }
+
+            return list;
+        }
+
+        // TODO add history
+        public bool addComputer(string brand, string model, string serial, string smartwater)
+        {
+            //Pupil p = new Pupil(-1, Grade, Class, Year, FirstName, LastName, "");
+            //InsertHistory(-1, -1, "added", p.ToString, DateTime.Now.Ticks);
+
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand("INSERT INTO computer (brand,model,serial,smartwater) VALUES (@brand,@model,@serial,@smartwater)", con))
+                {
+                    cmd.Parameters.AddWithValue("@brand", brand);
+                    cmd.Parameters.AddWithValue("@model", model);
+                    cmd.Parameters.AddWithValue("@serial", serial);
+                    cmd.Parameters.AddWithValue("@smartwater", smartwater);
+                    cmd.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
 
         }
 
@@ -447,7 +524,7 @@ namespace KeyList
                         comment);
 
                     // Console.WriteLine(l.Owner_id);
-
+                    Computer c = new MyItem().C;
                     if (owner == -1)
                     {
                         p = new Pupil(-1, "", "", "", "", "", "");
@@ -455,6 +532,11 @@ namespace KeyList
                     else
                     {
                         p = getPupil(owner);
+
+                        Computer cTmp = getComputerByOwner(owner);
+
+                        if (cTmp != null)
+                            c = cTmp;
                     }
 
                     //Console.WriteLine(reader.GetOrdinal("locker.owner_id"));
@@ -494,8 +576,9 @@ namespace KeyList
                         list.Add(new MyItem
                         {
                             P = p,
-                            L = l
-                        }); ;
+                            L = l,
+                            C = c
+                        });
                     }
 
                 }
@@ -529,6 +612,126 @@ namespace KeyList
                 }
             }
             return p;
+        }
+
+        //TODO add history
+        public Computer getComputer(int id)
+        {
+            Computer c = null;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                "SELECT * from computer where id=@id", con))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    //List<History> histories = GetHistory(0, id);
+                    //string comment = getHistoryShort(histories, 5);
+                    int owner_id;
+
+                    if (!int.TryParse(reader.GetValue(reader.GetOrdinal("owner_id")) + "", out owner_id))
+                    {
+
+                        owner_id = -1;
+                    }
+
+
+                    c = new Computer(
+                        reader.GetInt32(reader.GetOrdinal("id")),
+                        reader.GetString(reader.GetOrdinal("brand")),
+                        reader.GetString(reader.GetOrdinal("model")),
+                        reader.GetString(reader.GetOrdinal("serial")),
+                        reader.GetString(reader.GetOrdinal("comment")),
+                        reader.GetString(reader.GetOrdinal("smartwater")),
+                        reader.GetInt32(reader.GetOrdinal("buy_out")),
+                        reader.GetInt32(reader.GetOrdinal("status")),
+                        owner_id,
+                        "add history");
+                }
+            }
+            return c;
+        }
+
+        public void updateComputer(Computer c)
+        {
+            string query = "UPDATE computer set brand=@brand,model=@model,serial=@serial,smartwater=@smartwater,comment=@comment,status=@status,buy_out=@buy_out where id=@id";
+
+            try
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@brand", c.Brand);
+                    cmd.Parameters.AddWithValue("@model", c.Model);
+                    cmd.Parameters.AddWithValue("@serial", c.Serielnumber);
+                    cmd.Parameters.AddWithValue("@smartwater", c.Smartwater);
+                    cmd.Parameters.AddWithValue("@comment", c.Comment);
+                    cmd.Parameters.AddWithValue("@status", c.Status);
+                    cmd.Parameters.AddWithValue("@buy_out", c.Buy_out);
+                    cmd.Parameters.AddWithValue("@id", c.Id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+
+            }
+
+        }
+
+        //TODO add history
+        public Computer getComputerByOwner(int owner_id)
+        {
+            Computer c = null;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                "SELECT * from computer where owner_id=@owner_id", con))
+            {
+                cmd.Parameters.AddWithValue("@owner_id", owner_id);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    //List<History> histories = GetHistory(0, id);
+                    //string comment = getHistoryShort(histories, 5);
+
+                    if (!int.TryParse(reader.GetValue(reader.GetOrdinal("owner_id")) + "", out owner_id))
+                    {
+
+                        owner_id = -1;
+                    }
+
+
+                    c = new Computer(
+                        reader.GetInt32(reader.GetOrdinal("id")),
+                        reader.GetString(reader.GetOrdinal("brand")),
+                        reader.GetString(reader.GetOrdinal("model")),
+                        reader.GetString(reader.GetOrdinal("serial")),
+                        reader.GetString(reader.GetOrdinal("comment")),
+                        reader.GetString(reader.GetOrdinal("smartwater")),
+                        reader.GetInt32(reader.GetOrdinal("buy_out")),
+                        reader.GetInt32(reader.GetOrdinal("status")),
+                        owner_id,
+                        "add history");
+                }
+            }
+            return c;
+        }
+        public int getLastComputerID()
+        {
+            int lastId = -1;
+            using (SQLiteCommand cmd = new SQLiteCommand("SELECT id from computer", con))
+            {
+                //cmd.Parameters.AddWithValue("@id", lastID);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    lastId = reader.GetInt32(reader.GetOrdinal("id"));
+                }
+            }
+            return lastId;
         }
         public int getLastPupilID()
         {
@@ -660,6 +863,71 @@ namespace KeyList
                 cmd.Parameters.AddWithValue("@grade", p.Grade);
                 cmd.Parameters.AddWithValue("@classP", p.Class);
                 cmd.Parameters.AddWithValue("@id", p.Id);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        // TODO add history
+        public void assignComputerToPupil(string serial, int pupilID)
+        {
+            string query = "UPDATE computer set owner_id=@owner_id,status=1 where serial=@serial";
+
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                query, con))
+            {
+                cmd.Parameters.AddWithValue("@owner_id", pupilID);
+                cmd.Parameters.AddWithValue("@serial", serial);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public Computer getComputerSerial(string serial)
+        {
+            Computer c = null;
+
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                "SELECT * from computer where serial=@serial", con))
+            {
+                cmd.Parameters.AddWithValue("@serial", serial);
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    //List<History> histories = GetHistory(0, id);
+                    //string comment = getHistoryShort(histories, 5);
+                    int owner_id;
+
+                    if (!int.TryParse(reader.GetValue(reader.GetOrdinal("owner_id")) + "", out owner_id))
+                    {
+
+                        owner_id = -1;
+                    }
+
+
+                    c = new Computer(
+                        reader.GetInt32(reader.GetOrdinal("id")),
+                        reader.GetString(reader.GetOrdinal("brand")),
+                        reader.GetString(reader.GetOrdinal("model")),
+                        reader.GetString(reader.GetOrdinal("serial")),
+                        reader.GetString(reader.GetOrdinal("comment")),
+                        reader.GetString(reader.GetOrdinal("smartwater")),
+                        reader.GetInt32(reader.GetOrdinal("buy_out")),
+                        reader.GetInt32(reader.GetOrdinal("status")),
+                        owner_id,
+                        "add history");
+                }
+            }
+            return c;
+        }
+        //TODO add history
+        public void removePCFromPupil(int id)
+        {
+
+            string query = "UPDATE computer set owner_id=null,status=0 where id=@id";
+
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                query, con))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.ExecuteNonQuery();
             }
         }

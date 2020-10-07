@@ -1,4 +1,5 @@
 ﻿using KeyList;
+
 using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections;
@@ -46,6 +47,8 @@ namespace KeyList
     // columns: serial, type, computer comment, pupil comment(history of computers)
     // Add,remove,edit computers
 
+    // lägg till
+
     // give student temp removed status when graduated or removed early
     // remove history
     //replace comment with history
@@ -63,60 +66,6 @@ namespace KeyList
         public MainWindow()
         {
             InitializeComponent();
-
-
-
-
-            //gridView.Columns.Clear();
-            //gridView.Columns.Add(GetColumn("Firstname", new SolidColorBrush(Color.FromArgb(0x25, 0x25, 0xDD, 0x55)), "P.Firstname", "", ""));
-            //gridView.Columns.Add(GetColumn("Lastname", new SolidColorBrush(Color.FromArgb(0x25, 0x25, 0xDD, 0x55)), "P.Lastname", "", ""));
-            //gridView.Columns.Add(GetColumn("Klass", new SolidColorBrush(Color.FromArgb(0x25, 0x25, 0xDD, 0x55)), "P.GradeClass", "", ""));
-            //gridView.Columns.Add(GetColumn("Start", new SolidColorBrush(Color.FromArgb(0x25, 0x25, 0xDD, 0x55)), "P.Year", "", ""));
-
-            //gridView.Columns.Add(GetColumn("Skåp", new SolidColorBrush(Color.FromArgb(0x25, 0xDD, 0x25, 0x25)), "L.Number", "", ""));
-            //gridView.Columns.Add(GetColumn("Plan", new SolidColorBrush(Color.FromArgb(0x25, 0xDD, 0x25, 0x25)), "L.Floor", "", ""));
-            //gridView.Columns.Add(GetColumn("Status", new SolidColorBrush(Color.FromArgb(0x25, 0xDD, 0x25, 0x25)), "L.StatusText", "", "L.StatusColor"));
-            //gridView.Columns.Add(GetColumn("Nycklar", new SolidColorBrush(Color.FromArgb(0x25, 0xDD, 0x25, 0x25)), "L.Keys", "", ""));
-
-            //gridView.Columns.Add(GetColumn("Kommentar skåp", new SolidColorBrush(Color.FromArgb(0x25, 0x25, 0x25, 0xDD)), "L.CommentShort", "359", ""));
-            //gridView.Columns.Add(GetColumn("Kommentar Elev", new SolidColorBrush(Color.FromArgb(0x25, 0x55, 0x25, 0xFF)), "P.CommentShort", "275", ""));
-
-            //gridView.Columns.Move(3, 0);
-
-            //var path = @"C:\Users\rilhas\Desktop\chrome.csv"; // Habeeb, "Dubai Media City, Dubai"
-            //                                                  //using (TextFieldParser csvParser = new TextFieldParser(path))
-            //                                                  //{
-
-            //string text = File.ReadAllText(path);
-
-            //int a = 0;
-            //for (int i = 0; i < text.Length; i++)
-            //{
-
-            //}
-            //    csvParser.CommentTokens = new string[] { "\"" };
-            //    csvParser.SetDelimiters(new string[] { "," });
-            //    csvParser.HasFieldsEnclosedInQuotes = false;
-
-
-            //    // Skip the row with the column names
-            //    csvParser.ReadLine();
-
-            //    while (!csvParser.EndOfData)
-            //    {
-            //        // Read current line fields, pointer moves to the next line.
-            //        string[] fields = csvParser.ReadFields();
-            //        for (int i = 0; i < fields.Length; i++)
-            //        {
-            //            if (i < 5)
-            //                Console.Write(fields[i] + "\t\t");
-
-            //        }
-            //        Console.WriteLine();
-            //    }
-            //}
-
-
 
 
             string[] args = Environment.GetCommandLineArgs();
@@ -147,6 +96,7 @@ namespace KeyList
             view.Refresh();
 
             gbPupil.IsEnabledChanged += Is_GbPupil_Enabled;
+
 
         }
 
@@ -355,10 +305,25 @@ namespace KeyList
             if (m.P.Id == -1)
             {
                 gbPupil.IsEnabled = false;
+                gbPC.IsEnabled = false;
             }
             else
             {
                 gbPupil.IsEnabled = true;
+                gbPC.IsEnabled = true;
+            }
+
+            if (m.C.Id != -1)
+            {
+                bGivePC.IsEnabled = false;
+                bAddGivePC.IsEnabled = false;
+                bRemovePC.IsEnabled = true;
+            }
+            else
+            {
+                bGivePC.IsEnabled = true;
+                bAddGivePC.IsEnabled = true;
+                bRemovePC.IsEnabled = false;
             }
 
             UpdateTextBoxes(m);
@@ -397,6 +362,13 @@ namespace KeyList
                 view.Refresh();
             }
 
+            tbPCBrand.Text = m.C.Brand;
+            tbPCModel.Text = m.C.Model;
+            tbPCSerial.Text = m.C.Serielnumber;
+            tbPCComment.Text = m.C.Comment;
+            tbPCSmartwater.Text = m.C.Smartwater;
+            cbPCStatus.SelectedIndex = m.C.Status;
+            cbPCBuyOut.SelectedIndex = m.C.Buy_out;
 
         }
 
@@ -614,8 +586,9 @@ namespace KeyList
             }
             else
             {
-                bRemovePupil.IsEnabled = true;
-                bAssignPupil.IsEnabled = false;
+                bGivePC.IsEnabled = false;
+                bAddGivePC.IsEnabled = false;
+                bRemovePC.IsEnabled = true;
             }
 
         }
@@ -663,6 +636,20 @@ namespace KeyList
                 m.L.Status = cbStatus.SelectedIndex;
                 sql.updateLocker(m.L);
             }
+
+            if (m.C.Id != -1)
+            {
+                m.C.Model = tbPCModel.Text;
+                m.C.Brand = tbPCBrand.Text;
+                m.C.Smartwater = tbPCSmartwater.Text;
+                m.C.Comment = tbPCComment.Text;
+                m.C.Status = cbPCStatus.SelectedIndex;
+                m.C.Buy_out = cbPCBuyOut.SelectedIndex;
+
+
+                sql.updateComputer(m.C);
+            }
+
 
             ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
             view.Refresh();
@@ -907,7 +894,7 @@ namespace KeyList
                 gridView.Columns.Add(GetColumn("Buy_out", new SolidColorBrush(Color.FromArgb(0x25, 0xFF, 0, 0)), "C.Buy_out", "", "", TextAlignment.Center));
                 gridView.Columns.Add(GetColumn("Status", new SolidColorBrush(Color.FromArgb(0x25, 0xFF, 0, 0)), "C.Status", "", "", TextAlignment.Center));
 
-                gridView.Columns.Add(GetColumn("Status", new SolidColorBrush(Color.FromArgb(0x25, 0x00, 0, 0xFF)), "C.HistoryShort", "300", "", TextAlignment.Center));
+                gridView.Columns.Add(GetColumn("Kommentar Dator", new SolidColorBrush(Color.FromArgb(0x25, 0x00, 0, 0xFF)), "C.HistoryShort", "300", "", TextAlignment.Left));
                 gridView.Columns.Add(GetColumn("Kommentar Elev", new SolidColorBrush(Color.FromArgb(0x25, 0, 0x22, 0xFF)), "P.HistoryShort", "300", "", TextAlignment.Left));
 
                 System.GC.Collect();
@@ -1021,18 +1008,106 @@ namespace KeyList
 
             }
         }
+
+        private void Add_PC_History_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void bGivePC_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new AssignComputer();
+            window.ShowDialog();
+
+            if (window.s != "")
+            {
+                MyItem m = (MyItem)listView.SelectedItem;
+                sql.assignComputerToPupil(window.s, m.P.Id);
+
+                m.C = sql.getComputerSerial(window.s);
+                ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                view.Refresh();
+
+                bGivePC.IsEnabled = false;
+                bAddGivePC.IsEnabled = false;
+                bRemovePC.IsEnabled = true;
+                UpdateTextBoxes(m);
+            }
+        }
+
+        private void bRemovePC_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Ta bort dator från elev?", "Ta Bort", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+
+                MyItem m = (MyItem)listView.SelectedItem;
+                Console.WriteLine("Remove PC from: " + m.P.Id);
+
+                //sql.UpdatePupil(m.P, false);
+
+                sql.removePCFromPupil(m.C.Id);
+                // m.C.Owner_id = -1;
+                m.C = new Computer(-1, "", "", "", "", "", -1, -1, -1, "");
+
+
+
+                //m.L.Status = (int)Locker.StatusT.LÅST_AV_SKOLAN;
+
+                UpdateTextBoxes(m);
+
+                //m.L = sql.getLockerID(m.L.Id);
+
+                ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                view.Refresh();
+
+
+                bGivePC.IsEnabled = true;
+                bAddGivePC.IsEnabled = true;
+                bRemovePC.IsEnabled = false;
+
+                UpdateTextBoxes(m);
+                //ExportCSV();
+
+                ListViewItem item = listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem) as ListViewItem;
+                if (item != null)
+                {
+                    item.Focus();
+                }
+                else
+                {
+                    Console.WriteLine("item null");
+                }
+
+            }
+        }
+        //add a computer and give it to student with the serialnumber
+        private void bAddGivePC_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new AddComputer();
+            window.ShowDialog();
+
+
+            if (window.s != "")
+            {
+                MyItem m = (MyItem)listView.SelectedItem;
+                sql.assignComputerToPupil(window.s, m.P.Id);
+
+                m.C = sql.getComputerSerial(window.s);
+                ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                view.Refresh();
+
+                bGivePC.IsEnabled = false;
+                bAddGivePC.IsEnabled = false;
+                bRemovePC.IsEnabled = true;
+                UpdateTextBoxes(m);
+            }
+
+
+            Console.WriteLine("Serial added:" + window.s);
+        }
     }
 
 }
 
-public class MyItem
-{
 
-    private Pupil p = new Pupil(-1, "", "", "", "", "", "");
-    private Locker l = new Locker(-1, -1, -1, "", -1, -1, "");
-    private Computer c = new Computer(-1, "", "", "", "", "", -1, -1, -1, "");
-    public Pupil P { get => p; set => p = value; }
-    public Locker L { get => l; set => l = value; }
-    public Computer C { get => c; set => c = value; }
-
-}

@@ -19,19 +19,36 @@ namespace KeyList
     /// </summary>
     public partial class AddComputer : Window
     {
+        public string s = "";
         public AddComputer()
         {
             InitializeComponent();
+            Computer c = MainWindow.sql.getComputer(MainWindow.sql.getLastComputerID());
+            if (c != null)
+            {
+                tbBrand.Text = c.Brand;
+                tbModel.Text = c.Model;
+            }
         }
 
         private void bCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            DialogResult = null;
+            Close();
         }
 
         private void bOK_Click(object sender, RoutedEventArgs e)
         {
+            string brand = tbBrand.Text;
+            string model = tbModel.Text;
+            string serial = tbSerielnumber.Text;
+            string smartwater = tbSmartwater.Text;
 
+
+            bool check = MainWindow.sql.addComputer(brand, model, serial, smartwater);
+            if (check)
+                s = serial;
+            Close();
         }
     }
 }

@@ -23,10 +23,13 @@ namespace KeyList
         {
             InitializeComponent();
             Pupil p = MainWindow.sql.getPupil(MainWindow.sql.getLastPupilID());
-            tbPupilGrade.Text = p.Grade;
-            tbPupilClass.Text = p.Class;
-            tbPupilYear.Text = p.Year;
 
+            if (p != null)
+            {
+                tbPupilGrade.Text = p.Grade;
+                tbPupilClass.Text = p.Class;
+                tbPupilYear.Text = p.Year;
+            }
         }
 
         private void bOK_Click(object sender, RoutedEventArgs e)

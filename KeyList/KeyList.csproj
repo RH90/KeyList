@@ -102,11 +102,15 @@
     <Compile Include="AddPupil.xaml.cs">
       <DependentUpon>AddPupil.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AssignComputer.xaml.cs">
+      <DependentUpon>AssignComputer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AssignPupil.xaml.cs">
       <DependentUpon>AssignPupil.xaml</DependentUpon>
     </Compile>
     <Compile Include="Objects\Computer.cs" />
     <Compile Include="Objects\History.cs" />
+    <Compile Include="Objects\MyItem.cs" />
     <Compile Include="ShowComputers.xaml.cs">
       <DependentUpon>ShowComputers.xaml</DependentUpon>
     </Compile>
@@ -127,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddPupil.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AssignComputer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

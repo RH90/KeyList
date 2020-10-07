@@ -1,11 +1,11 @@
-﻿<Window x:Class="KeyList.ShowComputers"
+﻿<Window x:Class="KeyList.AssignComputer"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyList"
         mc:Ignorable="d"
-             Title="ShowComputers" Height="550" Width="635.195">
+       Title="AssignComputer" Height="550" Width="635.195">
     <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -71,7 +71,7 @@
             <TextBox Text="" Width="300" x:Name="tbSearch"></TextBox>
             <Button Width="59" x:Name="bSearch"  Content="SÖK"  Click="bSearch_Click"/>
         </StackPanel>
-        <Button  Margin="5,5,5,5" Grid.Column="0" Grid.Row="2" Content="Add"  Click="ADD_Button_Click"/>
-        <Button Margin="5,5,5,5" Grid.Column="1" Grid.Row="2" Content="Remove" Click="REMOVE_Button_Click"/>
+        <Button  Margin="5,5,5,5" Grid.Column="0" Grid.Row="2" Content="OK" x:Name="bOK" Click="bOK_Click"/>
+        <Button Margin="5,5,5,5" Grid.Column="1" Grid.Row="2" Content="Cancel" x:Name="bCancel" Click="bCancel_Click"/>
     </Grid>
 </Window>

@@ -361,13 +361,15 @@
                         <TextBlock Text="Modell"></TextBlock>
                         <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPCModel"></TextBox>
                         <TextBlock Text="Serienummer"></TextBlock>
+                        <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPCSmartwater"></TextBox>
+                        <TextBlock Text="Smartwater"></TextBlock>
                         <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPCSerial"></TextBox>
                         <TextBlock Text="Kommentar"></TextBlock>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="200">
                             <TextBox TextWrapping="Wrap" KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbPCComment"></TextBox>
                         </ScrollViewer>
                         <TextBlock Text="Status"></TextBlock>
-                        <ComboBox PreviewMouseDown="TextBlock_KeyDown" HorizontalAlignment="Left" Width="329">
+                        <ComboBox  x:Name="cbPCStatus" PreviewMouseDown="TextBlock_KeyDown" HorizontalAlignment="Left" Width="329">
                             <ComboBoxItem>
                                 <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="LIMEGREEN">LEDIG DATOR</TextBlock>
                             </ComboBoxItem>
@@ -379,6 +381,23 @@
                             </ComboBoxItem>
                             <ComboBoxItem>
                                 <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">DATOR SPÄRRAD</TextBlock>
+                            </ComboBoxItem>
+                        </ComboBox>
+                        <ComboBox  x:Name="cbPCBuyOut" PreviewMouseDown="TextBlock_KeyDown" HorizontalAlignment="Left" Width="329">
+                            <ComboBoxItem>
+                                <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="LIMEGREEN">Kopplad till EDU</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Pink">Vill köpa loss</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Yellow">Har betalt chrome</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">Är kopplad bort</TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">Okänt</TextBlock>
                             </ComboBoxItem>
                         </ComboBox>
                         <GroupBox Foreground="White" Header="Historia">
@@ -402,14 +421,17 @@
                                 <TextBox AcceptsReturn="True" TextWrapping="Wrap" x:Name="tbPCHistory"></TextBox>
                                 <StackPanel Orientation="Horizontal">
                                     <DatePicker x:Name="datePC"></DatePicker>
-                                    <Button Click="Add_Locker_History_Button_Click">Lägg till</Button>
+                                    <Button Click="Add_PC_History_Button_Click">Lägg till</Button>
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>
-                        <Button Margin="0,10,0,0" IsEnabled="False" Content="Ge elev Dator" >
+                        <Button Click="bGivePC_Click" x:Name="bGivePC" Margin="0,10,0,0" IsEnabled="False" Content="Ge elev Dator" >
                         </Button>
-                        <Button IsEnabled="False" Content="Ta bort dator från elev" >
+                        <Button Click="bAddGivePC_Click" x:Name="bAddGivePC" IsEnabled="False" Content="Lägg till och ge dator" >
                         </Button>
+                        <Button Click="bRemovePC_Click" x:Name="bRemovePC" IsEnabled="False" Content="Ta bort dator från elev" >
+                        </Button>
+
                     </StackPanel>
                 </GroupBox>
             </StackPanel>

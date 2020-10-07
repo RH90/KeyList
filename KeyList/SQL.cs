@@ -102,10 +102,13 @@ namespace KeyList
                 {
                     search = search.ToLower();
 
+                    int id = reader.GetInt32(reader.GetOrdinal("id"));
+                    List<History> histories = GetHistory(2, id);
 
+                    string shortHistory = getHistoryShort(histories, 4);
 
                     Computer c = new Computer(
-                        reader.GetInt32(reader.GetOrdinal("id")),
+                        id,
                         reader.GetString(reader.GetOrdinal("brand")),
                         reader.GetString(reader.GetOrdinal("model")),
                         reader.GetString(reader.GetOrdinal("serial")),
@@ -114,7 +117,7 @@ namespace KeyList
                         reader.GetInt32(reader.GetOrdinal("buy_out")),
                         reader.GetInt32(reader.GetOrdinal("status")),
                         -1,
-                        "");
+                        shortHistory);
 
                     if (c.Serielnumber.ToLower().Contains(search) || c.Model.ToLower().Contains(search) || c.Smartwater.ToLower().Contains(search) || c.Brand.ToLower().Contains(search))
                         list.Add(new MyItem
@@ -627,7 +630,7 @@ namespace KeyList
 
                 if (reader.Read())
                 {
-                    //List<History> histories = GetHistory(0, id);
+
                     //string comment = getHistoryShort(histories, 5);
                     int owner_id;
 
@@ -636,10 +639,12 @@ namespace KeyList
 
                         owner_id = -1;
                     }
+                    List<History> histories = GetHistory(2, id);
 
+                    string shortHistory = getHistoryShort(histories, 4);
 
                     c = new Computer(
-                        reader.GetInt32(reader.GetOrdinal("id")),
+                        id,
                         reader.GetString(reader.GetOrdinal("brand")),
                         reader.GetString(reader.GetOrdinal("model")),
                         reader.GetString(reader.GetOrdinal("serial")),
@@ -648,7 +653,7 @@ namespace KeyList
                         reader.GetInt32(reader.GetOrdinal("buy_out")),
                         reader.GetInt32(reader.GetOrdinal("status")),
                         owner_id,
-                        "add history");
+                        shortHistory);
                 }
             }
             return c;
@@ -702,9 +707,13 @@ namespace KeyList
                         owner_id = -1;
                     }
 
+                    int id = reader.GetInt32(reader.GetOrdinal("id"));
+                    List<History> histories = GetHistory(2, id);
+
+                    string shortHistory = getHistoryShort(histories, 4);
 
                     c = new Computer(
-                        reader.GetInt32(reader.GetOrdinal("id")),
+                        id,
                         reader.GetString(reader.GetOrdinal("brand")),
                         reader.GetString(reader.GetOrdinal("model")),
                         reader.GetString(reader.GetOrdinal("serial")),
@@ -713,7 +722,7 @@ namespace KeyList
                         reader.GetInt32(reader.GetOrdinal("buy_out")),
                         reader.GetInt32(reader.GetOrdinal("status")),
                         owner_id,
-                        "add history");
+                        shortHistory);
                 }
             }
             return c;
@@ -871,6 +880,19 @@ namespace KeyList
         {
             string query = "UPDATE computer set owner_id=@owner_id,status=1 where serial=@serial";
 
+            Pupil p = getPupil(pupilID);
+            Computer c = getComputerSerial(serial);
+
+            if (p != null)
+            {
+                InsertHistory(0, p.Id, "computer", "->" + serial, DateTime.Now.Ticks);
+            }
+
+            if (c != null)
+            {
+                InsertHistory(2, c.Id, "comment", "->" + p.ToString, DateTime.Now.Ticks);
+            }
+
             using (SQLiteCommand cmd = new SQLiteCommand(
                 query, con))
             {
@@ -901,10 +923,13 @@ namespace KeyList
 
                         owner_id = -1;
                     }
+                    int id = reader.GetInt32(reader.GetOrdinal("id"));
+                    List<History> histories = GetHistory(2, id);
 
+                    string shortHistory = getHistoryShort(histories, 4);
 
                     c = new Computer(
-                        reader.GetInt32(reader.GetOrdinal("id")),
+                        id,
                         reader.GetString(reader.GetOrdinal("brand")),
                         reader.GetString(reader.GetOrdinal("model")),
                         reader.GetString(reader.GetOrdinal("serial")),
@@ -913,7 +938,7 @@ namespace KeyList
                         reader.GetInt32(reader.GetOrdinal("buy_out")),
                         reader.GetInt32(reader.GetOrdinal("status")),
                         owner_id,
-                        "add history");
+                        shortHistory);
                 }
             }
             return c;
@@ -921,6 +946,19 @@ namespace KeyList
         //TODO add history
         public void removePCFromPupil(int id)
         {
+
+            Computer c = getComputer(id);
+            Pupil p = getPupil(c.Owner_id);
+
+            if (p != null)
+            {
+                InsertHistory(0, p.Id, "computer", c.Serielnumber + "->", DateTime.Now.Ticks);
+            }
+
+            if (c != null)
+            {
+                InsertHistory(2, c.Id, "comment", p.ToString + "->", DateTime.Now.Ticks);
+            }
 
             string query = "UPDATE computer set owner_id=null,status=0 where id=@id";
 

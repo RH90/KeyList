@@ -362,10 +362,20 @@ namespace KeyList
                 view.Refresh();
             }
 
+            if (m.C.Id != -1)
+            {
+                listPCHistory.ItemsSource = sql.GetHistory(2, m.C.Id);
+                datePC.SelectedDate = DateTime.Now;
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listPCHistory.ItemsSource);
+                //view.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+                view.Refresh();
+            }
+
+
             tbPCBrand.Text = m.C.Brand;
             tbPCModel.Text = m.C.Model;
             tbPCSerial.Text = m.C.Serielnumber;
-            tbPCComment.Text = m.C.Comment;
+            //tbPCComment.Text = m.C.Comment;
             tbPCSmartwater.Text = m.C.Smartwater;
             cbPCStatus.SelectedIndex = m.C.Status;
             cbPCBuyOut.SelectedIndex = m.C.Buy_out;
@@ -642,7 +652,7 @@ namespace KeyList
                 m.C.Model = tbPCModel.Text;
                 m.C.Brand = tbPCBrand.Text;
                 m.C.Smartwater = tbPCSmartwater.Text;
-                m.C.Comment = tbPCComment.Text;
+                //m.C.Comment = tbPCComment.Text;
                 m.C.Status = cbPCStatus.SelectedIndex;
                 m.C.Buy_out = cbPCBuyOut.SelectedIndex;
 
@@ -1011,7 +1021,38 @@ namespace KeyList
 
         private void Add_PC_History_Button_Click(object sender, RoutedEventArgs e)
         {
+            MyItem m = (MyItem)listView.SelectedItem;
+            int id = m.C.Id;
 
+            if (tbPCHistory.Text.Equals("") || id == -1)
+                return;
+
+            string comment = tbPCHistory.Text;
+
+            long date = datePC.SelectedDate.Value.Ticks;
+
+            try
+            {
+                sql.InsertHistory(2, id, "comment", comment, date);
+
+                listPCHistory.ItemsSource = sql.GetHistory(2, id);
+
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listPCHistory.ItemsSource);
+                //view.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+                view.Refresh();
+
+                datePC.SelectedDate = DateTime.Now;
+                tbPCHistory.Text = "";
+
+                m.C = sql.getComputer(id);
+                CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
+                view1.Refresh();
+
+            }
+            catch
+            {
+
+            }
         }
 
         private void bGivePC_Click(object sender, RoutedEventArgs e)
@@ -1024,6 +1065,7 @@ namespace KeyList
                 MyItem m = (MyItem)listView.SelectedItem;
                 sql.assignComputerToPupil(window.s, m.P.Id);
 
+                m.P = sql.getPupil(m.P.Id);
                 m.C = sql.getComputerSerial(window.s);
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
@@ -1049,7 +1091,7 @@ namespace KeyList
                 sql.removePCFromPupil(m.C.Id);
                 // m.C.Owner_id = -1;
                 m.C = new Computer(-1, "", "", "", "", "", -1, -1, -1, "");
-
+                m.P = sql.getPupil(m.P.Id);
 
 
                 //m.L.Status = (int)Locker.StatusT.LÅST_AV_SKOLAN;
@@ -1094,6 +1136,8 @@ namespace KeyList
                 sql.assignComputerToPupil(window.s, m.P.Id);
 
                 m.C = sql.getComputerSerial(window.s);
+                m.P = sql.getPupil(m.P.Id);
+
                 ICollectionView view = CollectionViewSource.GetDefaultView(listView.ItemsSource);
                 view.Refresh();
 

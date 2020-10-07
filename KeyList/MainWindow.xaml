@@ -356,52 +356,69 @@
                 </GroupBox>
                 <GroupBox Visibility="Collapsed"  x:Name="gbPC" Foreground="White" Header="Dator" >
                     <StackPanel>
-                        <TextBlock Text="Tillverkare"></TextBlock>
-                        <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPCBrand"></TextBox>
-                        <TextBlock Text="Modell"></TextBlock>
-                        <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPCModel"></TextBox>
-                        <TextBlock Text="Serienummer"></TextBlock>
-                        <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPCSmartwater"></TextBox>
-                        <TextBlock Text="Smartwater"></TextBlock>
-                        <TextBox KeyUp="TextBlock_KeyDown" x:Name="tbPCSerial"></TextBox>
-                        <TextBlock Text="Kommentar"></TextBlock>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="200">
-                            <TextBox TextWrapping="Wrap" KeyUp="TextBlock_KeyDown" AcceptsReturn="True" x:Name="tbPCComment"></TextBox>
-                        </ScrollViewer>
-                        <TextBlock Text="Status"></TextBlock>
-                        <ComboBox  x:Name="cbPCStatus" PreviewMouseDown="TextBlock_KeyDown" HorizontalAlignment="Left" Width="329">
-                            <ComboBoxItem>
-                                <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="LIMEGREEN">LEDIG DATOR</TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Pink">ELEV HAR DATOR</TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Yellow">DATOR SÖNDER</TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">DATOR SPÄRRAD</TextBlock>
-                            </ComboBoxItem>
-                        </ComboBox>
-                        <ComboBox  x:Name="cbPCBuyOut" PreviewMouseDown="TextBlock_KeyDown" HorizontalAlignment="Left" Width="329">
-                            <ComboBoxItem>
-                                <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="LIMEGREEN">Kopplad till EDU</TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Pink">Vill köpa loss</TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Yellow">Har betalt chrome</TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">Är kopplad bort</TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">Okänt</TextBlock>
-                            </ComboBoxItem>
-                        </ComboBox>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Tillverkare"></TextBlock>
+                            <TextBox Grid.Row="1" Grid.Column="0" KeyUp="TextBlock_KeyDown" x:Name="tbPCBrand"></TextBox>
+                            <TextBlock Margin="5,0,0,0" Grid.Row="0" Grid.Column="1" Text="Modell"></TextBlock>
+                            <TextBox Margin="5,0,0,0" Grid.Row="1" Grid.Column="1" KeyUp="TextBlock_KeyDown" x:Name="tbPCModel"></TextBox>
+
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Serienummer"></TextBlock>
+                            <TextBox Grid.Row="3" Grid.Column="0" KeyUp="TextBlock_KeyDown" x:Name="tbPCSerial"></TextBox>
+
+                            <TextBlock Margin="5,0,0,0" Grid.Row="2" Grid.Column="1" Text="Smartwater"></TextBlock>
+                            <TextBox Margin="5,0,0,0" Grid.Row="3" Grid.Column="1" KeyUp="TextBlock_KeyDown" x:Name="tbPCSmartwater"></TextBox>
+
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Status"></TextBlock>
+                            <ComboBox  Grid.Row="5" Grid.Column="0"  x:Name="cbPCStatus" PreviewMouseDown="TextBlock_KeyDown" HorizontalAlignment="Left" Width="329">
+                                <ComboBoxItem>
+                                    <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="LIMEGREEN">LEDIG DATOR</TextBlock>
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Pink">ELEV HAR DATOR</TextBlock>
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Yellow">DATOR SÖNDER</TextBlock>
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">DATOR SPÄRRAD</TextBlock>
+                                </ComboBoxItem>
+                            </ComboBox>
+
+                            <TextBlock Margin="5,0,0,0" Grid.Row="4" Grid.Column="1" Text="Buy out"></TextBlock>
+                            <ComboBox Margin="5,0,0,0" Grid.Row="5" Grid.Column="1"   x:Name="cbPCBuyOut" PreviewMouseDown="TextBlock_KeyDown" HorizontalAlignment="Left" Width="329">
+                                <ComboBoxItem>
+                                    <TextBlock Background="Black"  TextWrapping="Wrap" Foreground="LIMEGREEN">Kopplad till EDU</TextBlock>
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    <TextBlock Background="Black" TextWrapping="Wrap"  Foreground="Pink">Vill köpa loss</TextBlock>
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    <TextBlock Background="Black"  TextWrapping="Wrap"  Foreground="Yellow">Har betalt chrome</TextBlock>
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">Är kopplad bort</TextBlock>
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    <TextBlock Background="Black"   TextWrapping="Wrap"  Foreground="Orange">Okänt</TextBlock>
+                                </ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+
                         <GroupBox Foreground="White" Header="Historia">
-                            <ListView MinHeight="50" MaxHeight="150" x:Name="listPCHistory">
+                            <ListView MinHeight="50" MaxHeight="145" x:Name="listPCHistory">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Date" DisplayMemberBinding="{Binding DateString}"/>

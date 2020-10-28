@@ -36,7 +36,7 @@ namespace KeyList
         public string Type { get => type; set => type = value; }
         public string Comment { get => comment; set => comment = value; }
         public long Date { get => date; set => date = value; }
-        public string DateString { get => new DateTime(Date).ToString("yyyy-MM-dd_HHmm"); }
+        public string DateString { get => new DateTime(Date).ToString("yyyy-MM-dd"); }
         public string Owner { get => owner; set => owner = value; }
         public int Id { get => id; set => id = value; }
     }

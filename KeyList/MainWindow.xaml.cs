@@ -306,16 +306,23 @@ namespace KeyList
             {
                 gbPupil.IsEnabled = false;
                 gbPC.IsEnabled = false;
+
+                bRemovePupil.IsEnabled = false;
+                bAssignPupil.IsEnabled = true;
             }
             else
             {
                 gbPupil.IsEnabled = true;
                 gbPC.IsEnabled = true;
+
+                bRemovePupil.IsEnabled = true;
+                bAssignPupil.IsEnabled = false;
             }
 
             if (m.C.Id != -1)
             {
                 bGivePC.IsEnabled = false;
+
                 bAddGivePC.IsEnabled = false;
                 bRemovePC.IsEnabled = true;
             }
@@ -591,14 +598,13 @@ namespace KeyList
             Console.WriteLine("Is_GbPupil_Enabled: " + e.NewValue);
             if (((bool)e.NewValue) == false)
             {
-                bRemovePupil.IsEnabled = false;
-                bAssignPupil.IsEnabled = true;
+
             }
             else
             {
-                bGivePC.IsEnabled = false;
-                bAddGivePC.IsEnabled = false;
-                bRemovePC.IsEnabled = true;
+                //bGivePC.IsEnabled = false;
+                //bAddGivePC.IsEnabled = false;
+                //bRemovePC.IsEnabled = true;
             }
 
         }
@@ -712,7 +718,8 @@ namespace KeyList
                     Console.WriteLine("item null");
                 }
 
-
+                listView.SelectedIndex = -1;
+                listView.SelectedItem = m;
 
 
 
@@ -764,7 +771,8 @@ namespace KeyList
                     Console.WriteLine("item null");
                 }
 
-
+                listView.SelectedIndex = -1;
+                listView.SelectedItem = m;
 
                 //Clipboard.SetText(text);
 
@@ -1077,6 +1085,9 @@ namespace KeyList
                 bAddGivePC.IsEnabled = false;
                 bRemovePC.IsEnabled = true;
                 UpdateTextBoxes(m);
+
+                listView.SelectedIndex = -1;
+                listView.SelectedItem = m;
             }
         }
 
@@ -1124,6 +1135,9 @@ namespace KeyList
                     Console.WriteLine("item null");
                 }
 
+                listView.SelectedIndex = -1;
+                listView.SelectedItem = m;
+
             }
         }
         //add a computer and give it to student with the serialnumber
@@ -1149,6 +1163,9 @@ namespace KeyList
                 bAddGivePC.IsEnabled = false;
                 bRemovePC.IsEnabled = true;
                 UpdateTextBoxes(m);
+
+                listView.SelectedIndex = -1;
+                listView.SelectedItem = m;
             }
 
 

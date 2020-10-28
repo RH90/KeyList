@@ -239,7 +239,7 @@
                                     <GridView>
                                         <GridViewColumn Header="Date" DisplayMemberBinding="{Binding DateString}"/>
                                         <GridViewColumn Header="Typ" DisplayMemberBinding="{Binding Type}"/>
-                                        <GridViewColumn Width="250" Header="Text">
+                                        <GridViewColumn Width="240" Header="Text">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
@@ -418,7 +418,7 @@
                         </Grid>
 
                         <GroupBox Foreground="White" Header="Historia">
-                            <ListView MinHeight="50" MaxHeight="145" x:Name="listPCHistory">
+                            <ListView MinHeight="50" MaxHeight="120" x:Name="listPCHistory">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Date" DisplayMemberBinding="{Binding DateString}"/>

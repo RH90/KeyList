@@ -600,29 +600,35 @@ namespace KeyList
         public Pupil getPupil(int id)
         {
             Pupil p = null;
+            String query = "SELECT * from pupil where id=@id";
 
             using (SQLiteCommand cmd = new SQLiteCommand(
-                "SELECT * from pupil where id=@id", con))
+               query, con))
             {
                 cmd.Parameters.AddWithValue("@id", id);
                 SQLiteDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
-                    List<History> histories = GetHistory(0, id);
-                    string comment = getHistoryShort(histories, 5);
-
-
-                    p = new Pupil(
-                        id,
-                        reader.GetString(reader.GetOrdinal("grade")),
-                        reader.GetString(reader.GetOrdinal("classP")),
-                        reader.GetString(reader.GetOrdinal("year")),
-                        reader.GetString(reader.GetOrdinal("firstname")),
-                        reader.GetString(reader.GetOrdinal("lastname")),
-                        comment);
+                    p = readPupil(id, reader);
                 }
             }
+            return p;
+        }
+
+        private Pupil readPupil(int id, SQLiteDataReader reader)
+        {
+            Pupil p;
+            List<History> histories = GetHistory(0, id);
+            string comment = getHistoryShort(histories, 5);
+            p = new Pupil(
+                id,
+                reader.GetString(reader.GetOrdinal("grade")),
+                reader.GetString(reader.GetOrdinal("classP")),
+                reader.GetString(reader.GetOrdinal("year")),
+                reader.GetString(reader.GetOrdinal("firstname")),
+                reader.GetString(reader.GetOrdinal("lastname")),
+                comment);
             return p;
         }
 
@@ -709,18 +715,14 @@ namespace KeyList
                 {
                     //List<History> histories = GetHistory(0, id);
                     //string comment = getHistoryShort(histories, 5);
-
                     if (!int.TryParse(reader.GetValue(reader.GetOrdinal("owner_id")) + "", out owner_id))
                     {
 
                         owner_id = -1;
                     }
-
                     int id = reader.GetInt32(reader.GetOrdinal("id"));
                     List<History> histories = GetHistory(2, id);
-
                     string shortHistory = getHistoryShort(histories, 4);
-
                     c = new Computer(
                         id,
                         reader.GetString(reader.GetOrdinal("brand")),
@@ -785,22 +787,15 @@ namespace KeyList
         {
             List<MyItem> list = new List<MyItem>();
             string query = "select * from pupil where not EXISTS(select * from locker where owner_id=pupil.id);";
+
+
             using (SQLiteCommand cmd = new SQLiteCommand(
                 query, con))
             {
                 SQLiteDataReader reader = cmd.ExecuteReader();
-
                 while (reader.Read())
                 {
-
-                    Pupil p = new Pupil(
-                        reader.GetInt32(reader.GetOrdinal("id")),
-                        reader.GetString(reader.GetOrdinal("grade")),
-                        reader.GetString(reader.GetOrdinal("classP")),
-                        reader.GetString(reader.GetOrdinal("year")),
-                        reader.GetString(reader.GetOrdinal("firstname")),
-                        reader.GetString(reader.GetOrdinal("lastname")),
-                        reader.GetString(reader.GetOrdinal("comment")));
+                    Pupil p = readPupil(reader.GetInt32(reader.GetOrdinal("id")), reader);
 
                     Locker l = null;
 

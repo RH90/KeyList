@@ -565,7 +565,7 @@ namespace KeyList
                             if (!l.Number.ToString().Equals(parts[i]))
                                 check = false;
                         }
-                        else if (!p.Firstname.ToLower().Contains(parts[i]) && !p.Lastname.ToLower().Contains(parts[i]))
+                        else if (!p.HistoryShort.ToLower().Contains(parts[i]) && !p.Firstname.ToLower().Contains(parts[i]) && !p.Lastname.ToLower().Contains(parts[i]))
                         {
                             check = false;
                         }
@@ -822,7 +822,7 @@ namespace KeyList
 
             //locker history
             InsertHistory(1, l.Id, "comment", p.ToString + "->", DateTime.Now.Ticks);
-
+            //w
             string query = "UPDATE locker set owner_id=null,status=1 where id=@id";
 
             using (SQLiteCommand cmd = new SQLiteCommand(

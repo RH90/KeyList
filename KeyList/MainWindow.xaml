@@ -242,7 +242,7 @@
                                         <GridViewColumn Width="240" Header="Text">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
+                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=GridViewColumn, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -331,7 +331,7 @@
                                         <GridViewColumn Width="250" Header="Text">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
+                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=GridViewColumn, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -425,7 +425,7 @@
                                         <GridViewColumn Width="250" Header="Text">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=ListViewItem, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
+                                                    <TextBlock Width="{Binding  RelativeSource={RelativeSource Mode=FindAncestor , AncestorType=GridViewColumn, AncestorLevel=1},Path=ActualWidth}" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Comment}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
